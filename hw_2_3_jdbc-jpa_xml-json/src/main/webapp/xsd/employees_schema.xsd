@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <xs:element name="account" type="account"/>
+
+  <xs:element name="department" type="department"/>
+
+  <xs:element name="employee" type="employee"/>
+
+  <xs:element name="employees" type="xmlEmployeeWrapper"/>
+
+  <xs:complexType name="xmlEmployeeWrapper">
+    <xs:sequence>
+      <xs:element ref="employee" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="employee">
+    <xs:all>
+      <xs:element ref="account" minOccurs="0"/>
+      <xs:element ref="department"/>
+      <xs:element name="email" type="xs:string" minOccurs="0"/>
+      <xs:element name="hiredate" type="xs:string"/>
+      <xs:element name="job" type="xs:string"/>
+      <xs:element name="name" type="xs:string"/>
+      <xs:element name="phone" type="xs:string" minOccurs="0"/>
+      <xs:element name="salary" type="xs:int"/>
+    </xs:all>
+    <xs:attribute name="id" type="xs:long" use="required"/>
+  </xs:complexType>
+
+  <xs:complexType name="account">
+    <xs:all>
+      <xs:element name="password" type="xs:string"/>
+      <xs:element name="role" type="xs:string"/>
+      <xs:element name="username" type="xs:string"/>
+    </xs:all>
+    <xs:attribute name="id" type="xs:long" use="required"/>
+  </xs:complexType>
+
+  <xs:complexType name="department">
+    <xs:all>
+      <xs:element name="city" type="xs:string"/>
+      <xs:element name="name" type="xs:string"/>
+    </xs:all>
+    <xs:attribute name="id" type="xs:long" use="required"/>
+  </xs:complexType>
+</xs:schema>
+

@@ -1,0 +1,202 @@
+{"employees": {"employee": [
+    {
+        "phone": "+7(234)231-12-12",
+        "name": "Steven King",
+        "id": 1,
+        "department": {
+            "city": "Moscow",
+            "name": "Administration",
+            "id": 1
+        },
+        "job": "CEO",
+        "salary": 24000,
+        "hiredate": "17-06-2011",
+        "email": "s.king@company.com",
+        "account": {
+            "password": "asdkfadjfbvsdhs",
+            "role": "CEO",
+            "id": 1,
+            "username": "SKING"
+        }
+    },
+    {
+        "phone": "+7(234)231-12-13",
+        "name": "Neena Kochhar",
+        "id": 2,
+        "department": {
+            "city": "Moscow",
+            "name": "Administration",
+            "id": 1
+        },
+        "job": "ACM",
+        "salary": 17000,
+        "hiredate": "21-09-2009",
+        "email": "n.kochhar@company.com",
+        "account": {
+            "password": "jasdhljalsdkjfa",
+            "role": "ACM",
+            "id": 2,
+            "username": "NKOCHHAR"
+        }
+    },
+    {
+        "phone": "+7(234)231-12-15",
+        "name": "Lex De Haan",
+        "id": 3,
+        "department": {
+            "city": "Moscow",
+            "name": "Administration",
+            "id": 1
+        },
+        "job": "AD_VP",
+        "salary": 16000,
+        "hiredate": "13-01-2009",
+        "email": "l.dehaan@company.com",
+        "account": {
+            "password": "jsdscdbfsdbcjdh",
+            "role": "HRM",
+            "id": 3,
+            "username": "LDEHAAN"
+        }
+    },
+    {
+        "phone": "+7(456)231-12-12",
+        "name": "Alexander Hunold",
+        "id": 4,
+        "department": {
+            "city": "Saint-Petersburg",
+            "name": "Marketing",
+            "id": 2
+        },
+        "job": "IT_PROG",
+        "salary": 9000,
+        "hiredate": "03-01-2014",
+        "email": "a.hunold@company.com",
+        "account": {
+            "password": "skjdfhsdfhlsdhf",
+            "role": "USR",
+            "id": 4,
+            "username": "AHUNOLD"
+        }
+    },
+    {
+        "phone": "+1(122)231-12-10",
+        "name": "Bruce Ernst",
+        "id": 5,
+        "department": {
+            "city": "New-York",
+            "name": "Public Relations",
+            "id": 5
+        },
+        "job": "IT_PROG",
+        "salary": 6000,
+        "hiredate": "21-05-2015",
+        "email": "b.ernst@company.com",
+        "account": {
+            "password": "ajhsbcdasghdbca",
+            "role": "USR",
+            "id": 5,
+            "username": "BERNST"
+        }
+    },
+    {
+        "phone": "+3(122)445-00-11",
+        "name": "David Austin",
+        "id": 6,
+        "department": {
+            "city": "London",
+            "name": "Purchasing",
+            "id": 3
+        },
+        "job": "FI_MGR",
+        "salary": 12000,
+        "hiredate": "25-06-2013",
+        "email": "d.austin@company.com",
+        "account": {
+            "password": "asdkfhcnasdfhsk",
+            "role": "ACM",
+            "id": 6,
+            "username": "DAUSTIN"
+        }
+    },
+    {
+        "phone": "+3(122)445-00-12",
+        "name": "Valli Pataballa",
+        "id": 7,
+        "department": {
+            "city": "London",
+            "name": "Purchasing",
+            "id": 3
+        },
+        "job": "IT_PROG",
+        "salary": 4800,
+        "hiredate": "05-02-2014",
+        "email": "v.pataballa@company.com",
+        "account": {
+            "password": "sdnakcsjdlsmjkj",
+            "role": "USR",
+            "id": 7,
+            "username": "VPATABAL"
+        }
+    },
+    {
+        "phone": "+3(122)445-00-13",
+        "name": "Diana Lorentz",
+        "id": 8,
+        "department": {
+            "city": "London",
+            "name": "Purchasing",
+            "id": 3
+        },
+        "job": "IT_PROG",
+        "salary": 4200,
+        "hiredate": "07-02-2015",
+        "email": "d.lorentz@company.com",
+        "account": {
+            "password": "khjjkahsdfasasd",
+            "role": "USR",
+            "id": 8,
+            "username": "DLORENTZ"
+        }
+    },
+    {
+        "phone": "+5(252)631-42-55",
+        "name": "Daniel Faviet",
+        "id": 9,
+        "department": {
+            "city": "Hamburg",
+            "name": "Shipping",
+            "id": 4
+        },
+        "job": "PU_MAN",
+        "salary": 2800,
+        "hiredate": "16-08-2010",
+        "email": "d.faviet@company.com",
+        "account": {
+            "password": "asjdnmnlskans",
+            "role": "USR",
+            "id": 9,
+            "username": "DFAVIET"
+        }
+    },
+    {
+        "phone": "+5(252)631-42-56",
+        "name": "Ismael Sciarra",
+        "id": 10,
+        "department": {
+            "city": "Hamburg",
+            "name": "Shipping",
+            "id": 4
+        },
+        "job": "PU_MAN",
+        "salary": 2700,
+        "hiredate": "30-09-2013",
+        "email": "i.sciarra@company.com",
+        "account": {
+            "password": "ljsdfjlkabjba",
+            "role": "USR",
+            "id": 10,
+            "username": "ISCIARRA"
+        }
+    }
+]}}
