@@ -1,0 +1,44 @@
+<div style="width: 1170px; display:flex; flex-wrap: wrap; margin-left: auto; margin-right: auto;">
+    <div style="width: 100%; max-width: 100%;" >
+        <div class="frame" style="padding: 20px">
+            <form>
+                <div class="form-group">
+                    <div class="input-group">
+                        <div class="input-group-addon"><i class="fa fa-search"></i></div>
+                        <input type="text" class="form-control" placeholder="Search ..." ng-model="ctrl.search">
+                    </div>
+                </div>
+            </form>
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th><a href="#" ng-click="ctrl.sortType = 'id'; ctrl.sortReverse = !ctrl.sortReverse">ID
+                            <span ng-show="ctrl.sortType == 'id' && !ctrl.sortReverse" class="fa fa-chevron-down"></span>
+                            <span ng-show="ctrl.sortType == 'id' && ctrl.sortReverse" class="fa fa-chevron-up"></span></a></th>
+                        <th><a href="#" ng-click="ctrl.sortType = 'name'; ctrl.sortReverse = !ctrl.sortReverse">NAME
+                            <span ng-show="ctrl.sortType == 'name' && !ctrl.sortReverse" class="fa fa-chevron-down"></span>
+                            <span ng-show="ctrl.sortType == 'name' && ctrl.sortReverse" class="fa fa-chevron-up"></span></a>
+                        </th>
+                        <th><a href="#" ng-click="ctrl.sortType = 'city'; ctrl.sortReverse = !ctrl.sortReverse">CITY
+                            <span ng-show="ctrl.sortType == 'city' && !ctrl.sortReverse" class="fa fa-chevron-down"></span>
+                            <span ng-show="ctrl.sortType == 'city' && ctrl.sortReverse" class="fa fa-chevron-up"></span></a>
+                        </th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="d in ctrl.getAllDepartments() | orderBy:ctrl.sortType:ctrl.sortReverse | filter:ctrl.search">
+                        <td>{{d.id}}</td>
+                        <td>{{d.name}}</td>
+                        <td>{{d.city}}</td>
+                        <td><button type="button" ng-click="ctrl.editModal(d)" class="btn btn-default"><i class="fa fa-pencil-square-o"></i></button>
+                            <button type="button" ng-click="ctrl.deleteModal(d)" class="btn btn-danger"><i class="fa fa-trash-o"></i></button></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <button type="button" ng-click="ctrl.addModal()" class="btn btn-default">Add Department</button>
+        </div>
+    </div>
+</div>
