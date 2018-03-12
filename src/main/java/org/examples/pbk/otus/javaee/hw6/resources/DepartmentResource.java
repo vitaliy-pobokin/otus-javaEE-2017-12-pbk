@@ -27,8 +27,8 @@ public class DepartmentResource {
     @GET
     @RolesAllowed({"CEO", "ACC", "HRM", "USR"})
     public Response findAll() {
-        List<Department> departments = TransactionUtils.runInTransaction(entityManager -> {
-            dao.setEntityManager(entityManager);
+        List<Department> departments = TransactionUtils.runInTransaction(session -> {
+            dao.setSession(session);
             return dao.findAll();
         });
         return Response.ok(departments).build();
@@ -38,8 +38,8 @@ public class DepartmentResource {
     @Path("/{id}")
     @RolesAllowed({"CEO", "ACC", "HRM", "USR"})
     public Response findById(@PathParam("id") long id) {
-        Department department = TransactionUtils.runInTransaction(entityManager -> {
-            dao.setEntityManager(entityManager);
+        Department department = TransactionUtils.runInTransaction(session -> {
+            dao.setSession(session);
             return dao.findById(id);
         });
         return Response.ok(department).build();
@@ -48,8 +48,8 @@ public class DepartmentResource {
     @POST
     @RolesAllowed({"CEO"})
     public Response create(Department department) throws URISyntaxException {
-        TransactionUtils.runInTransactionWithoutResult(entityManager -> {
-            dao.setEntityManager(entityManager);
+        TransactionUtils.runInTransactionWithoutResult(session -> {
+            dao.setSession(session);
             dao.create(department);
         });
         return Response.created(new URI("/api/account/" + department.getId())).build();
@@ -58,8 +58,8 @@ public class DepartmentResource {
     @PUT
     @RolesAllowed({"CEO"})
     public Response update(Department department) {
-        TransactionUtils.runInTransactionWithoutResult(entityManager -> {
-            dao.setEntityManager(entityManager);
+        TransactionUtils.runInTransactionWithoutResult(session -> {
+            dao.setSession(session);
             dao.update(department);
         });
         return Response.ok().build();
@@ -69,8 +69,8 @@ public class DepartmentResource {
     @Path("/{id}")
     @RolesAllowed({"CEO"})
     public Response delete(@PathParam("id") long id) {
-        TransactionUtils.runInTransactionWithoutResult(entityManager -> {
-            dao.setEntityManager(entityManager);
+        TransactionUtils.runInTransactionWithoutResult(session -> {
+            dao.setSession(session);
             dao.delete(id);
         });
         return Response.ok().build();

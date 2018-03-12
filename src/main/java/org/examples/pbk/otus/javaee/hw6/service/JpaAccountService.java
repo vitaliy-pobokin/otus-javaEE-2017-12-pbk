@@ -18,48 +18,48 @@ public class JpaAccountService implements AccountService {
 
     @Override
     public List<Account> findAll() {
-        return TransactionUtils.runInTransaction(entityManager -> {
-            dao.setEntityManager(entityManager);
+        return TransactionUtils.runInTransaction(session -> {
+            dao.setSession(session);
             return dao.findAll();
         });
     }
 
     @Override
     public Account findById(long id) {
-        return TransactionUtils.runInTransaction(entityManager -> {
-            dao.setEntityManager(entityManager);
+        return TransactionUtils.runInTransaction(session -> {
+            dao.setSession(session);
             return dao.findById(id);
         });
     }
 
     @Override
     public Account findByUsername(String username) {
-        return TransactionUtils.runInTransaction(entityManager -> {
-            dao.setEntityManager(entityManager);
+        return TransactionUtils.runInTransaction(session -> {
+            dao.setSession(session);
             return dao.findByUsername(username);
         });
     }
 
     @Override
     public void create(Account account) {
-        TransactionUtils.runInTransactionWithoutResult(entityManager -> {
-            dao.setEntityManager(entityManager);
+        TransactionUtils.runInTransactionWithoutResult(session -> {
+            dao.setSession(session);
             dao.create(account);
         });
     }
 
     @Override
     public void update(Account account) {
-        TransactionUtils.runInTransactionWithoutResult(entityManager -> {
-            dao.setEntityManager(entityManager);
+        TransactionUtils.runInTransactionWithoutResult(session -> {
+            dao.setSession(session);
             dao.update(account);
         });
     }
 
     @Override
     public void delete(long id) {
-        TransactionUtils.runInTransactionWithoutResult(entityManager -> {
-            dao.setEntityManager(entityManager);
+        TransactionUtils.runInTransactionWithoutResult(session -> {
+            dao.setSession(session);
             dao.delete(id);
         });
     }

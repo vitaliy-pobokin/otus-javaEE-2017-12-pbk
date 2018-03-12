@@ -1,6 +1,7 @@
 package org.examples.pbk.otus.javaee.hw6.dao;
 
 import org.examples.pbk.otus.javaee.hw6.model.Employee;
+import org.hibernate.Session;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.persistence.EntityManager;
@@ -10,44 +11,44 @@ import java.util.List;
 
 @ApplicationScoped
 public class JpaEmployeeDao implements EmployeeDao {
-    private EntityManager entityManager;
+    private Session session;
 
     @Override
     public List<Employee> findAll() {
-        CriteriaBuilder builder = getEntityManager().getCriteriaBuilder();
+        CriteriaBuilder builder = getSession().getCriteriaBuilder();
         CriteriaQuery<Employee> criteria = builder.createQuery(Employee.class);
         criteria.from(Employee.class);
-        return entityManager.createQuery(criteria).getResultList();
+        return session.createQuery(criteria).getResultList();
     }
 
     @Override
     public Employee findById(long id) {
-        return getEntityManager().find(Employee.class, id);
+        return getSession().find(Employee.class, id);
     }
 
     @Override
     public void create(Employee employee) {
-        getEntityManager().persist(employee);
+        getSession().persist(employee);
     }
 
     @Override
     public void update(Employee employee) {
-        getEntityManager().merge(employee);
+        getSession().merge(employee);
     }
 
     @Override
     public void delete(long id) {
-        getEntityManager().remove(getEntityManager().find(Employee.class, id));
+        getSession().remove(getSession().find(Employee.class, id));
     }
 
-    public void setEntityManager(EntityManager entityManager) {
-        this.entityManager = entityManager;
+    public void setSession(Session session) {
+        this.session = session;
     }
 
-    private EntityManager getEntityManager() {
-        if (entityManager == null) {
-            throw new RuntimeException("EntityManager wasn't set");
+    private Session getSession() {
+        if (session == null) {
+            throw new RuntimeException("Session wasn't set");
         }
-        return entityManager;
+        return session;
     }
 }

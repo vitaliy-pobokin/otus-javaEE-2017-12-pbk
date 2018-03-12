@@ -1,15 +1,13 @@
 package org.examples.pbk.otus.javaee.hw6.listener;
 
-import org.examples.pbk.otus.javaee.hw6.dao.JpaAccountDao;
-import org.examples.pbk.otus.javaee.hw6.dao.JpaDepartmentDao;
-import org.examples.pbk.otus.javaee.hw6.dao.JpaEmployeeDao;
 import org.examples.pbk.otus.javaee.hw6.model.AccountWrapper;
 import org.examples.pbk.otus.javaee.hw6.model.DepartmentWrapper;
 import org.examples.pbk.otus.javaee.hw6.model.EmployeeWrapper;
 import org.examples.pbk.otus.javaee.hw6.resources.TransactionUtils;
 import org.examples.pbk.otus.javaee.hw6.xml.XmlBean;
+import org.hibernate.ReplicationMode;
+import org.hibernate.SessionFactory;
 
-import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
@@ -26,11 +24,11 @@ public class AppContextListener implements ServletContextListener {
     public static final String DEPARTMENTS_XML_PATH = "/WEB-INF/classes/database_state/departments.xml";
     public static final String EMPLOYEES_XML_PATH = "/WEB-INF/classes/database_state/employees.xml";
 
-    private static EntityManagerFactory emf;
+    private static SessionFactory sessionFactory;
 
     @Override
     public void contextInitialized(ServletContextEvent event) {
-        emf = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
+        sessionFactory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME).unwrap(SessionFactory.class);
         ServletContext sc = event.getServletContext();
         sc.setAttribute("ctx", sc.getContextPath());
         loadDatabaseState(sc);
@@ -44,35 +42,29 @@ public class AppContextListener implements ServletContextListener {
 
     private void loadAccountsXml(String xmlFilePath) {
         AccountWrapper accounts = (AccountWrapper) XmlBean.unmarshal(new File(xmlFilePath), AccountWrapper.class);
-        JpaAccountDao dao = new JpaAccountDao();
-        TransactionUtils.runInTransactionWithoutResult(entityManager -> {
-            dao.setEntityManager(entityManager);
-            accounts.getAccounts().forEach(dao::create);
+        TransactionUtils.runInTransactionWithoutResult(session -> {
+            accounts.getAccounts().forEach(account -> session.replicate(account, ReplicationMode.EXCEPTION));
         });
     }
 
     private void loadDepartmentsXml(String xmlFilePath) {
         DepartmentWrapper departments = (DepartmentWrapper) XmlBean.unmarshal(new File(xmlFilePath), DepartmentWrapper.class);
-        JpaDepartmentDao dao = new JpaDepartmentDao();
-        TransactionUtils.runInTransactionWithoutResult(entityManager -> {
-            dao.setEntityManager(entityManager);
-            departments.getDepartments().forEach(dao::create);
+        TransactionUtils.runInTransactionWithoutResult(session -> {
+            departments.getDepartments().forEach(department -> session.replicate(department, ReplicationMode.EXCEPTION));
         });
     }
 
     private void loadEmployeesXml(String xmlFilePath) {
         EmployeeWrapper employees = (EmployeeWrapper) XmlBean.unmarshal(new File(xmlFilePath), EmployeeWrapper.class);
-        JpaEmployeeDao dao = new JpaEmployeeDao();
-        TransactionUtils.runInTransactionWithoutResult(entityManager -> {
-            dao.setEntityManager(entityManager);
-            employees.getEmployees().forEach(dao::create);
+        TransactionUtils.runInTransactionWithoutResult(session -> {
+            employees.getEmployees().forEach(employee -> session.replicate(employee, ReplicationMode.EXCEPTION));
         });
     }
 
     @Override
     public void contextDestroyed(ServletContextEvent event) {}
 
-    public static EntityManagerFactory getEmf() {
-        return emf;
+    public static SessionFactory getSessionFactory() {
+        return sessionFactory;
     }
 }
