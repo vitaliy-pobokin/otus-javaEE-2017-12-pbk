@@ -1,6 +1,7 @@
 package org.examples.pbk.otus.javaee.hw6.dao;
 
 import org.examples.pbk.otus.javaee.hw6.model.Department;
+import org.hibernate.Session;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.persistence.EntityManager;
@@ -10,44 +11,44 @@ import java.util.List;
 
 @ApplicationScoped
 public class JpaDepartmentDao implements DepartmentDao{
-    private EntityManager entityManager;
+    private Session session;
 
     @Override
     public List<Department> findAll() {
-        CriteriaBuilder builder = getEntityManager().getCriteriaBuilder();
+        CriteriaBuilder builder = getSession().getCriteriaBuilder();
         CriteriaQuery<Department> criteria = builder.createQuery(Department.class);
         criteria.from(Department.class);
-        return entityManager.createQuery(criteria).getResultList();
+        return session.createQuery(criteria).getResultList();
     }
 
     @Override
     public Department findById(long id) {
-        return getEntityManager().find(Department.class, id);
+        return getSession().find(Department.class, id);
     }
 
     @Override
     public void create(Department department) {
-        getEntityManager().persist(department);
+        getSession().persist(department);
     }
 
     @Override
     public void update(Department department) {
-        getEntityManager().merge(department);
+        getSession().merge(department);
     }
 
     @Override
     public void delete(long id) {
-        getEntityManager().remove(getEntityManager().find(Department.class, id));
+        getSession().remove(getSession().find(Department.class, id));
     }
 
-    public void setEntityManager(EntityManager entityManager) {
-        this.entityManager = entityManager;
+    public void setSession(Session session) {
+        this.session = session;
     }
 
-    private EntityManager getEntityManager() {
-        if (entityManager == null) {
-            throw new RuntimeException("EntityManager wasn't set");
+    private Session getSession() {
+        if (session == null) {
+            throw new RuntimeException("Session wasn't set");
         }
-        return entityManager;
+        return session;
     }
 }
