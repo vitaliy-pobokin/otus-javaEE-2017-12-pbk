@@ -8,8 +8,8 @@ import org.examples.pbk.otus.javaee.hw6.model.DepartmentWrapper;
 import org.examples.pbk.otus.javaee.hw6.model.EmployeeWrapper;
 import org.examples.pbk.otus.javaee.hw6.resources.TransactionUtils;
 import org.examples.pbk.otus.javaee.hw6.xml.XmlBean;
+import org.hibernate.SessionFactory;
 
-import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
@@ -26,11 +26,11 @@ public class AppContextListener implements ServletContextListener {
     public static final String DEPARTMENTS_XML_PATH = "/WEB-INF/classes/database_state/departments.xml";
     public static final String EMPLOYEES_XML_PATH = "/WEB-INF/classes/database_state/employees.xml";
 
-    private static EntityManagerFactory emf;
+    private static SessionFactory sessionFactory;
 
     @Override
     public void contextInitialized(ServletContextEvent event) {
-        emf = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
+        sessionFactory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME).unwrap(SessionFactory.class);
         ServletContext sc = event.getServletContext();
         sc.setAttribute("ctx", sc.getContextPath());
         loadDatabaseState(sc);
@@ -72,7 +72,7 @@ public class AppContextListener implements ServletContextListener {
     @Override
     public void contextDestroyed(ServletContextEvent event) {}
 
-    public static EntityManagerFactory getEmf() {
-        return emf;
+    public static SessionFactory getSessionFactory() {
+        return sessionFactory;
     }
 }
