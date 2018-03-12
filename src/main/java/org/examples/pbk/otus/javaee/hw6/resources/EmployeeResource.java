@@ -27,8 +27,8 @@ public class EmployeeResource {
     @GET
     @RolesAllowed({"CEO", "ACC", "HRM", "USR"})
     public Response findAll() {
-        List<Employee> employees = TransactionUtils.runInTransaction(entityManager -> {
-            dao.setEntityManager(entityManager);
+        List<Employee> employees = TransactionUtils.runInTransaction(session -> {
+            dao.setSession(session);
             return dao.findAll();
         });
         return Response.ok(employees).build();
@@ -38,8 +38,8 @@ public class EmployeeResource {
     @Path("/{id}")
     @RolesAllowed({"CEO", "ACC", "HRM", "USR"})
     public Response findById(@PathParam("id") long id) {
-        Employee employee = TransactionUtils.runInTransaction(entityManager -> {
-            dao.setEntityManager(entityManager);
+        Employee employee = TransactionUtils.runInTransaction(session -> {
+            dao.setSession(session);
             return dao.findById(id);
         });
         return Response.ok(employee).build();
@@ -48,8 +48,8 @@ public class EmployeeResource {
     @POST
     @RolesAllowed({"CEO", "HRM"})
     public Response create(Employee employee) throws URISyntaxException {
-        TransactionUtils.runInTransactionWithoutResult(entityManager -> {
-            dao.setEntityManager(entityManager);
+        TransactionUtils.runInTransactionWithoutResult(session -> {
+            dao.setSession(session);
             dao.create(employee);
         });
         return Response.created(new URI("/api/account/" + employee.getId())).build();
@@ -58,8 +58,8 @@ public class EmployeeResource {
     @PUT
     @RolesAllowed({"CEO", "ACC", "HRM"})
     public Response update(Employee employee) {
-        TransactionUtils.runInTransactionWithoutResult(entityManager -> {
-            dao.setEntityManager(entityManager);
+        TransactionUtils.runInTransactionWithoutResult(session -> {
+            dao.setSession(session);
             dao.update(employee);
         });
         return Response.ok().build();
@@ -69,8 +69,8 @@ public class EmployeeResource {
     @Path("/{id}")
     @RolesAllowed({"CEO", "HRM"})
     public Response delete(@PathParam("id") long id) {
-        TransactionUtils.runInTransactionWithoutResult(entityManager -> {
-            dao.setEntityManager(entityManager);
+        TransactionUtils.runInTransactionWithoutResult(session -> {
+            dao.setSession(session);
             dao.delete(id);
         });
         return Response.ok().build();

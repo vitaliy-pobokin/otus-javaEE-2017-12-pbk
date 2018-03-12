@@ -27,8 +27,8 @@ public class AccountResource {
     @GET
     @DenyAll
     public Response findAll() {
-        List<Account> accounts = TransactionUtils.runInTransaction(entityManager -> {
-            dao.setEntityManager(entityManager);
+        List<Account> accounts = TransactionUtils.runInTransaction(session -> {
+            dao.setSession(session);
             return dao.findAll();
         });
         return Response.ok(accounts).build();
@@ -38,8 +38,8 @@ public class AccountResource {
     @Path("/{id}")
     @DenyAll
     public Response findById(@PathParam("id") long id) {
-        Account account = TransactionUtils.runInTransaction(entityManager -> {
-            dao.setEntityManager(entityManager);
+        Account account = TransactionUtils.runInTransaction(session -> {
+            dao.setSession(session);
             return dao.findById(id);
         });
         return Response.ok(account).build();
@@ -48,8 +48,8 @@ public class AccountResource {
     @POST
     @DenyAll
     public Response create(Account account) throws URISyntaxException {
-        TransactionUtils.runInTransactionWithoutResult(entityManager -> {
-            dao.setEntityManager(entityManager);
+        TransactionUtils.runInTransactionWithoutResult(session -> {
+            dao.setSession(session);
             dao.create(account);
         });
         return Response.created(new URI("/api/account/" + account.getId())).build();
@@ -58,8 +58,8 @@ public class AccountResource {
     @PUT
     @DenyAll
     public Response update(Account account) {
-        TransactionUtils.runInTransactionWithoutResult(entityManager -> {
-            dao.setEntityManager(entityManager);
+        TransactionUtils.runInTransactionWithoutResult(session -> {
+            dao.setSession(session);
             dao.update(account);
         });
         return Response.ok().build();
@@ -69,8 +69,8 @@ public class AccountResource {
     @Path("/{id}")
     @DenyAll
     public Response delete(@PathParam("id") long id) {
-        TransactionUtils.runInTransactionWithoutResult(entityManager -> {
-            dao.setEntityManager(entityManager);
+        TransactionUtils.runInTransactionWithoutResult(session -> {
+            dao.setSession(session);
             dao.delete(id);
         });
         return Response.ok().build();
