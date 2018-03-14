@@ -48,6 +48,15 @@ public class XmlBean {
         }
     }
 
+    public static void marshall(Object source, File out) {
+        try {
+            JAXBContext context = JAXBContext.newInstance(source.getClass());
+            context.createMarshaller().marshal(source, out);
+        } catch (JAXBException e) {
+            e.printStackTrace();
+        }
+    }
+
     public static Document getDomRepresentation(InputStream source) {
         try {
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
