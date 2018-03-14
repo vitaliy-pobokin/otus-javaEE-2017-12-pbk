@@ -21,6 +21,8 @@ public class AppContextListener implements ServletContextListener {
 
     @Override
     public void contextDestroyed(ServletContextEvent event) {
+        ServletContext sc = event.getServletContext();
+        new DatabaseStateManager().saveDatabaseState(sc);
         SessionFactoryProvider.dispose();
     }
 }

@@ -1,14 +1,16 @@
 package org.examples.pbk.otus.javaee.hw6;
 
-import org.examples.pbk.otus.javaee.hw6.model.AccountWrapper;
-import org.examples.pbk.otus.javaee.hw6.model.DepartmentWrapper;
-import org.examples.pbk.otus.javaee.hw6.model.EmployeeWrapper;
+import org.examples.pbk.otus.javaee.hw6.model.*;
 import org.examples.pbk.otus.javaee.hw6.resources.TransactionUtils;
+import org.examples.pbk.otus.javaee.hw6.service.JpaAccountService;
+import org.examples.pbk.otus.javaee.hw6.service.JpaDepartmentService;
+import org.examples.pbk.otus.javaee.hw6.service.JpaEmployeeService;
 import org.examples.pbk.otus.javaee.hw6.xml.XmlBean;
 import org.hibernate.ReplicationMode;
 
 import javax.servlet.ServletContext;
 import java.io.File;
+import java.util.List;
 
 public class DatabaseStateManager {
 
@@ -20,6 +22,12 @@ public class DatabaseStateManager {
         loadAccountsXml(servletContext.getRealPath(ACCOUNTS_XML_PATH));
         loadDepartmentsXml(servletContext.getRealPath(DEPARTMENTS_XML_PATH));
         loadEmployeesXml(servletContext.getRealPath(EMPLOYEES_XML_PATH));
+    }
+
+    public void saveDatabaseState(ServletContext servletContext) {
+        saveAccountsToXml(servletContext.getRealPath(ACCOUNTS_XML_PATH));
+        saveDepartmentsToXml(servletContext.getRealPath(DEPARTMENTS_XML_PATH));
+        saveEmployeesToXml(servletContext.getRealPath(EMPLOYEES_XML_PATH));
     }
 
     private void loadAccountsXml(String xmlFilePath) {
@@ -41,5 +49,26 @@ public class DatabaseStateManager {
         TransactionUtils.runInTransactionWithoutResult(session -> {
             employees.getEmployees().forEach(employee -> session.replicate(employee, ReplicationMode.EXCEPTION));
         });
+    }
+
+    private void saveAccountsToXml(String xmlFilePath) {
+        List<Account> accounts = new JpaAccountService().findAll();
+        AccountWrapper wrapper = new AccountWrapper();
+        wrapper.setAccounts(accounts);
+        XmlBean.marshall(wrapper, new File(xmlFilePath));
+    }
+
+    private void saveDepartmentsToXml(String xmlFilePath) {
+        List<Department> departments = new JpaDepartmentService().findAll();
+        DepartmentWrapper wrapper = new DepartmentWrapper();
+        wrapper.setDepartments(departments);
+        XmlBean.marshall(wrapper, new File(xmlFilePath));
+    }
+
+    private void saveEmployeesToXml(String xmlFilePath) {
+        List<Employee> employees = new JpaEmployeeService().findAll();
+        EmployeeWrapper wrapper = new EmployeeWrapper();
+        wrapper.setEmployees(employees);
+        XmlBean.marshall(wrapper, new File(xmlFilePath));
     }
 }
