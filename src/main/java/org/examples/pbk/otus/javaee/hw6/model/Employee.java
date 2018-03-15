@@ -3,6 +3,7 @@ package org.examples.pbk.otus.javaee.hw6.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.examples.pbk.otus.javaee.hw6.xml.XmlDateAdapter;
 
 import javax.json.Json;
@@ -14,9 +15,9 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
-import java.sql.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Objects;
 
 @XmlRootElement
@@ -93,8 +94,7 @@ public class Employee {
 
     @XmlElement(name = "hiredate", required = true)
     @XmlJavaTypeAdapter(XmlDateAdapter.class)
-    @JsonbProperty("hiredate")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    @JsonProperty("hireDate")
     public Date getHireDate() {
         return hireDate;
     }

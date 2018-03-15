@@ -1,18 +1,18 @@
 package org.examples.pbk.otus.javaee.hw6.xml;
 
 import javax.xml.bind.annotation.adapters.XmlAdapter;
-import java.sql.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class XmlDateAdapter extends XmlAdapter<String, Date> {
 
-    private final DateFormat dateFormat = new SimpleDateFormat("dd-mm-yyyy");
+    private final DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
 
     @Override
     public Date unmarshal(String v) throws Exception {
         synchronized (dateFormat) {
-            return new Date(dateFormat.parse(v).getTime());
+            return dateFormat.parse(v);
         }
     }
 
