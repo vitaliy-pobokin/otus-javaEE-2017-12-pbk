@@ -1,0 +1,18 @@
+<div class="modal-header">
+    <button type="button" class="close" ng-click="ctrl.close()" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <h4 class="modal-title" id="exampleModalLabel">Login</h4>
+</div>
+<div class="modal-body">
+    <form>
+        <div class="form-group">
+            <label for="username" class="control-label">Username:</label>
+            <input type="text" class="form-control" id="username" ng-model="ctrl.credentials.username">
+            <label for="password" class="control-label">Password:</label>
+            <input type="password" class="form-control" id="password" ng-model="ctrl.credentials.password">
+        </div>
+    </form>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-default" ng-click="ctrl.close()">Cancel</button>
+    <button type="button" class="btn btn-primary" ng-click="ctrl.login(ctrl.credentials)">Login</button>
+</div>
