@@ -13,7 +13,7 @@
     <salary>24000</salary>
     <account id="1">
       <username>SKING</username>
-      <password>asdkfadjfbvsdhs</password>
+      <password>sking</password>
       <role>CEO</role>
     </account>
   </employee>
@@ -30,7 +30,7 @@
     <salary>17000</salary>
     <account id="2">
       <username>NKOCHHAR</username>
-      <password>jasdhljalsdkjfa</password>
+      <password>nkochhar</password>
       <role>ACM</role>
     </account>
   </employee>
@@ -47,7 +47,7 @@
     <salary>16000</salary>
     <account id="3">
       <username>LDEHAAN</username>
-      <password>jsdscdbfsdbcjdh</password>
+      <password>ldehaan</password>
       <role>HRM</role>
     </account>
   </employee>
@@ -64,7 +64,7 @@
     <salary>9000</salary>
     <account id="4">
       <username>AHUNOLD</username>
-      <password>skjdfhsdfhlsdhf</password>
+      <password>ahunold</password>
       <role>USR</role>
     </account>
   </employee>
@@ -81,7 +81,7 @@
     <salary>6000</salary>
     <account id="5">
       <username>BERNST</username>
-      <password>ajhsbcdasghdbca</password>
+      <password>bernst</password>
       <role>USR</role>
     </account>
   </employee>
@@ -98,7 +98,7 @@
     <salary>12000</salary>
     <account id="6">
       <username>DAUSTIN</username>
-      <password>asdkfhcnasdfhsk</password>
+      <password>daustin</password>
       <role>ACM</role>
     </account>
   </employee>
@@ -115,7 +115,7 @@
     <salary>4800</salary>
     <account id="7">
       <username>VPATABAL</username>
-      <password>sdnakcsjdlsmjkj</password>
+      <password>vpatabal</password>
       <role>USR</role>
     </account>
   </employee>
@@ -132,7 +132,7 @@
     <salary>4200</salary>
     <account id="8">
       <username>DLORENTZ</username>
-      <password>khjjkahsdfasasd</password>
+      <password>dlorentz</password>
       <role>USR</role>
     </account>
   </employee>
@@ -149,7 +149,7 @@
     <salary>2800</salary>
     <account id="9">
       <username>DFAVIET</username>
-      <password>asjdnmnlskans</password>
+      <password>dfaviet</password>
       <role>USR</role>
     </account>
   </employee>
@@ -166,7 +166,7 @@
     <salary>2700</salary>
     <account id="10">
       <username>ISCIARRA</username>
-      <password>ljsdfjlkabjba</password>
+      <password>isciarra</password>
       <role>USR</role>
     </account>
   </employee>
