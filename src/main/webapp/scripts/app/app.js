@@ -3,13 +3,13 @@
 var app = angular.module('hw4App', ['ui.router', 'ui.router.state.events', 'ngResource', 'ngStorage', 'ui.bootstrap']);
 
 app.constant('urls', {
-    BASE: 'http://localhost:3000/',
-    EMPLOYEE_SERVICE_API: 'http://localhost:3000/api/employee/',
-    DEPARTMENT_SERVICE_API: 'http://localhost:3000/api/department/',
-    ACCOUNT_SERVICE_API: 'http://localhost:3000/api/account/',
-    LOGIN_SERVICE: 'http://localhost:3000/api/login/',
-    NEWS_SERVICE_API: 'http://localhost:3000/api/news/',
-    CURRENCY_SERVICE_API: 'http://localhost:3000/api/currency/'});
+    BASE: 'http://localhost:3000' + contextPath,
+    EMPLOYEE_SERVICE_API: 'http://localhost:3000' + contextPath + '/api/employee/',
+    DEPARTMENT_SERVICE_API: 'http://localhost:3000' + contextPath + '/api/department/',
+    ACCOUNT_SERVICE_API: 'http://localhost:3000' + contextPath + '/api/account/',
+    LOGIN_SERVICE: 'http://localhost:3000' + contextPath + '/api/login/',
+    NEWS_SERVICE_API: 'http://localhost:3000' + contextPath + '/api/news/',
+    CURRENCY_SERVICE_API: 'http://localhost:3000' + contextPath + '/api/currency/'});
 
 app.constant('AUTH_EVENTS', {
     loginSuccess: 'auth-login-success',
