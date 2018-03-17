@@ -18,10 +18,10 @@
 </head>
 
 <body ng-controller="ApplicationController">
-<div ui-view="header"></div>
-<div ui-view="nav"></div>
+<%@include file="WEB-INF/views/header.jsp"%>
+<%@include file="WEB-INF/views/nav.jsp"%>
 <div ui-view="content"></div>
-<div ui-view="footer"></div>
+<%@include file="WEB-INF/views/footer.jsp"%>
 <script src="${ctx}/scripts/lib/angular.min.js"></script>
 <script src="${ctx}/scripts/lib/angular-ui-router.min.js"></script>
 <script src="${ctx}/scripts/lib/stateEvents.min.js"></script>

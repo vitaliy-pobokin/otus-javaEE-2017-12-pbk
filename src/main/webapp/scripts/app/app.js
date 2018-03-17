@@ -33,19 +33,10 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', 'USER_R
             .state('app', {
                 url:'/',
                 views: {
-                    'header': {
-                        templateUrl : 'views/header.html',
-                    },
-                    'nav': {
-                        templateUrl : 'views/nav.html',
-                    },
                     'content': {
                         templateUrl : 'views/home.html',
                         controller  : 'SideBarController',
                         controllerAs: 'ctrl',
-                    },
-                    'footer': {
-                        templateUrl : 'views/footer.html',
                     }
                 },
                 data: {
