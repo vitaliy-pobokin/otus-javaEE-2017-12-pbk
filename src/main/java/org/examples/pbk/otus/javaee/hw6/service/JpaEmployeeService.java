@@ -3,6 +3,7 @@ package org.examples.pbk.otus.javaee.hw6.service;
 import org.examples.pbk.otus.javaee.hw6.dao.JpaEmployeeDao;
 import org.examples.pbk.otus.javaee.hw6.model.Employee;
 import org.examples.pbk.otus.javaee.hw6.resources.TransactionUtils;
+import org.hibernate.criterion.DetachedCriteria;
 
 import java.util.List;
 
@@ -19,6 +20,14 @@ public class JpaEmployeeService implements EmployeeService {
         return TransactionUtils.runInTransaction(session -> {
             dao.setSession(session);
             return dao.findAll();
+        });
+    }
+
+    @Override
+    public List<Employee> findEmployees(DetachedCriteria dcr) {
+        return TransactionUtils.runInTransaction(session -> {
+            dao.setSession(session);
+            return dao.findEmployees(dcr);
         });
     }
 

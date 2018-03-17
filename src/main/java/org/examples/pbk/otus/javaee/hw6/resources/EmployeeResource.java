@@ -4,14 +4,20 @@ import org.examples.pbk.otus.javaee.hw6.dao.JpaEmployeeDao;
 import org.examples.pbk.otus.javaee.hw6.model.Employee;
 import org.examples.pbk.otus.javaee.hw6.service.EmployeeService;
 import org.examples.pbk.otus.javaee.hw6.service.JpaEmployeeService;
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.MatchMode;
+import org.hibernate.criterion.Restrictions;
 
 import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
 import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Collection;
 import java.util.List;
 
 @Path("employee")
@@ -30,6 +36,32 @@ public class EmployeeResource {
     @RolesAllowed({"CEO", "ACC", "HRM", "USR"})
     public Response findAll() {
         List<Employee> employees = service.findAll();
+        return Response.ok(employees).build();
+    }
+
+    @GET
+    @Path("/filter")
+    @RolesAllowed({"CEO", "ACC", "HRM", "USR"})
+    public Response filterEmployees(@QueryParam("name") String name,
+                                    @QueryParam("job") String job,
+                                    @QueryParam("city") String city,
+                                    @QueryParam("ageFrom") int ageFrom,
+                                    @QueryParam("ageTo") int ageTo,
+                                    @Context UriInfo uriInfo) {
+        DetachedCriteria criteria = DetachedCriteria.forClass(Employee.class);
+        if (name != null) {
+            criteria.add(Restrictions.like("name", name, MatchMode.ANYWHERE));
+        }
+        if (job != null) {
+            criteria.add(Restrictions.eq("job", job));
+        }
+        if (ageFrom != 0) {
+            criteria.add(Restrictions.gt("age", ageFrom));
+        }
+        if (ageTo != 0) {
+            criteria.add(Restrictions.lt("age", ageTo));
+        }
+        List<Employee> employees = service.findEmployees(criteria);
         return Response.ok(employees).build();
     }
 
