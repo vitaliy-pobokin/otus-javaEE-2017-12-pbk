@@ -1,7 +1,5 @@
 package org.examples.pbk.otus.javaee.hw6.model;
 
-
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.examples.pbk.otus.javaee.hw6.xml.XmlDateAdapter;
@@ -9,7 +7,6 @@ import org.examples.pbk.otus.javaee.hw6.xml.XmlDateAdapter;
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
-import javax.json.bind.annotation.JsonbProperty;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
@@ -32,6 +29,9 @@ public class Employee {
 
     @Column (name = "EmpName", nullable = false)
     private String name;
+
+    @Column (name = "EmpAge", nullable = false)
+    private int age;
 
     @Column (name = "EmpEmail")
     private String email;
@@ -72,6 +72,15 @@ public class Employee {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @XmlElement(name = "age", required = true)
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
     }
 
     @XmlElement(name = "email", required = false)
@@ -145,6 +154,7 @@ public class Employee {
         DateFormat dateFormat = new SimpleDateFormat("dd-mm-yyyy");
         builder.add("id", id)
                 .add("name", name)
+                .add("age", age)
                 .add("email", email)
                 .add("phone", phone)
                 .add("hiredate", dateFormat.format(hireDate))
@@ -159,6 +169,7 @@ public class Employee {
         return "Employee{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
+                ", age='" + age + '\'' +
                 ", email='" + email + '\'' +
                 ", phone='" + phone + '\'' +
                 ", hireDate=" + hireDate +
@@ -177,6 +188,7 @@ public class Employee {
         return salary == employee.salary &&
                 Objects.equals(id, employee.id) &&
                 Objects.equals(name, employee.name) &&
+                Objects.equals(age, employee.age) &&
                 Objects.equals(email, employee.email) &&
                 Objects.equals(phone, employee.phone) &&
                 Objects.equals(hireDate, employee.hireDate) &&
@@ -188,6 +200,6 @@ public class Employee {
     @Override
     public int hashCode() {
 
-        return Objects.hash(id, name, email, phone, hireDate, department, job, salary, account);
+        return Objects.hash(id, name, age, email, phone, hireDate, department, job, salary, account);
     }
 }

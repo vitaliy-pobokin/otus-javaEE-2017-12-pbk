@@ -20,6 +20,10 @@
                             <span ng-show="ctrl.sortType == 'name' && !ctrl.sortReverse" class="fa fa-chevron-down"></span>
                             <span ng-show="ctrl.sortType == 'name' && ctrl.sortReverse" class="fa fa-chevron-up"></span></a>
                         </th>
+                        <th><a href="#" ng-click="ctrl.sortType = 'age'; ctrl.sortReverse = !ctrl.sortReverse">AGE
+                            <span ng-show="ctrl.sortType == 'age' && !ctrl.sortReverse" class="fa fa-chevron-down"></span>
+                            <span ng-show="ctrl.sortType == 'age' && ctrl.sortReverse" class="fa fa-chevron-up"></span></a>
+                        </th>
                         <th><a href="#" ng-click="ctrl.sortType = 'email'; ctrl.sortReverse = !ctrl.sortReverse">EMAIL
                             <span ng-show="ctrl.sortType == 'email' && !ctrl.sortReverse" class="fa fa-chevron-down"></span>
                             <span ng-show="ctrl.sortType == 'email' && ctrl.sortReverse" class="fa fa-chevron-up"></span></a>
@@ -52,6 +56,7 @@
                     <tr ng-repeat="e in ctrl.getAllEmployees() | orderBy:ctrl.sortType:ctrl.sortReverse | filter:ctrl.search">
                         <td>{{e.id}}</td>
                         <td>{{e.name}}</td>
+                        <td>{{e.age}}</td>
                         <td>{{e.email}}</td>
                         <td>{{e.phone}}</td>
                         <td>{{e.hireDate}}</td>

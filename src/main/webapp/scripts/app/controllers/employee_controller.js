@@ -113,6 +113,7 @@ function AddEmployeeModalController($uibModalInstance, departments, EmployeeServ
     var self = this;
     self.employee = {
         name: '',
+        age: '',
         email: '',
         phone: '',
         hireDate: '',
