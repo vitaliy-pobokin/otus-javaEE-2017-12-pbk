@@ -2,6 +2,8 @@ package org.examples.pbk.otus.javaee.hw6.resources;
 
 import org.examples.pbk.otus.javaee.hw6.dao.JpaAccountDao;
 import org.examples.pbk.otus.javaee.hw6.model.Account;
+import org.examples.pbk.otus.javaee.hw6.service.AccountService;
+import org.examples.pbk.otus.javaee.hw6.service.JpaAccountService;
 
 import javax.annotation.security.DenyAll;
 import javax.inject.Inject;
@@ -17,20 +19,17 @@ import java.util.List;
 @Consumes(MediaType.APPLICATION_JSON)
 public class AccountResource {
 
-    private JpaAccountDao dao;
+    private AccountService service;
 
     @Inject
-    public AccountResource(JpaAccountDao accountDao) {
-        this.dao = accountDao;
+    public AccountResource(JpaAccountService service) {
+        this.service = service;
     }
 
     @GET
     @DenyAll
     public Response findAll() {
-        List<Account> accounts = TransactionUtils.runInTransaction(session -> {
-            dao.setSession(session);
-            return dao.findAll();
-        });
+        List<Account> accounts = service.findAll();
         return Response.ok(accounts).build();
     }
 
@@ -38,30 +37,21 @@ public class AccountResource {
     @Path("/{id}")
     @DenyAll
     public Response findById(@PathParam("id") long id) {
-        Account account = TransactionUtils.runInTransaction(session -> {
-            dao.setSession(session);
-            return dao.findById(id);
-        });
+        Account account = service.findById(id);
         return Response.ok(account).build();
     }
 
     @POST
     @DenyAll
     public Response create(Account account) throws URISyntaxException {
-        TransactionUtils.runInTransactionWithoutResult(session -> {
-            dao.setSession(session);
-            dao.create(account);
-        });
+        service.create(account);
         return Response.created(new URI("/api/account/" + account.getId())).build();
     }
 
     @PUT
     @DenyAll
     public Response update(Account account) {
-        TransactionUtils.runInTransactionWithoutResult(session -> {
-            dao.setSession(session);
-            dao.update(account);
-        });
+        service.update(account);
         return Response.ok().build();
     }
 
@@ -69,10 +59,7 @@ public class AccountResource {
     @Path("/{id}")
     @DenyAll
     public Response delete(@PathParam("id") long id) {
-        TransactionUtils.runInTransactionWithoutResult(session -> {
-            dao.setSession(session);
-            dao.delete(id);
-        });
+        service.delete(id);
         return Response.ok().build();
     }
 }

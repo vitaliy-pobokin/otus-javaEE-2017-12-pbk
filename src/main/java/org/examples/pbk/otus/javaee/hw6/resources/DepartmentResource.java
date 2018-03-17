@@ -2,6 +2,8 @@ package org.examples.pbk.otus.javaee.hw6.resources;
 
 import org.examples.pbk.otus.javaee.hw6.dao.JpaDepartmentDao;
 import org.examples.pbk.otus.javaee.hw6.model.Department;
+import org.examples.pbk.otus.javaee.hw6.service.DepartmentService;
+import org.examples.pbk.otus.javaee.hw6.service.JpaDepartmentService;
 
 import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
@@ -17,20 +19,17 @@ import java.util.List;
 @Consumes(MediaType.APPLICATION_JSON)
 public class DepartmentResource {
 
-    private JpaDepartmentDao dao;
+    private DepartmentService service;
 
     @Inject
-    public DepartmentResource(JpaDepartmentDao departmentDao) {
-        this.dao = departmentDao;
+    public DepartmentResource(JpaDepartmentService service) {
+        this.service = service;
     }
 
     @GET
     @RolesAllowed({"CEO", "ACC", "HRM", "USR"})
     public Response findAll() {
-        List<Department> departments = TransactionUtils.runInTransaction(session -> {
-            dao.setSession(session);
-            return dao.findAll();
-        });
+        List<Department> departments = service.findAll();
         return Response.ok(departments).build();
     }
 
@@ -38,30 +37,21 @@ public class DepartmentResource {
     @Path("/{id}")
     @RolesAllowed({"CEO", "ACC", "HRM", "USR"})
     public Response findById(@PathParam("id") long id) {
-        Department department = TransactionUtils.runInTransaction(session -> {
-            dao.setSession(session);
-            return dao.findById(id);
-        });
+        Department department = service.findById(id);
         return Response.ok(department).build();
     }
 
     @POST
     @RolesAllowed({"CEO"})
     public Response create(Department department) throws URISyntaxException {
-        TransactionUtils.runInTransactionWithoutResult(session -> {
-            dao.setSession(session);
-            dao.create(department);
-        });
+        service.create(department);
         return Response.created(new URI("/api/account/" + department.getId())).build();
     }
 
     @PUT
     @RolesAllowed({"CEO"})
     public Response update(Department department) {
-        TransactionUtils.runInTransactionWithoutResult(session -> {
-            dao.setSession(session);
-            dao.update(department);
-        });
+        service.update(department);
         return Response.ok().build();
     }
 
@@ -69,10 +59,7 @@ public class DepartmentResource {
     @Path("/{id}")
     @RolesAllowed({"CEO"})
     public Response delete(@PathParam("id") long id) {
-        TransactionUtils.runInTransactionWithoutResult(session -> {
-            dao.setSession(session);
-            dao.delete(id);
-        });
+        service.delete(id);
         return Response.ok().build();
     }
 }
