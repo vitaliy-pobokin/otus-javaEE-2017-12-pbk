@@ -1,7 +1,9 @@
 package org.examples.pbk.otus.javaee.hw6.dao;
 
 import org.examples.pbk.otus.javaee.hw6.model.Employee;
+import org.hibernate.Criteria;
 import org.hibernate.Session;
+import org.hibernate.criterion.DetachedCriteria;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.persistence.EntityManager;
@@ -19,6 +21,11 @@ public class JpaEmployeeDao implements EmployeeDao {
         CriteriaQuery<Employee> criteria = builder.createQuery(Employee.class);
         criteria.from(Employee.class);
         return session.createQuery(criteria).getResultList();
+    }
+
+    @Override
+    public List<Employee> findEmployees(DetachedCriteria dcr) {
+        return dcr.getExecutableCriteria(getSession()).list();
     }
 
     @Override

@@ -9,6 +9,23 @@
                     </div>
                 </div>
             </form>
+            <form class="form-inline" name="filter_form">
+                <div class="form-group form-group-sm">
+                    <label for="employee-name" class="control-label">Name:</label>
+                    <input type="text" class="form-control" id="employee-name" ng-model="filter.name">
+                    <label for="employee-age-from" class="control-label">Age:</label>
+                    <input type="number" class="form-control" id="employee-age-from" ng-model="filter.ageFrom">
+                    -
+                    <input type="number" class="form-control" id="employee-age-to" ng-model="filter.ageTo">
+                    <label for="employee-job" class="control-label">Job:</label>
+                    <input type="text" class="form-control" id="employee-job" ng-model="filter.job">
+                    <label for="employee-city" class="control-label">City:</label>
+                    <input type="text" class="form-control" id="employee-city" ng-model="filter.city">
+                </div>
+
+                <button type="button" class="btn btn-sm btn-default" ng-click="ctrl.filterEmployees(filter)">Filter</button>
+                <button type="button" class="btn btn-sm btn-default" ng-click="ctrl.resetFilter()">Reset</button>
+            </form>
             <div class="table-responsive">
                 <table class="table table-hover">
                     <thead>

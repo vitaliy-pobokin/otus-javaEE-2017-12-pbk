@@ -12,8 +12,17 @@ angular.module('hw4App')
         self.sortType = 'id';
         self.sortReverse = false;
         self.search = '';
+        $scope.filter = {
+            name:'',
+            ageFrom: 0,
+            ageTo: 0,
+            job:'',
+            city:''
+        };
 
         self.getAllEmployees = getAllEmployees;
+        self.filterEmployees = filterEmployees;
+        self.resetFilter = resetFilter;
         self.editModal = editModal;
         self.deleteModal = deleteModal;
         self.addModal = addModal;
@@ -21,6 +30,39 @@ angular.module('hw4App')
         self.successMessage = '';
         self.errorMessage = '';
         self.done = false;
+
+        function filterEmployees(filter) {
+            var queryString = '';
+            if (filter.name !== '') {
+                queryString = queryString + 'name=' + filter.name;
+            }
+            if (filter.ageFrom > 0) {
+                queryString !== '' ? queryString = queryString + '&ageFrom=' + filter.ageFrom : queryString = queryString + 'ageFrom=' + filter.ageFrom;
+            }
+            if (filter.ageTo > 0) {
+                queryString !== '' ? queryString = queryString + '&ageTo=' + filter.ageTo : queryString = queryString + 'ageTo=' + filter.ageTo;
+            }
+            if (filter.job !== '') {
+                queryString !== '' ? queryString = queryString + '&job=' + filter.job : queryString = queryString + 'job=' + filter.job;
+            }
+            if (filter.city !== '') {
+                queryString !== '' ? queryString = queryString + '&city=' + filter.city : queryString = queryString + 'city=' + filter.city;
+            }
+            return EmployeeService.filterEmployees(queryString);
+        }
+
+        function resetFilter() {
+            var filter = {
+                name:'',
+                ageFrom: 0,
+                ageTo: 0,
+                job:'',
+                city:''
+            };
+            $scope.filter = angular.copy(filter);
+            $scope.filter_form.$setPristine();
+            EmployeeService.loadAllEmployees();
+        }
 
         function editModal(employee) {
             $uibModal.open({
