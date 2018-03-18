@@ -15,7 +15,8 @@ angular.module('hw4App')
         self.filter = {
             name:'',
             ageFrom: 0,
-            ageTo: 0
+            ageTo: 0,
+            job:''
         };
 
         self.getAllEmployees = getAllEmployees;
@@ -39,6 +40,9 @@ angular.module('hw4App')
             }
             if (filter.ageTo > 0) {
                 queryString !== '' ? queryString = queryString + '&ageTo=' + filter.ageTo : queryString = queryString + 'ageTo=' + filter.ageTo;
+            }
+            if (filter.job !== '') {
+                queryString !== '' ? queryString = queryString + '&job=' + filter.job : queryString = queryString + 'job=' + filter.job;
             }
             return EmployeeService.filterEmployees(queryString);
         }
