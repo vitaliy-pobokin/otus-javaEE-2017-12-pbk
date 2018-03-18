@@ -12,7 +12,7 @@ angular.module('hw4App')
         self.sortType = 'id';
         self.sortReverse = false;
         self.search = '';
-        self.filter = {
+        $scope.filter = {
             name:'',
             ageFrom: 0,
             ageTo: 0,
@@ -52,6 +52,15 @@ angular.module('hw4App')
         }
 
         function resetFilter() {
+            var filter = {
+                name:'',
+                ageFrom: 0,
+                ageTo: 0,
+                job:'',
+                city:''
+            };
+            $scope.filter = angular.copy(filter);
+            $scope.filter_form.$setPristine();
             EmployeeService.loadAllEmployees();
         }
 
