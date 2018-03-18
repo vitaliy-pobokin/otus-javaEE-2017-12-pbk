@@ -16,7 +16,8 @@ angular.module('hw4App')
             name:'',
             ageFrom: 0,
             ageTo: 0,
-            job:''
+            job:'',
+            city:''
         };
 
         self.getAllEmployees = getAllEmployees;
@@ -43,6 +44,9 @@ angular.module('hw4App')
             }
             if (filter.job !== '') {
                 queryString !== '' ? queryString = queryString + '&job=' + filter.job : queryString = queryString + 'job=' + filter.job;
+            }
+            if (filter.city !== '') {
+                queryString !== '' ? queryString = queryString + '&city=' + filter.city : queryString = queryString + 'city=' + filter.city;
             }
             return EmployeeService.filterEmployees(queryString);
         }

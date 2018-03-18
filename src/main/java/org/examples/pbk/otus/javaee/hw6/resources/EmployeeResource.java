@@ -55,6 +55,10 @@ public class EmployeeResource {
         if (job != null) {
             criteria.add(Restrictions.eq("job", job));
         }
+        if (city != null) {
+            criteria.createCriteria("department")
+                    .add(Restrictions.eq("city", city));
+        }
         if (ageFrom != 0) {
             criteria.add(Restrictions.gt("age", ageFrom));
         }
