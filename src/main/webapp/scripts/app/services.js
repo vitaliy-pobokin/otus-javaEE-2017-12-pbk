@@ -7,6 +7,7 @@ angular.module('hw4App')
             var factory = {
                 loadAllEmployees: loadAllEmployees,
                 getAllEmployees: getAllEmployees,
+                filterEmployees: filterEmployees,
                 getEmployee: getEmployee,
                 createEmployee: createEmployee,
                 updateEmployee: updateEmployee,
@@ -36,6 +37,25 @@ angular.module('hw4App')
  
             function getAllEmployees(){
                 return $localStorage.employees;
+            }
+
+            function filterEmployees(queryString) {
+                console.log('Filtering Employees');
+                var deferred = $q.defer();
+                $http.get(urls.EMPLOYEE_SERVICE_API + 'filter?' + queryString)
+                    .then(
+                        function (response) {
+                            console.log('Employees filtered successfully');
+                            console.log(response.data);//-------------------------
+                            $localStorage.employees = response.data;
+                            deferred.resolve(response);
+                        },
+                        function (errResponse) {
+                            console.error('Error while filtering Employees');
+                            deferred.reject(errResponse);
+                        }
+                    );
+                return deferred.promise;
             }
  
             function getEmployee(id) {
