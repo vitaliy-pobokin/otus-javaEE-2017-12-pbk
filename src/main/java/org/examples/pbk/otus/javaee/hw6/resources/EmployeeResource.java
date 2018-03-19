@@ -93,6 +93,7 @@ public class EmployeeResource {
     @RolesAllowed({"CEO", "HRM"})
     public Response create(Employee employee) throws URISyntaxException {
         service.create(employee);
+        filterCache.clear();
         return Response.created(new URI("/api/account/" + employee.getId())).build();
     }
 
@@ -100,6 +101,7 @@ public class EmployeeResource {
     @RolesAllowed({"CEO", "ACC", "HRM"})
     public Response update(Employee employee) {
         service.update(employee);
+        filterCache.clear();
         return Response.ok().build();
     }
 
@@ -108,6 +110,7 @@ public class EmployeeResource {
     @RolesAllowed({"CEO", "HRM"})
     public Response delete(@PathParam("id") long id) {
         service.delete(id);
+        filterCache.clear();
         return Response.ok().build();
     }
 }
