@@ -1,0 +1,92 @@
+<div style="width: 1170px; display:flex; flex-wrap: wrap; margin-left: auto; margin-right: auto;">
+    <div style="width: 100%; max-width: 100%;" >
+        <div class="frame" style="padding: 20px">
+            <form>
+                <div class="form-group">
+                    <div class="input-group">
+                        <div class="input-group-addon"><i class="fa fa-search"></i></div>
+                        <input type="text" class="form-control" placeholder="Search ..." ng-model="ctrl.search">
+                    </div>
+                </div>
+            </form>
+            <form class="form-inline" name="filter_form">
+                <div class="form-group form-group-sm">
+                    <label for="employee-name" class="control-label">Name:</label>
+                    <input type="text" class="form-control" id="employee-name" ng-model="filter.name">
+                    <label for="employee-age-from" class="control-label">Age:</label>
+                    <input type="number" class="form-control" id="employee-age-from" ng-model="filter.ageFrom">
+                    -
+                    <input type="number" class="form-control" id="employee-age-to" ng-model="filter.ageTo">
+                    <label for="employee-job" class="control-label">Job:</label>
+                    <input type="text" class="form-control" id="employee-job" ng-model="filter.job">
+                    <label for="employee-city" class="control-label">City:</label>
+                    <input type="text" class="form-control" id="employee-city" ng-model="filter.city">
+                </div>
+
+                <button type="button" class="btn btn-sm btn-default" ng-click="ctrl.filterEmployees(filter)">Filter</button>
+                <button type="button" class="btn btn-sm btn-default" ng-click="ctrl.resetFilter()">Reset</button>
+            </form>
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th><a href="#" ng-click="ctrl.sortType = 'id'; ctrl.sortReverse = !ctrl.sortReverse">ID
+                            <span ng-show="ctrl.sortType == 'id' && !ctrl.sortReverse" class="fa fa-chevron-down"></span>
+                            <span ng-show="ctrl.sortType == 'id' && ctrl.sortReverse" class="fa fa-chevron-up"></span></a></th>
+                        <th><a href="#" ng-click="ctrl.sortType = 'name'; ctrl.sortReverse = !ctrl.sortReverse">NAME
+                            <span ng-show="ctrl.sortType == 'name' && !ctrl.sortReverse" class="fa fa-chevron-down"></span>
+                            <span ng-show="ctrl.sortType == 'name' && ctrl.sortReverse" class="fa fa-chevron-up"></span></a>
+                        </th>
+                        <th><a href="#" ng-click="ctrl.sortType = 'age'; ctrl.sortReverse = !ctrl.sortReverse">AGE
+                            <span ng-show="ctrl.sortType == 'age' && !ctrl.sortReverse" class="fa fa-chevron-down"></span>
+                            <span ng-show="ctrl.sortType == 'age' && ctrl.sortReverse" class="fa fa-chevron-up"></span></a>
+                        </th>
+                        <th><a href="#" ng-click="ctrl.sortType = 'email'; ctrl.sortReverse = !ctrl.sortReverse">EMAIL
+                            <span ng-show="ctrl.sortType == 'email' && !ctrl.sortReverse" class="fa fa-chevron-down"></span>
+                            <span ng-show="ctrl.sortType == 'email' && ctrl.sortReverse" class="fa fa-chevron-up"></span></a>
+                        </th>
+                        <th><a href="#" ng-click="ctrl.sortType = 'phone'; ctrl.sortReverse = !ctrl.sortReverse">PHONE
+                            <span ng-show="ctrl.sortType == 'phone' && !ctrl.sortReverse" class="fa fa-chevron-down"></span>
+                            <span ng-show="ctrl.sortType == 'phone' && ctrl.sortReverse" class="fa fa-chevron-up"></span></a>
+                        </th>
+                        <th><a href="#" ng-click="ctrl.sortType = 'hireDate'; ctrl.sortReverse = !ctrl.sortReverse">HIREDATE
+                            <span ng-show="ctrl.sortType == 'hireDate' && !ctrl.sortReverse" class="fa fa-chevron-down"></span>
+                            <span ng-show="ctrl.sortType == 'hireDate' && ctrl.sortReverse" class="fa fa-chevron-up"></span></a>
+                        </th>
+                        <th><a href="#" ng-click="ctrl.sortType = 'job'; ctrl.sortReverse = !ctrl.sortReverse">JOB
+                            <span ng-show="ctrl.sortType == 'job' && !ctrl.sortReverse" class="fa fa-chevron-down"></span>
+                            <span ng-show="ctrl.sortType == 'job' && ctrl.sortReverse" class="fa fa-chevron-up"></span></a>
+                        </th>
+                        <th><a href="#" ng-click="ctrl.sortType = 'salary'; ctrl.sortReverse = !ctrl.sortReverse">SALARY
+                            <span ng-show="ctrl.sortType == 'salary' && !ctrl.sortReverse" class="fa fa-chevron-down"></span>
+                            <span ng-show="ctrl.sortType == 'salary' && ctrl.sortReverse" class="fa fa-chevron-up"></span></a>
+                        </th>
+                        <!--<th></th>-->
+                        <th><a href="#" ng-click="ctrl.sortType = 'department'; ctrl.sortReverse = !ctrl.sortReverse">DEPARTMENT
+                            <span ng-show="ctrl.sortType == 'department' && !ctrl.sortReverse" class="fa fa-chevron-down"></span>
+                            <span ng-show="ctrl.sortType == 'department' && ctrl.sortReverse" class="fa fa-chevron-up"></span></a>
+                        </th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="e in ctrl.getAllEmployees() | orderBy:ctrl.sortType:ctrl.sortReverse | filter:ctrl.search">
+                        <td>{{e.id}}</td>
+                        <td>{{e.name}}</td>
+                        <td>{{e.age}}</td>
+                        <td>{{e.email}}</td>
+                        <td>{{e.phone}}</td>
+                        <td>{{e.hireDate}}</td>
+                        <td>{{e.job}}</td>
+                        <td>{{e.salary}}</td>
+                        <td>{{e.department.name}}</td>
+                        <td><button type="button" ng-click="ctrl.editModal(e)" class="btn btn-default"><i class="fa fa-pencil-square-o"></i></button>
+                            <button type="button" ng-click="ctrl.deleteModal(e)" class="btn btn-danger"><i class="fa fa-trash-o"></i></button></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <button type="button" ng-click="ctrl.addModal()" class="btn btn-default">Add Employee</button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <xs:element name="department" type="department"/>
+
+  <xs:element name="departments" type="xmlDepartmentWrapper"/>
+
+  <xs:complexType name="xmlDepartmentWrapper">
+    <xs:sequence>
+      <xs:element ref="department" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="department">
+    <xs:all>
+      <xs:element name="city" type="xs:string"/>
+      <xs:element name="name" type="xs:string"/>
+    </xs:all>
+    <xs:attribute name="id" type="xs:long" use="required"/>
+  </xs:complexType>
+</xs:schema>
+
