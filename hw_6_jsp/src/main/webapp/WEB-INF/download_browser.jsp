@@ -13,10 +13,9 @@
 </head>
 <body>
     <%@include file="views/header.jsp"%>
-    <%@include file="views/nav.jsp"%>
     <div style="width: 1170px; display:flex; flex-wrap: wrap; justify-content: space-between; margin-left: auto; margin-right: auto;">
         <div style="width: 100%; max-width: 100%;" >
-            <div class="frame" style="padding: 20px">
+            <div class="frame" style="padding: 20px; margin: 10 0 5 0;">
               <h3>It seems you are using an outdated browser. You can download latest version by the following links.</h3>
             </div>
         </div>
