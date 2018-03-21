@@ -66,8 +66,8 @@ angular.module('hw4App')
 
         function editModal(employee) {
             $uibModal.open({
-                templateUrl: 'views/modal/employee_update_modal.html',
-                windowTemplateUrl: 'views/modal/modal_window.html',
+                templateUrl: 'static/views/modal/employee_update_modal.html',
+                windowTemplateUrl: 'static/views/modal/modal_window.html',
                 controller: ['$uibModalInstance', 'employee', 'departments', 'EmployeeService', EditEmployeeModalController],
                 controllerAs: 'ctrl',
                 resolve: {
@@ -86,8 +86,8 @@ angular.module('hw4App')
 
         function deleteModal(employee) {
             $uibModal.open({
-                templateUrl: 'views/modal/employee_delete_modal.html',
-                windowTemplateUrl: 'views/modal/modal_window.html',
+                templateUrl: 'static/views/modal/employee_delete_modal.html',
+                windowTemplateUrl: 'static/views/modal/modal_window.html',
                 controller: ['$uibModalInstance', 'employee', 'EmployeeService', DeleteEmployeeModalController],
                 controllerAs: 'ctrl',
                 resolve: {
@@ -100,8 +100,8 @@ angular.module('hw4App')
 
         function addModal() {
             $uibModal.open({
-                templateUrl: 'views/modal/employee_create_modal.html',
-                windowTemplateUrl: 'views/modal/modal_window.html',
+                templateUrl: 'static/views/modal/employee_create_modal.html',
+                windowTemplateUrl: 'static/views/modal/modal_window.html',
                 controller: ['$uibModalInstance', 'departments', 'EmployeeService', AddEmployeeModalController],
                 controllerAs: 'ctrl',
                 resolve: {

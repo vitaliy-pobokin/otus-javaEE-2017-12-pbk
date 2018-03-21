@@ -34,7 +34,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', 'USER_R
                 url:'/',
                 views: {
                     'content': {
-                        templateUrl : 'views/home.html',
+                        templateUrl : 'static/views/home.html',
                         controller  : 'SideBarController',
                         controllerAs: 'ctrl',
                     }
@@ -48,7 +48,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', 'USER_R
                 url:'login',
                 views: {
                     'content@': {
-                        templateUrl : 'views/login.html',
+                        templateUrl : 'static/views/login.html',
                     }
                 },
                 data: {
@@ -60,7 +60,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', 'USER_R
                 url:'news',
                 views: {
                     'content@': {
-                        templateUrl : 'views/news.html',
+                        templateUrl : 'static/views/news.html',
                         controller  : 'SideBarController',
                         controllerAs: 'ctrl',
                     }
@@ -74,7 +74,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', 'USER_R
                 url:'our_employees',
                 views: {
                     'content@': {
-                        templateUrl : 'views/our_employees.html',
+                        templateUrl : 'static/views/our_employees.html',
                         controller  : 'SideBarController',
                         controllerAs: 'ctrl',
                     }
@@ -88,7 +88,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', 'USER_R
                 url:'about',
                 views: {
                     'content@': {
-                        templateUrl : 'views/about.html',
+                        templateUrl : 'static/views/about.html',
                         controller  : 'SideBarController',
                         controllerAs: 'ctrl',
                     }
@@ -102,7 +102,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', 'USER_R
                 url:'scripts',
                 views: {
                     'content@': {
-                        templateUrl : 'views/scripts.html',
+                        templateUrl : 'static/views/scripts.html',
                     }
                 },
                 data: {
@@ -115,7 +115,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', 'USER_R
                 url: 'employees',
                 views: {
                     'content@': {
-                        templateUrl : 'views/employees.html',
+                        templateUrl : 'static/views/employees.html',
                         controller  : 'EmployeeController',
                         controllerAs: 'ctrl',
                     }
@@ -130,7 +130,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', 'USER_R
                 url: 'departments',
                 views: {
                     'content@': {
-                        templateUrl : 'views/departments.html',
+                        templateUrl : 'static/views/departments.html',
                         controller  : 'DepartmentController',
                         controllerAs: 'ctrl',
                     }

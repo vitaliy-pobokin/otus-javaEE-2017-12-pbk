@@ -6,9 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Download Browser</title>
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
-    <link href="${ctx}/styles/bootstrap.min.css" rel="stylesheet">
-    <link href="${ctx}/styles/font-awesome.min.css" rel="stylesheet">
-    <link href="${ctx}/styles/styles.css" rel="stylesheet">
+    <link href="${ctx}/static/styles/bootstrap.min.css" rel="stylesheet">
+    <link href="${ctx}/static/styles/font-awesome.min.css" rel="stylesheet">
+    <link href="${ctx}/static/styles/styles.css" rel="stylesheet">
     <base href="${ctx}/">
 </head>
 <body>
@@ -22,22 +22,22 @@
         </div>
         <div class="image">
           <a href="https://www.google.com/chrome/">
-            <img src="${ctx}/images/chrome_download.jpg">
+            <img src="${ctx}/static/images/chrome_download.jpg">
           </a>
         </div>
         <div class="image">
           <a href="https://www.mozilla.org/en-US/firefox/">
-            <img src="${ctx}/images/firefox_download.jpg">
+            <img src="${ctx}/static/images/firefox_download.jpg">
           </a>
         </div>
         <div class="image">
           <a href="https://www.opera.com/ru">
-            <img src="${ctx}/images/opera_download.png">
+            <img src="${ctx}/static/images/opera_download.png">
           </a>
         </div>
         <div class="image">
           <a href="https://support.microsoft.com/en-us/help/17621/internet-explorer-downloads">
-            <img src="${ctx}/images/ie_download.png">
+            <img src="${ctx}/static/images/ie_download.png">
           </a>
         </div>
     </div>

@@ -25,8 +25,8 @@ angular.module('hw4App')
 
         function warningModal(message) {
             $uibModal.open({
-                templateUrl: 'views/modal/warning_modal.html',
-                windowTemplateUrl: 'views/modal/modal_window.html',
+                templateUrl: 'static/views/modal/warning_modal.html',
+                windowTemplateUrl: 'static/views/modal/modal_window.html',
                 controller: ['$uibModalInstance', 'message', WarningModalController],
                 controllerAs: 'ctrl',
                 resolve: {
@@ -39,8 +39,8 @@ angular.module('hw4App')
 
         function loginModal() {
             $uibModal.open({
-                templateUrl: 'views/modal/login_modal.html',
-                windowTemplateUrl: 'views/modal/modal_window.html',
+                templateUrl: 'static/views/modal/login_modal.html',
+                windowTemplateUrl: 'static/views/modal/modal_window.html',
                 controller: ['$uibModalInstance', '$rootScope', 'AuthService', 'AUTH_EVENTS', LoginModalController],
                 controllerAs: 'ctrl'
             });

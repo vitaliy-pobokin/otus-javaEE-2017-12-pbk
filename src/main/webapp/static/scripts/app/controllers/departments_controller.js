@@ -21,8 +21,8 @@ angular.module('hw4App')
 
         function editModal(department) {
             $uibModal.open({
-                templateUrl: 'views/modal/department_update_modal.html',
-                windowTemplateUrl: 'views/modal/modal_window.html',
+                templateUrl: 'static/views/modal/department_update_modal.html',
+                windowTemplateUrl: 'static/views/modal/modal_window.html',
                 controller: ['$uibModalInstance', 'department', 'DepartmentService', EditDepartmentModalController],
                 controllerAs: 'ctrl',
                 resolve: {
@@ -35,8 +35,8 @@ angular.module('hw4App')
 
         function deleteModal(department) {
             $uibModal.open({
-                templateUrl: 'views/modal/department_delete_modal.html',
-                windowTemplateUrl: 'views/modal/modal_window.html',
+                templateUrl: 'static/views/modal/department_delete_modal.html',
+                windowTemplateUrl: 'static/views/modal/modal_window.html',
                 controller: ['$uibModalInstance', 'department', 'DepartmentService', DeleteDepartmentModalController],
                 controllerAs: 'ctrl',
                 resolve: {
@@ -49,8 +49,8 @@ angular.module('hw4App')
 
         function addModal() {
             $uibModal.open({
-                templateUrl: 'views/modal/department_create_modal.html',
-                windowTemplateUrl: 'views/modal/modal_window.html',
+                templateUrl: 'static/views/modal/department_create_modal.html',
+                windowTemplateUrl: 'static/views/modal/modal_window.html',
                 controller: ['$uibModalInstance', 'DepartmentService', AddDepartmentModalController],
                 controllerAs: 'ctrl'
             });
