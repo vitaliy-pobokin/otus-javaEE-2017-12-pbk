@@ -1,0 +1,31 @@
+.messages {
+    position: relative;
+    height: 500px;
+    width: 600px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+.chat {
+    
+}
+.chat-message {
+    padding-top: 5px;
+    padding-bottom: 5px;
+    width: max-content;
+    max-width: 500px;
+}
+.message-text {
+    max-width: 450px;
+    word-wrap: break-word;
+}
+mat-card {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+mat-card-title {
+    color: #666666;
+    margin-bottom: 5px;
+}
+mat-form-field {
+    width: 500px;
+}

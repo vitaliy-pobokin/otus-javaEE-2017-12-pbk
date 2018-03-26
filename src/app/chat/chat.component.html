@@ -1,9 +1,23 @@
-<div *ngFor="let message of messages">
-  {{message.body}}
+<div class="messages">
+  <div class="chat">
+    <div *ngFor="let message of messages">
+        <div class="chat-message">
+          <mat-card>
+            <mat-card-title>User:</mat-card-title>
+            <mat-card-content>
+              <p class="message-text">
+                  {{message.body}}
+              </p>
+            </mat-card-content>
+          </mat-card>
+        </div>
+      </div>
+  </div>
 </div>
-<div>
-  <label>message:
-      <input #message />
-  </label>
-</div>
-<button (click)="sendMessage(message.value); message.value=''">send</button>
+
+<form>
+  <mat-form-field>
+    <textarea matInput placeholder="Type something" #message></textarea>
+  </mat-form-field>
+  <button mat-raised-button (click)="sendMessage(message.value); message.value=''">send</button>
+</form>
