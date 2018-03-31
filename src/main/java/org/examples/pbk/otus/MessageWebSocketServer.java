@@ -29,7 +29,8 @@ public class MessageWebSocketServer {
     }
 
     @OnError
-    public void onError(Throwable error) {
+    public void onError(Session session, Throwable error) {
+        sessionHandler.removeSession(session);
     }
 
     @OnMessage
