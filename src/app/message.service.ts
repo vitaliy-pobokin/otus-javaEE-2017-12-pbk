@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
+import { Message } from './message';
+
 @Injectable()
 export class MessageService {
   private ws: WebSocket;

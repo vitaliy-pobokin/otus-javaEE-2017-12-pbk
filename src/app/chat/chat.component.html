@@ -1,23 +1,33 @@
-<div class="messages">
-  <div class="chat">
-    <div *ngFor="let message of messages">
-        <div class="chat-message">
-          <mat-card>
-            <mat-card-title>User:</mat-card-title>
-            <mat-card-content>
-              <p class="message-text">
-                  {{message.body}}
-              </p>
-            </mat-card-content>
-          </mat-card>
+<form *ngIf="user === ''">
+  <mat-form-field>
+    <input matInput placeholder="Introduce yourself" #username>
+  </mat-form-field>
+  <button mat-raised-button (click)="joinChat(username.value)">join</button>
+</form>
+
+<div *ngIf="user !==''">
+  <div class="messages">
+    <div class="chat">
+      <div *ngFor="let message of messages">
+          <div class="chat-message">
+            <mat-card>
+              <mat-card-title *ngIf="message.from">User: {{message.from}}</mat-card-title>
+              <mat-card-content>
+                <p class="message-text">
+                    {{message.text}}
+                </p>
+              </mat-card-content>
+            </mat-card>
+          </div>
         </div>
-      </div>
+    </div>
   </div>
+  
+  <form>
+    <mat-form-field>
+      <textarea matInput placeholder="Type something" #message></textarea>
+    </mat-form-field>
+    <button mat-raised-button (click)="sendChatMessage(message.value); message.value=''">send</button>
+  </form>
 </div>
 
-<form>
-  <mat-form-field>
-    <textarea matInput placeholder="Type something" #message></textarea>
-  </mat-form-field>
-  <button mat-raised-button (click)="sendMessage(message.value); message.value=''">send</button>
-</form>
