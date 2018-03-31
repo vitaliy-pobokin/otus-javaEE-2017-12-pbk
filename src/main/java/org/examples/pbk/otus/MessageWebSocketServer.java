@@ -1,13 +1,22 @@
 package org.examples.pbk.otus;
 
+import org.examples.pbk.otus.decoders.MessageDecoder;
+import org.examples.pbk.otus.encoders.ChatMessageEncoder;
+import org.examples.pbk.otus.encoders.JoinMessageEncoder;
+import org.examples.pbk.otus.messages.ChatMessage;
+import org.examples.pbk.otus.messages.InfoMessage;
+import org.examples.pbk.otus.messages.JoinMessage;
+import org.examples.pbk.otus.messages.Message;
+
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.websocket.*;
 import javax.websocket.server.ServerEndpoint;
-import java.io.IOException;
 
 @ApplicationScoped
-@ServerEndpoint("/messages")
+@ServerEndpoint(value = "/messages",
+        encoders = {JoinMessageEncoder.class, ChatMessageEncoder.class},
+        decoders = MessageDecoder.class)
 public class MessageWebSocketServer {
 
     @Inject
@@ -15,12 +24,7 @@ public class MessageWebSocketServer {
 
     @OnOpen
     public void open(Session session) {
-        sessionHandler.addSession(session);
-        try {
-            session.getBasicRemote().sendText("Connected");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        // Log connected.
     }
 
     @OnClose
@@ -34,7 +38,20 @@ public class MessageWebSocketServer {
     }
 
     @OnMessage
-    public void handleMessage(String message, Session session) {
-        sessionHandler.sendToAllConnectedSessions(message);
+    public void handleMessage(Message message, Session session) {
+        if (message instanceof JoinMessage) {
+            JoinMessage msg = (JoinMessage) message;
+            session.getUserProperties().put("user", msg.getUser());
+            sessionHandler.addSession(session);
+            sessionHandler.sendToAllConnectedSessions(new InfoMessage(msg.getUser() + "has joined the chat!"));
+        } else if (message instanceof ChatMessage) {
+            String user = (String) session.getUserProperties().get("user");
+            ChatMessage msg = (ChatMessage) message;
+            if (user == null || !user.equals(msg.getFrom())) {
+                // Log unknown user
+            } else {
+                sessionHandler.sendToAllConnectedSessions(msg);
+            }
+        }
     }
 }
