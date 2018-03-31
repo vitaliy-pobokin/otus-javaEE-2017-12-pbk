@@ -13,13 +13,17 @@ import java.io.StringReader;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Logger;
 
 public class MessageDecoder implements Decoder.Text<Message> {
+
+    private Logger logger = Logger.getLogger("MessageDecoder");
 
     private Map<String, String> messageMap;
 
     @Override
     public Message decode(String s) throws DecodeException {
+        logger.info("Decoding message: " + s);
         Message message = null;
         if (willDecode(s)) {
             switch (messageMap.get("type")) {
@@ -35,6 +39,7 @@ public class MessageDecoder implements Decoder.Text<Message> {
                     break;
             }
         } else {
+            logger.info("Unknown message type: " + s);
             throw new DecodeException(s, "Cannot be decoded.");
         }
         return message;
