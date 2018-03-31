@@ -6,21 +6,27 @@
 </form>
 
 <div *ngIf="user !==''">
+  <div class="users">
+    <h4>Connected users:</h4>
+    <ul>
+      <li *ngFor="let u of users">
+        {{u}}
+      </li>
+    </ul>
+  </div>
   <div class="messages">
-    <div class="chat">
-      <div *ngFor="let message of messages">
-          <div class="chat-message">
-            <mat-card>
-              <mat-card-title *ngIf="message.from">User: {{message.from}}</mat-card-title>
-              <mat-card-content>
-                <p class="message-text">
-                    {{message.text}}
-                </p>
-              </mat-card-content>
-            </mat-card>
-          </div>
+    <div *ngFor="let message of messages">
+        <div class="chat-message">
+          <mat-card>
+            <mat-card-title *ngIf="message.from">User: {{message.from}}</mat-card-title>
+            <mat-card-content>
+              <p class="message-text">
+                  {{message.text}}
+              </p>
+            </mat-card-content>
+          </mat-card>
         </div>
-    </div>
+      </div>
   </div>
   
   <form>

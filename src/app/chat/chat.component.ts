@@ -13,6 +13,7 @@ export class ChatComponent implements OnInit {
 
   private ws: WebSocket;
   user: string = "";
+  users: string[];
   messages: Message[] = [];
 
   constructor(private messageService: MessageService) { }
@@ -24,6 +25,8 @@ export class ChatComponent implements OnInit {
         let message = JSON.parse(str);
         if (message.type === "chat" || message.type === "info") {
           this.messages.push(message);
+        } else if (message.type === "users") {
+          this.users = message.users;
         }
       });
   }
