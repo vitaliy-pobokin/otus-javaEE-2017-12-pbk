@@ -8,8 +8,18 @@ import javax.websocket.EncodeException;
 import javax.websocket.Encoder;
 import javax.websocket.EndpointConfig;
 import java.io.StringWriter;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
+import java.util.Locale;
 
 public class ChatMessageEncoder implements Encoder.Text<ChatMessage> {
+
+    private static final DateTimeFormatter FORMATTER =
+            DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT)
+                    .withLocale(Locale.US)
+                    .withZone(ZoneId.systemDefault());
+
     @Override
     public String encode(ChatMessage chatMessage) throws EncodeException {
         StringWriter stringWriter = new StringWriter();
@@ -19,6 +29,7 @@ public class ChatMessageEncoder implements Encoder.Text<ChatMessage> {
                     .write("from", chatMessage.getFrom())
                     .write("to", chatMessage.getTo())
                     .write("text", chatMessage.getText())
+                    .write("date", FORMATTER.format(chatMessage.getDate()))
                 .writeEnd();
         }
         return stringWriter.toString();
