@@ -1,39 +1,54 @@
-<form *ngIf="user === ''">
-  <mat-form-field>
-    <input matInput placeholder="Introduce yourself" #username>
-  </mat-form-field>
-  <button mat-raised-button (click)="joinChat(username.value)">join</button>
-</form>
-
-<div *ngIf="user !==''">
-  <div class="users">
-    <h4>Connected users:</h4>
-    <ul>
-      <li *ngFor="let u of users">
-        {{u}}
-      </li>
-    </ul>
-  </div>
-  <div class="messages">
-    <div *ngFor="let message of messages">
-        <div class="chat-message">
-          <mat-card>
-            <mat-card-title *ngIf="message.from">User: {{message.from}}</mat-card-title>
-            <mat-card-content>
-              <p class="message-text">
-                  {{message.text}}
-              </p>
-            </mat-card-content>
-          </mat-card>
-        </div>
-      </div>
+<div class="body">
+  <div class="form-wrapper" *ngIf="user === ''">
+    <div class="introduceForm">
+      <h2>Welcome to the chat!</h2>
+      <form>
+        <mat-form-field>
+          <input matInput placeholder="Introduce yourself" #username>
+        </mat-form-field>
+        <button mat-raised-button (click)="joinChat(username.value)">join</button>
+      </form>
+    </div>
   </div>
   
-  <form>
-    <mat-form-field>
-      <textarea matInput placeholder="Type something" #message></textarea>
-    </mat-form-field>
-    <button mat-raised-button (click)="sendChatMessage(message.value); message.value=''">send</button>
-  </form>
+  <div class="chat" *ngIf="user !==''">
+    <div class="user-box">
+      <div class="user-box-header">
+        <h4>Connected users:</h4>
+      </div>
+      <div class="users scrollbar">
+        <ul>
+          <li *ngFor="let u of users">
+            <div>{{u}}</div>
+          </li>
+        </ul>
+      </div>
+    </div>
+    
+    <div class="chat-box">
+      <div class="chat-box-header">
+        <h4>Chat</h4>
+      </div>
+      <div class="messages scrollbar">
+        <div *ngFor="let message of messages">
+          <div class="chat-message">
+            <mat-card>
+              <mat-card-title *ngIf="message.from">{{message.from}}</mat-card-title>
+              <mat-card-content>
+                <p class="message-text">
+                    {{message.text}}
+                </p>
+              </mat-card-content>
+            </mat-card>
+          </div>
+        </div>
+      </div>
+      <form class="message-form">
+        <mat-form-field>
+          <textarea matInput placeholder="Type something" #message></textarea>
+        </mat-form-field>
+        <button mat-raised-button (click)="sendChatMessage(message.value); message.value=''">send</button>
+      </form>
+    </div>
+  </div>
 </div>
-
