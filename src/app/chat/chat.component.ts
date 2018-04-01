@@ -19,7 +19,7 @@ export class ChatComponent implements OnInit {
   constructor(private messageService: MessageService) { }
 
   ngOnInit() {
-    this.messageService.createObservableSocket("ws://localhost:3000/hw8-websockets/messages")
+    this.messageService.createObservableSocket("ws://localhost:3000/messages")
       .subscribe(str => {
         console.log('Message received: ' + str);
         let message = JSON.parse(str);
