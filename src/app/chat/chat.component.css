@@ -72,6 +72,15 @@
 .message-text {
     max-width: 450px;
     word-wrap: break-word;
+    margin-bottom: 0.5em;
+}
+.message-date {
+    font-size: 0.7em;
+    color: #999;
+    padding: 0.5em;
+    position: absolute;
+    right: 0;
+    bottom: 0;
 }
 .message-form {
     position: relative;

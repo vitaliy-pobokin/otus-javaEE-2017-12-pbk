@@ -5,4 +5,5 @@ export class ChatMessage extends Message {
     from: string;
     to: string;
     text: string;
+    date: Date;
 }

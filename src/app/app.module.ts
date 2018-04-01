@@ -5,12 +5,15 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
+import { registerLocaleData } from '@angular/common';
+import localeRu from '@angular/common/locales/ru';
 
 
 import { AppComponent } from './app.component';
 import { ChatComponent } from './chat/chat.component';
 import { MessageService } from './message.service';
 
+registerLocaleData(localeRu, 'ru');
 
 @NgModule({
   declarations: [

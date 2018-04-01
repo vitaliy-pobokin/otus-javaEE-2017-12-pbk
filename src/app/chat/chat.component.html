@@ -38,6 +38,7 @@
                 <p class="message-text">
                     {{message.text}}
                 </p>
+                <div class="message-date" *ngIf="message.date">{{message.date | date:'shortTime':'':'ru'}}</div>
               </mat-card-content>
             </mat-card>
           </div>
