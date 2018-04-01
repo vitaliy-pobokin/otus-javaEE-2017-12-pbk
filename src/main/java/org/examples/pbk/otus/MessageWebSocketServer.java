@@ -4,10 +4,8 @@ import org.examples.pbk.otus.decoders.MessageDecoder;
 import org.examples.pbk.otus.encoders.ChatMessageEncoder;
 import org.examples.pbk.otus.encoders.InfoMessageEncoder;
 import org.examples.pbk.otus.encoders.JoinMessageEncoder;
-import org.examples.pbk.otus.messages.ChatMessage;
-import org.examples.pbk.otus.messages.InfoMessage;
-import org.examples.pbk.otus.messages.JoinMessage;
-import org.examples.pbk.otus.messages.Message;
+import org.examples.pbk.otus.encoders.UsersMessageEncoder;
+import org.examples.pbk.otus.messages.*;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -17,7 +15,7 @@ import java.util.logging.Logger;
 
 @ApplicationScoped
 @ServerEndpoint(value = "/messages",
-        encoders = {JoinMessageEncoder.class, InfoMessageEncoder.class, ChatMessageEncoder.class},
+        encoders = {JoinMessageEncoder.class, InfoMessageEncoder.class, ChatMessageEncoder.class, UsersMessageEncoder.class},
         decoders = MessageDecoder.class)
 public class MessageWebSocketServer {
 
@@ -28,18 +26,22 @@ public class MessageWebSocketServer {
 
     @OnOpen
     public void open(Session session) {
-        // Log connected.
         logger.info("Connected " + session.getBasicRemote());
     }
 
     @OnClose
     public void close(Session session) {
         sessionHandler.removeSession(session);
+        String user = (String) session.getUserProperties().get("user");
+        if (user != null) {
+            sessionHandler.sendToAllConnectedSessions(new InfoMessage(user + " has left the chat!"));
+            sessionHandler.sendToAllConnectedSessions(new UsersMessage(sessionHandler.getAllConnectedUsers()));
+        }
     }
 
     @OnError
     public void onError(Session session, Throwable error) {
-        sessionHandler.removeSession(session);
+        logger.info("Error: " + error.toString());
     }
 
     @OnMessage
@@ -50,6 +52,7 @@ public class MessageWebSocketServer {
             session.getUserProperties().put("user", msg.getUser());
             sessionHandler.addSession(session);
             sessionHandler.sendToAllConnectedSessions(new InfoMessage(msg.getUser() + " has joined the chat!"));
+            sessionHandler.sendToAllConnectedSessions(new UsersMessage(sessionHandler.getAllConnectedUsers()));
         } else if (message instanceof ChatMessage) {
             String user = (String) session.getUserProperties().get("user");
             ChatMessage msg = (ChatMessage) message;

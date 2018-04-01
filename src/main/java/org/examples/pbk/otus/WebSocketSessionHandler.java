@@ -6,6 +6,8 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.websocket.EncodeException;
 import javax.websocket.Session;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
 
@@ -37,5 +39,13 @@ public class WebSocketSessionHandler {
                 e.printStackTrace();
             }
         });
+    }
+
+    public List<String> getAllConnectedUsers() {
+        List<String> users = new ArrayList<>();
+        for (Session session : sessions) {
+            users.add((String) session.getUserProperties().get("user"));
+        }
+        return users;
     }
 }
