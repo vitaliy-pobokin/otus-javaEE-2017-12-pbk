@@ -4,26 +4,36 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 @Entity
-@Table(name = "STORE_USER")
-public class User {
+@Table(name = "STORE_CUSTOMER")
+public class Customer {
     @Id
-    private long id;
+    private long userId;
     private String username;
     private String password;
     private String address;
-    @OneToMany
+    @OneToMany(mappedBy = "customer")
     private List<Order> orders;
 
-    public long getId() {
-        return id;
+    public Customer() {
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public Customer(String username, String password, String address) {
+        this.username = username;
+        this.password = password;
+        this.address = address;
+    }
+
+    public long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(long id) {
+        this.userId = id;
     }
 
     public String getUsername() {
@@ -58,27 +68,34 @@ public class User {
         this.orders = orders;
     }
 
+    public void addOrder(Order order) {
+        if (orders == null) {
+            orders = new ArrayList<>();
+        }
+        orders.add(order);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        User user = (User) o;
-        return id == user.id &&
-                Objects.equals(username, user.username) &&
-                Objects.equals(password, user.password) &&
-                Objects.equals(address, user.address) &&
-                Objects.equals(orders, user.orders);
+        Customer customer = (Customer) o;
+        return userId == customer.userId &&
+                Objects.equals(username, customer.username) &&
+                Objects.equals(password, customer.password) &&
+                Objects.equals(address, customer.address) &&
+                Objects.equals(orders, customer.orders);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, username, password, address, orders);
+        return Objects.hash(userId, username, password, address, orders);
     }
 
     @Override
     public String toString() {
-        return "User{" +
-                "id=" + id +
+        return "Customer{" +
+                "id=" + userId +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", address='" + address + '\'' +

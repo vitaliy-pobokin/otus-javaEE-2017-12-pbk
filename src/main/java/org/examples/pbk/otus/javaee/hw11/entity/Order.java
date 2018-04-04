@@ -9,43 +9,60 @@ import java.util.Objects;
 @Table(name = "STORE_ORDER")
 public class Order {
     @Id
-    private long id;
+    private long orderId;
     @ManyToOne
-    private User user;
-    @ManyToMany
-    private List<Item> items;
+    private Customer customer;
+    @OneToMany(mappedBy = "order")
+    private List<OrderPosition> positions;
     private BigDecimal total;
 
-    public long getId() {
-        return id;
+    public Order() {
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public Order(Customer customer, List<OrderPosition> positions) {
+        this.customer = customer;
+        this.positions = positions;
+        this.total = countTotal(positions);
     }
 
-    public User getUser() {
-        return user;
+    public long getOrderId() {
+        return orderId;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setOrderId(long id) {
+        this.orderId = id;
     }
 
-    public List<Item> getItems() {
-        return items;
+    public Customer getCustomer() {
+        return customer;
     }
 
-    public void setItems(List<Item> items) {
-        this.items = items;
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
+
+    public List<OrderPosition> getPositions() {
+        return positions;
+    }
+
+    public void setPositions(List<OrderPosition> items) {
+        this.positions = items;
     }
 
     public BigDecimal getTotal() {
         return total;
     }
 
-    public void setTotal(BigDecimal total) {
-        this.total = total;
+    private BigDecimal countTotal(List<OrderPosition> positions) {
+        BigDecimal total = BigDecimal.ZERO;
+        if (positions != null && positions.size() != 0) {
+            for (OrderPosition position : positions) {
+                BigDecimal itemPrice = position.getItem().getPrice();
+                int itemQuantity = position.getQuantity();
+                total.add(itemPrice.multiply(new BigDecimal(itemQuantity)));
+            }
+        }
+        return total;
     }
 
     @Override
@@ -53,24 +70,23 @@ public class Order {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Order order = (Order) o;
-        return id == order.id &&
-                Objects.equals(user, order.user) &&
-                Objects.equals(items, order.items) &&
+        return Objects.equals(orderId, order.orderId) &&
+                Objects.equals(customer, order.customer) &&
+                Objects.equals(positions, order.positions) &&
                 Objects.equals(total, order.total);
     }
 
     @Override
     public int hashCode() {
-
-        return Objects.hash(id, user, items, total);
+        return Objects.hash(orderId, customer, positions, total);
     }
 
     @Override
     public String toString() {
         return "Order{" +
-                "id=" + id +
-                ", user=" + user +
-                ", items=" + items +
+                "id=" + orderId +
+                ", customer=" + customer +
+                ", items=" + positions +
                 ", total=" + total +
                 '}';
     }

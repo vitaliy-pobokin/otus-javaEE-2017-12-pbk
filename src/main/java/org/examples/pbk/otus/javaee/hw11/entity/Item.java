@@ -2,26 +2,40 @@ package org.examples.pbk.otus.javaee.hw11.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import java.math.BigDecimal;
 import java.util.Objects;
 
 @Entity
 @Table(name = "STORE_ITEM")
+@NamedQuery(
+        name = "selectAllItems",
+        query = "SELECT i FROM Item i ORDER BY itemId")
 public class Item {
     @Id
-    private long id;
+    private long itemId;
     private String name;
     private BigDecimal price;
     private String description;
     private int stock;
 
-    public long getId() {
-        return id;
+    public Item() {
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public Item(String name, BigDecimal price, String description, int stock) {
+        this.name = name;
+        this.price = price;
+        this.description = description;
+        this.stock = stock;
+    }
+
+    public long getItemId() {
+        return itemId;
+    }
+
+    public void setItemId(long id) {
+        this.itemId = id;
     }
 
     public String getName() {
@@ -61,7 +75,7 @@ public class Item {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Item item = (Item) o;
-        return id == item.id &&
+        return itemId == item.itemId &&
                 stock == item.stock &&
                 Objects.equals(name, item.name) &&
                 Objects.equals(price, item.price) &&
@@ -70,13 +84,13 @@ public class Item {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, price, description, stock);
+        return Objects.hash(itemId, name, price, description, stock);
     }
 
     @Override
     public String toString() {
         return "Item{" +
-                "id=" + id +
+                "id=" + itemId +
                 ", name='" + name + '\'' +
                 ", price=" + price +
                 ", description='" + description + '\'' +
