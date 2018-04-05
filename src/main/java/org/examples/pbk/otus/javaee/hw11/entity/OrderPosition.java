@@ -7,6 +7,7 @@ import java.util.Objects;
 @Table(name = "STORE_ORDER_POSITION")
 public class OrderPosition {
     @Id
+    @GeneratedValue(strategy = GenerationType.TABLE)
     private long orderPositionId;
     @ManyToOne
     private Order order;

@@ -1,9 +1,6 @@
 package org.examples.pbk.otus.javaee.hw11.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Objects;
 
@@ -14,6 +11,7 @@ import java.util.Objects;
         query = "SELECT i FROM Item i ORDER BY itemId")
 public class Item {
     @Id
+    @GeneratedValue(strategy = GenerationType.TABLE)
     private long itemId;
     private String name;
     private BigDecimal price;

@@ -9,6 +9,7 @@ import java.util.Objects;
 @Table(name = "STORE_ORDER")
 public class Order {
     @Id
+    @GeneratedValue(strategy = GenerationType.TABLE)
     private long orderId;
     @ManyToOne
     private Customer customer;
