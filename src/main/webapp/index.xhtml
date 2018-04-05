@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:b="http://bootsfaces.net/ui">
+<h:head></h:head>
+<b:container fluid="true">
+    <b:navBar brand="My Store" brandHref="#" inverse="true">
+        <b:navbarLinks>
+            <b:navLink value="Home" href="#"></b:navLink>
+            <!-- Following line is needed for TBS 3.0.1 (panel content overflow issue) -->
+            <b:navbarLinks pull="right"><b:navLink value="    " href="#"></b:navLink></b:navbarLinks>
+            <b:navbarLinks pull="right" styleClass="hidden-xs">
+                <b:navLink href="#">
+                    <b:iconAwesome name="shopping-cart"/>
+                    <b:badge value="#{cart.totalItems}"/>
+                </b:navLink>
+                <b:navLink value="Login" href="#"></b:navLink>
+            </b:navbarLinks>
+        </b:navbarLinks>
+    </b:navBar>
+    <h:form>
+        <b:dataTable value="#{shop.allItems}" var="item">
+            <b:dataTableColumn value="#{item.name}"/>
+            <b:dataTableColumn value="#{item.description}"/>
+            <b:dataTableColumn value="#{item.price}"/>
+            <b:dataTableColumn value="#{item.stock}"/>
+            <b:dataTableColumn>
+                <b:commandButton iconAwesome="shopping-cart"
+                    actionListener="#{cart.add(item.itemId, item)}"/>
+            </b:dataTableColumn>
+        </b:dataTable>
+    </h:form>
+</b:container>
+
+</html>
