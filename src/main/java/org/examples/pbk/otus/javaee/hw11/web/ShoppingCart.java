@@ -8,6 +8,7 @@ import org.examples.pbk.otus.javaee.hw11.exception.JpaBeanException;
 
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -25,8 +26,9 @@ public class ShoppingCart implements Serializable {
 
     @EJB
     private OrderJpaBean orderBean;
-    @EJB
-    private CustomerJpaBean customerBean;
+
+    @Inject
+    private Login loginBean;
 
     public ShoppingCart() {
         this.cart = new HashMap<>();
@@ -87,12 +89,15 @@ public class ShoppingCart implements Serializable {
 
     public String buy() {
         try {
-            Customer customer = customerBean.findById(3);
             List<ShoppingCartItem> items = getCartItems();
             if (items != null && items.size() > 0) {
-                orderBean.createOrder(customer, this);
-                clear();
-                return "index.xhtml";
+                if (loginBean.isCustomerAuthenticated()) {
+                    orderBean.createOrder(loginBean.getAuthenticatedCustomer(), this);
+                    clear();
+                    return "index.xhtml";
+                } else {
+                    return "login.xhtml";
+                }
             }
         } catch (JpaBeanException e) {
         }
