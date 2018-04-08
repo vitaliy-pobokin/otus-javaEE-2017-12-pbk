@@ -1,7 +1,7 @@
 package org.examples.pbk.otus.javaee.hw11.entity;
 
 import javax.persistence.*;
-import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -15,15 +15,23 @@ public class Order {
     private Customer customer;
     @OneToMany(mappedBy = "order")
     private List<OrderPosition> positions;
-    private BigDecimal total;
 
     public Order() {
+        positions = new ArrayList<>();
+    }
+
+    public Order(Customer customer) {
+        this();
+        this.customer = customer;
     }
 
     public Order(Customer customer, List<OrderPosition> positions) {
         this.customer = customer;
         this.positions = positions;
-        this.total = countTotal(positions);
+    }
+
+    public void addOrderPosition(OrderPosition orderPosition) {
+        positions.add(orderPosition);
     }
 
     public long getOrderId() {
@@ -50,45 +58,27 @@ public class Order {
         this.positions = items;
     }
 
-    public BigDecimal getTotal() {
-        return total;
-    }
-
-    private BigDecimal countTotal(List<OrderPosition> positions) {
-        BigDecimal total = BigDecimal.ZERO;
-        if (positions != null && positions.size() != 0) {
-            for (OrderPosition position : positions) {
-                BigDecimal itemPrice = position.getItem().getPrice();
-                int itemQuantity = position.getQuantity();
-                total.add(itemPrice.multiply(new BigDecimal(itemQuantity)));
-            }
-        }
-        return total;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Order order = (Order) o;
-        return Objects.equals(orderId, order.orderId) &&
+        return orderId == order.orderId &&
                 Objects.equals(customer, order.customer) &&
-                Objects.equals(positions, order.positions) &&
-                Objects.equals(total, order.total);
+                Objects.equals(positions, order.positions);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(orderId, customer, positions, total);
+        return Objects.hash(orderId, customer, positions);
     }
 
     @Override
     public String toString() {
         return "Order{" +
-                "id=" + orderId +
+                "orderId=" + orderId +
                 ", customer=" + customer +
-                ", items=" + positions +
-                ", total=" + total +
+                ", positions=" + positions +
                 '}';
     }
 }

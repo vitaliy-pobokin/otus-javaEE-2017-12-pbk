@@ -10,6 +10,7 @@ public class OrderPosition {
     @GeneratedValue(strategy = GenerationType.TABLE)
     private long orderPositionId;
     @ManyToOne
+    @JoinColumn(name = "ORDERID", nullable = false)
     private Order order;
     @ManyToOne
     private Item item;
@@ -29,6 +30,14 @@ public class OrderPosition {
 
     public void setOrderPositionId(long orderPositionId) {
         this.orderPositionId = orderPositionId;
+    }
+
+    public Order getOrder() {
+        return order;
+    }
+
+    public void setOrder(Order order) {
+        this.order = order;
     }
 
     public Item getItem() {
