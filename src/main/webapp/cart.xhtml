@@ -14,7 +14,7 @@
             <!-- Following line is needed for TBS 3.0.1 (panel content overflow issue) -->
             <b:navbarLinks pull="right"><b:navLink value="    " href="#"></b:navLink></b:navbarLinks>
             <b:navbarLinks pull="right" styleClass="hidden-xs">
-                <b:navLink href="/cart.xhtml">
+                <b:navLink href="#">
                     <b:iconAwesome name="shopping-cart"/>
                     <b:badge value="#{cart.totalItems}"/>
                 </b:navLink>
@@ -22,17 +22,27 @@
             </b:navbarLinks>
         </b:navbarLinks>
     </b:navBar>
+    <table>
+        <tr>
+            <th>Item</th>
+            <th>Price</th>
+            <th>Quantity</th>
+        </tr>
+        <ui:repeat value="#{cart.cartItems}" var="cartItem">
+            <tr>
+                <td>#{cartItem.item.name}</td>
+                <td>#{cartItem.item.price}</td>
+                <td>#{cartItem.itemQuantity}</td>
+            </tr>
+        </ui:repeat>
+    </table>
+    <h:outputText value="Total items: "/>
+    <h:outputText value="#{cart.totalItems}"/>
+    <h:outputText value="Total: "/>
+    <h:outputText value="#{cart.total}"/>
     <h:form>
-        <b:dataTable value="#{shop.allItems}" var="item">
-            <b:dataTableColumn value="#{item.name}"/>
-            <b:dataTableColumn value="#{item.description}"/>
-            <b:dataTableColumn value="#{item.price}"/>
-            <b:dataTableColumn value="#{item.stock}"/>
-            <b:dataTableColumn>
-                <b:commandButton iconAwesome="shopping-cart"
-                    actionListener="#{cart.add(item.itemId, item)}"/>
-            </b:dataTableColumn>
-        </b:dataTable>
+        <h:commandButton value="buy"
+                         action="#{cart.buy()}"/>
     </h:form>
 </b:container>
 

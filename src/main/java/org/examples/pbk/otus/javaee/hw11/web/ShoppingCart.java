@@ -1,11 +1,19 @@
 package org.examples.pbk.otus.javaee.hw11.web;
 
+import org.examples.pbk.otus.javaee.hw11.ejb.CustomerJpaBean;
+import org.examples.pbk.otus.javaee.hw11.ejb.OrderJpaBean;
+import org.examples.pbk.otus.javaee.hw11.entity.Customer;
 import org.examples.pbk.otus.javaee.hw11.entity.Item;
+import org.examples.pbk.otus.javaee.hw11.exception.JpaBeanException;
 
+import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Named("cart")
@@ -14,6 +22,11 @@ public class ShoppingCart implements Serializable {
 
     private Map<Long, ShoppingCartItem> cart;
     private int totalItems = 0;
+
+    @EJB
+    private OrderJpaBean orderBean;
+    @EJB
+    private CustomerJpaBean customerBean;
 
     public ShoppingCart() {
         this.cart = new HashMap<>();
@@ -44,7 +57,45 @@ public class ShoppingCart implements Serializable {
         }
     }
 
+    public List<ShoppingCartItem> getCartItems() {
+        List<ShoppingCartItem> items = new ArrayList<>();
+        items.addAll(cart.values());
+        return items;
+    }
+
     public int getTotalItems() {
         return totalItems;
+    }
+
+    public BigDecimal getTotal() {
+        BigDecimal total = new BigDecimal(0);
+        List<ShoppingCartItem> items = getCartItems();
+        if (items != null && items.size() > 0) {
+            for (ShoppingCartItem item : items) {
+                BigDecimal itemPrice = item.getItem().getPrice();
+                int itemQuantity = item.getItemQuantity();
+                total = total.add(itemPrice.multiply(new BigDecimal(itemQuantity)));
+            }
+        }
+        return total;
+    }
+
+    public void clear() {
+        this.cart = new HashMap<>();
+        this.totalItems = 0;
+    }
+
+    public String buy() {
+        try {
+            Customer customer = customerBean.findById(3);
+            List<ShoppingCartItem> items = getCartItems();
+            if (items != null && items.size() > 0) {
+                orderBean.createOrder(customer, this);
+                clear();
+                return "index.xhtml";
+            }
+        } catch (JpaBeanException e) {
+        }
+        return "error.xhtml";
     }
 }
