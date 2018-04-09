@@ -30,6 +30,9 @@ public class ShoppingCart implements Serializable {
     @Inject
     private Login loginBean;
 
+    @Inject
+    private Error errorBeam;
+
     public ShoppingCart() {
         this.cart = new HashMap<>();
     }
@@ -100,6 +103,7 @@ public class ShoppingCart implements Serializable {
                 }
             }
         } catch (JpaBeanException e) {
+            errorBeam.setMessage(e.getMessage());
         }
         return "error.xhtml";
     }

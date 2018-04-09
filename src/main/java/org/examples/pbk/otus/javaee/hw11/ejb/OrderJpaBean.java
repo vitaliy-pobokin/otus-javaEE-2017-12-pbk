@@ -45,7 +45,7 @@ public class OrderJpaBean {
                 em.persist(orderPosition);
             }
         } catch (Exception e) {
-            throw new JpaBeanException("Error creating order: " + order.getOrderId());
+            throw new JpaBeanException("Error creating order: " + order.getOrderId() + ". " + e.getMessage());
         }
         logger.log(Level.INFO, "Order {0} persisted", order.getOrderId());
     }
