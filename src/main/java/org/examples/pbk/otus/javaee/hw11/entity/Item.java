@@ -15,7 +15,9 @@ public class Item {
     private long itemId;
     private String name;
     private BigDecimal price;
+    @Column(length = 2048)
     private String description;
+    private String imageLink;
     private int stock;
 
     public Item() {
@@ -60,6 +62,14 @@ public class Item {
         this.description = description;
     }
 
+    public String getImageLink() {
+        return imageLink;
+    }
+
+    public void setImageLink(String imageLink) {
+        this.imageLink = imageLink;
+    }
+
     public int getStock() {
         return stock;
     }
@@ -77,21 +87,23 @@ public class Item {
                 stock == item.stock &&
                 Objects.equals(name, item.name) &&
                 Objects.equals(price, item.price) &&
-                Objects.equals(description, item.description);
+                Objects.equals(description, item.description) &&
+                Objects.equals(imageLink, item.imageLink);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(itemId, name, price, description, stock);
+        return Objects.hash(itemId, name, price, description, imageLink, stock);
     }
 
     @Override
     public String toString() {
         return "Item{" +
-                "id=" + itemId +
+                "itemId=" + itemId +
                 ", name='" + name + '\'' +
                 ", price=" + price +
                 ", description='" + description + '\'' +
+                ", imageLink='" + imageLink + '\'' +
                 ", stock=" + stock +
                 '}';
     }

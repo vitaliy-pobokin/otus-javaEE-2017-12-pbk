@@ -1,5 +1,6 @@
 package org.examples.pbk.otus.javaee.hw11.startup;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.examples.pbk.otus.javaee.hw11.ejb.CustomerJpaBean;
 import org.examples.pbk.otus.javaee.hw11.ejb.ItemJpaBean;
 import org.examples.pbk.otus.javaee.hw11.entity.Item;
@@ -9,7 +10,8 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
-import java.math.BigDecimal;
+import java.io.File;
+import java.net.URL;
 
 @Singleton
 @Startup
@@ -21,15 +23,16 @@ public class StartupBean {
 
     @PostConstruct
     void populateDatabase() {
-        itemBean.createItem(new Item(
-                "computer",
-                new BigDecimal("10.01"),
-                "powerful computer",
-                2
-        ));
-        userBean.createCustomer(new Customer(
-                "pbk",
-                "111qqq222",
-                "Smolensk"));
+        URL url = this.getClass().getClassLoader().getResource("/items/items.json");
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            Item[] items = mapper.readValue(new File(url.toURI()), Item[].class);
+            for (Item item : items) {
+                item.setStock(5);
+                itemBean.createItem(item);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
