@@ -9,6 +9,8 @@
                 template="pageTemplate.xhtml">
     <ui:define name="header"></ui:define>
     <ui:define name="content">
-        <h:outputText value="#{error.message}"/>
+        <b:alert severity="danger">
+            <h:outputText value="#{error.message}"/>
+        </b:alert>
     </ui:define>
 </ui:composition>

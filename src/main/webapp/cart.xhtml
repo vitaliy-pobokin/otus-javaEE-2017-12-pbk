@@ -9,27 +9,36 @@
                 template="pageTemplate.xhtml">
     <ui:define name="header"></ui:define>
     <ui:define name="content">
-        <table>
-            <tr>
-                <th>Item</th>
-                <th>Price</th>
-                <th>Quantity</th>
-            </tr>
-            <ui:repeat value="#{cart.cartItems}" var="cartItem">
-                <tr>
-                    <td>#{cartItem.item.name}</td>
-                    <td>#{cartItem.item.price}</td>
-                    <td>#{cartItem.itemQuantity}</td>
-                </tr>
-            </ui:repeat>
-        </table>
-        <h:outputText value="Total items: "/>
-        <h:outputText value="#{cart.totalItems}"/>
-        <h:outputText value="Total: "/>
-        <h:outputText value="#{cart.total}"/>
-        <h:form>
-            <h:commandButton value="buy"
-                             action="#{cart.buy()}"/>
-        </h:form>
+        <b:row rendered="#{not empty cart.cartItems}">
+            <b:column span="6" offset="3">
+                <h:outputStylesheet library="css" name="bootstrap.min.css"/>
+                <table class="table table-striped">
+                    <tr>
+                        <th>Item</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                    </tr>
+                    <ui:repeat value="#{cart.cartItems}" var="cartItem">
+                        <tr>
+                            <td>#{cartItem.item.name}</td>
+                            <td>#{cartItem.item.price}</td>
+                            <td>#{cartItem.itemQuantity}</td>
+                        </tr>
+                    </ui:repeat>
+                    <tr>
+                        <td><strong>Toatal</strong></td>
+                        <td><h:outputText value="#{cart.total}"/></td>
+                        <td><h:outputText value="#{cart.totalItems}"/></td>
+                    </tr>
+                </table>
+                <h:form>
+                    <b:commandButton value="buy"
+                                     action="#{cart.buy()}" style="width:80px"/>
+                </h:form>
+            </b:column>
+        </b:row>
+        <b:row rendered="#{empty cart.cartItems}">
+            <b:alert severity="info"><strong>Your cart is empty!</strong> Try to add some items. </b:alert>
+        </b:row>
     </ui:define>
 </ui:composition>
