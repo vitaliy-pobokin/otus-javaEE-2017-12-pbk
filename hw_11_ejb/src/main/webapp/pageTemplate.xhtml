@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:b="http://bootsfaces.net/ui">
+
+<h:head>
+</h:head>
+
+<h:body>
+    <div id="header" align="center">
+        <h:outputStylesheet library="css" name="main.css"/>
+        <h:form>
+            <b:navBar brand="My Store" brandHref="/" inverse="true">
+                <b:navbarLinks>
+                    <b:navLink value="Home" href="/"/>
+                    <b:navLink href="/cart.xhtml">
+                        <b:iconAwesome name="shopping-cart"/>
+                        <b:badge value="#{cart.totalItems}"/>
+                    </b:navLink>
+                    <b:navLink rendered="#{empty login.authenticatedCustomer}" value="Login " href="/login.xhtml">
+                        <b:iconAwesome name="sign-in"/>
+                    </b:navLink>
+                    <b:navLink rendered="#{empty login.authenticatedCustomer}" value="Register" href="/register.xhtml"/>
+                    <b:navCommandLink rendered="#{not empty login.authenticatedCustomer}" value="Logout" action="#{login.logout()}"/>
+                </b:navbarLinks>
+            </b:navBar>
+        </h:form>
+        <ui:insert name="header" />
+    </div>
+
+    <b:container fluid="true">
+        <div id="content" class="center_content" >
+            <ui:insert name="content" />
+        </div>
+    </b:container>
+</h:body>
+
+</html>

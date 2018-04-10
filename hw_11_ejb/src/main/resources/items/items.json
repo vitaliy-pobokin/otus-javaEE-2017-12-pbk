@@ -1,0 +1,92 @@
+[
+    {
+        "name": "EVGA SuperNOVA GQ 650 Watt",
+        "description": "100% High Quality Japanese Nippon Chemi-Con Solid State Capacitors: Get the most reliablity and greatest performance with the use of the highest possible quality Japanese sold state capacitors. Gold Rated Efficiency: 80 PLUS certification ensures your power supply isn't wasting power and turning it into excess heat. Under typical loads these power supplies are 90% efficiency or higher.",
+        "price": 78.99,
+        "imageLink": "resources/images/906276308C6FF0826ED64457B21F3EA4.jpg"
+    },
+    {
+        "name": "Samsung SSD 850 EVO 250GB",
+        "description": "The Samsung SSD 850 EVO elevates the everyday computing experience to a higher level of performance and endurance than was ever imagined. Powered by Samsung's unmatched V-NAND technology, no wonder the 850 EVO is the best-selling* SSD for everyday computing. Designed for mainstream desktop PCs and laptops, the 850 EVO comes in a wide range of capacities and form factors.",
+        "price": 74.78,
+        "imageLink": "resources/images/905806500B6F727B9B934A0AAFBFE4F7.jpg"
+    },
+    {
+        "name": "Corsair Vengeance LPX 16GB DDR4 Kit (2x8GB) 3000MHz C15",
+        "description": "Vengeance Low Profile heat spreaders have a reduced height of 1.03. They're designed for high-performance systems with extra-large CPU coolers, small form factor system builds, or any other space-constrained application where you need high-performance memory but standard Vengeance modules might not fit.",
+        "price": 160.50,
+        "imageLink": "resources/images/90613996964EDE1A262F492593BE8774.jpg"
+    },
+    {
+        "name": "Intel Core i7-8700K",
+        "description": "Outstanding gaming experiences extend beyond personal gameplay to your entire gaming community. Share those experiences by live-streaming or recording, editing, and posting your epic highlights.",
+        "price": 294.11,
+        "imageLink": "resources/images/907097586EE3B0EE69744A02B5E3324A.jpg"
+    },
+    {
+        "name": "ASUS PRIME Z370-A LGA1151",
+        "description": "Designed for 8th generation Intel Core processors, the Prime Z370-A delivers maximum performance with customizable style. 5-Way Optimization provides intelligent auto-tuning and dynamic fan calibration, AURA Sync RGB with addressable headers and 3D printing mounts customize your build, while Dual M.2 and USB 3.1 Gen2 delivers maximum transfer speeds.",
+        "price": 149.99,
+        "imageLink": "resources/images/81rvwj0dwvL._SL1500_.jpg"
+    },
+    {
+        "name": "Cooler Master Hyper RR-212E-20PK-R2",
+        "description": "Cooler Master, an industry leading chassis, thermal solution, peripheral, and accessory manufacturer, signals the rebirth of a household name in computing, the Hyper 212 EVO CPU Cooler. It comes packed with an improved tower fin design, heat pipe layout, and upgraded fans and fan brackets that provide an even more extreme value for end-users of all types. Dents are created when the heat pipes are sealed.",
+        "price": 29.99,
+        "imageLink": "resources/images/51cFhrlMYGL.jpg"
+    },
+    {
+        "name": "YI Home Camera 2, 1080p Full HD",
+        "description": "YI 1080p Home Camera 2 offers the world first HDR 1080P consumer indoor home security camera which brings the best picture quality even in strong and low light condition.",
+        "price": 59.99,
+        "imageLink": "resources/images/31U6TwFHsZL.jpg"
+    },
+    {
+        "name": "Corsair Carbide Series 200R Compact ATX Case",
+        "description": "Carbide Series 200R is compact, but it’s designed to let you build high-performance systems with massive storage, extra graphics performance, and superior cooling and ventilation. Less work. More play. Build with the Carbide Series 200R and the only time you’ll need to pick up a screwdriver is to install the motherboard.",
+        "price": 59.99,
+        "imageLink": "resources/images/61bD9v4I6eL._SL1160_.jpg"
+    },
+    {
+        "name": "COWIN E7",
+        "description": "Cowin E-7 wireless headphones are engineered to sound better, be more comfortable and easier to take with you. Put them on, and suddenly everything changes. Your music is deep, powerful and balanced, and so quiet that every note sounds clearer. Even air travel becomes enjoyable, as engine roar gently fades away. No matter how noisy the world is, it’s just you and your music—or simply peace and quiet.",
+        "price": 69.99,
+        "imageLink": "resources/images/61oEU8lUE9L._SL1001_.jpg"
+    },
+    {
+        "name": "WD Blue 1TB SATA 6 Gb/s 7200 RPM",
+        "description": "Boost your PC storage with WD Blue drives, the brand designed just for desktop and all-in-one PCs with a variety of storage capacities.",
+        "price": 43.99,
+        "imageLink": "resources/images/61ErQF2DqaL._SL1200_.jpg"
+    },
+    {
+        "name": "AMD Ryzen 3 1200",
+        "description": "TRUE, UNLOCKED QUAD CORE PERFORMANCE FOR GAMING AND COMPUTING. Featuring 4 processor cores for performance gaming and processing, With a brand-new, true quad-core architecture, AMD Ryzen 3 processors provide the responsiveness and performance you'd expect from a much pricier PC.",
+        "price": 94.00,
+        "imageLink": "resources/images/615o6o8HXqL._SL1500_.jpg"
+    },
+    {
+        "name": "Graphics Card 1050, NXDA GTX 1050 2GB GDDR5",
+        "description": "Built-in 168 stream processor and support DirectX 12,Max up to DirectX 12 which bring more realistic effect in the game. It has HDMI,VGA,DVI interfaces, support high definition video.",
+        "price": 79.99,
+        "imageLink": "resources/images/6123L5yBF8L._SL1053_.jpg"
+    },
+    {
+        "name": "Corsair CW-9060007-WW Hydro Series",
+        "description": "Upgrade from your stock CPU fan or bulky air cooler to the efficiency and simplicity of liquid CPU cooling. Enjoy better cooling performance and lower noise, and protect your investment in your CPU. The included SP120L fan uses custom-engineered impellers for better static pressure to noise ratio, offering improved performance at lower noise levels.",
+        "price": 59.99,
+        "imageLink": "resources/images/41IoD63E9AL.jpg"
+    },
+    {
+        "name": "Apple iPad with WiFi, 32GB, Space Gray",
+        "description": "Apple iPad XX6LL/A Tablet (64GB, Wifi + AT&T 3G, Black) NEWEST MODEL",
+        "price": 292.97,
+        "imageLink": "resources/images/81IVm9xTHFL._SL1500_.jpg"
+    },
+    {
+        "name": "Samsung Galaxy Tab A SM-T580NZKAXAR",
+        "description": "Enjoy powerful performance and a vibrant display with the Black 10.1 Galaxy Tab a from Samsung. This tablet features a Samsung exynos 7870 chip set, which utilizes an octa-core processor clocked at speeds up to 1.6 GHz.",
+        "price": 189.95,
+        "imageLink": "resources/images/71jqVlTgp-L._SL1500_.jpg"
+    }
+]

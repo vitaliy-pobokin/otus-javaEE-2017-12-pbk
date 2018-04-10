@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:b="http://bootsfaces.net/ui"
+                template="pageTemplate.xhtml">
+    <ui:define name="header"></ui:define>
+    <ui:define name="content">
+        <b:row>
+            <b:column span="4" offset="4">
+                <b:form id="loginForm">
+                    <b:inputText id="usernameDiv" fieldId="j_username" name="j_username"
+                                 binding="#{username}"
+                                 label="Username" />
+                    <b:message for="@previous" />
+                    <b:inputSecret id="passwordDiv" fieldId="j_password" name="j_password"
+                                   binding="#{password}"
+                                   label="Password"  />
+                    <b:message for="passwordDiv" />
+                    <b:inputText id="addressDiv" fieldId="j_address" name="j_address"
+                                 binding="#{address}"
+                                 label="Address" />
+                    <b:commandButton value="Register" action="#{login.register(username.value, password.value, address.value)}"/>
+                </b:form>
+            </b:column>
+        </b:row>
+    </ui:define>
+</ui:composition>
