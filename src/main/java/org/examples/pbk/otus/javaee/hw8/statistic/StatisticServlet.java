@@ -48,6 +48,7 @@ public class StatisticServlet extends HttpServlet {
         marker.setLanguage("ru_RU");
         marker.setUserAgent("Chrome");
         marker.setUsername("pbk");
+        marker.setSession(req.getSession().getId());
         Long id = TransactionUtils.runInTransaction(session -> {
             statisticBean.setSession(session);
             return statisticBean.addStatMarker(marker);
@@ -58,6 +59,5 @@ public class StatisticServlet extends HttpServlet {
                 .write("marker_id", id)
                 .writeEnd()
                 .flush();
-//        resp.getWriter().write("table created");
     }
 }

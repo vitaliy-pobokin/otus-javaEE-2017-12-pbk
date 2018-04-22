@@ -33,6 +33,9 @@ public class StatisticMarker {
     @Column(name = "STAT_MARKER_USER")
     private String username;
 
+    @Column(name = "STAT_MARKER_SESSION")
+    private String session;
+
     @Column(name = "STAT_MARKER_LANGUAGE")
     private String language;
 
@@ -103,6 +106,14 @@ public class StatisticMarker {
         this.username = username;
     }
 
+    public String getSession() {
+        return session;
+    }
+
+    public void setSession(String session) {
+        this.session = session;
+    }
+
     public String getLanguage() {
         return language;
     }
@@ -130,6 +141,7 @@ public class StatisticMarker {
                 ", clientTime=" + clientTime +
                 ", serverTime=" + serverTime +
                 ", username='" + username + '\'' +
+                ", session='" + session + '\'' +
                 ", language='" + language + '\'' +
                 ", previousMarkerId=" + previousMarkerId +
                 '}';

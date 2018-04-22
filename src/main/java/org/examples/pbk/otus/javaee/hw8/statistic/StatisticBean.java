@@ -22,6 +22,7 @@ public class StatisticBean {
                     "STAT_MARKER_CLIENTTIME DATE NOT NULL," +
                     "STAT_MARKER_SERVERTIME DATE NOT NULL," +
                     "STAT_MARKER_USER VARCHAR2(50)," +
+                    "STAT_MARKER_SESSION VARCHAR2(64) NOT NULL," +
                     "STAT_MARKER_LANGUAGE VARCHAR(20) NOT NULL," +
                     "STAT_MARKER_PREVIOUS NUMBER(8)," +
                     "CONSTRAINT PK_STAT_MARKER PRIMARY KEY (STAT_MARKER_ID))";
@@ -45,6 +46,7 @@ public class StatisticBean {
                     "MARKER_CLIENTTIME IN STAT_MARKER.STAT_MARKER_CLIENTTIME%TYPE,\n" +
                     "MARKER_SERVERTIME IN STAT_MARKER.STAT_MARKER_SERVERTIME%TYPE,\n" +
                     "MARKER_USER IN STAT_MARKER.STAT_MARKER_USER%TYPE,\n" +
+                    "MARKER_SESSION IN STAT_MARKER.STAT_MARKER_SESSION%TYPE,\n" +
                     "MARKER_LANGUAGE IN STAT_MARKER.STAT_MARKER_LANGUAGE%TYPE,\n" +
                     "MARKER_PREVIOUS IN STAT_MARKER.STAT_MARKER_PREVIOUS%TYPE,\n" +
                     "MARKER_ID OUT STAT_MARKER.STAT_MARKER_ID%TYPE)\n" +
@@ -59,6 +61,7 @@ public class StatisticBean {
                     "STAT_MARKER_CLIENTTIME,\n" +
                     "STAT_MARKER_SERVERTIME,\n" +
                     "STAT_MARKER_USER,\n" +
+                    "STAT_MARKER_SESSION,\n" +
                     "STAT_MARKER_LANGUAGE,\n" +
                     "STAT_MARKER_PREVIOUS)\n" +
                     "VALUES (\n" +
@@ -70,6 +73,7 @@ public class StatisticBean {
                     "CREATE_STAT_MARKER.MARKER_CLIENTTIME,\n" +
                     "CREATE_STAT_MARKER.MARKER_SERVERTIME,\n" +
                     "CREATE_STAT_MARKER.MARKER_USER,\n" +
+                    "CREATE_STAT_MARKER.MARKER_SESSION,\n" +
                     "CREATE_STAT_MARKER.MARKER_LANGUAGE,\n" +
                     "CREATE_STAT_MARKER.MARKER_PREVIOUS\n" +
                     ") RETURNING STAT_MARKER_ID INTO CREATE_STAT_MARKER.MARKER_ID;\n" +
@@ -84,6 +88,7 @@ public class StatisticBean {
                 .registerStoredProcedureParameter("MARKER_CLIENTTIME", Instant.class, ParameterMode.IN)
                 .registerStoredProcedureParameter("MARKER_SERVERTIME", Instant.class, ParameterMode.IN)
                 .registerStoredProcedureParameter("MARKER_USER", String.class, ParameterMode.IN)
+                .registerStoredProcedureParameter("MARKER_SESSION", String.class, ParameterMode.IN)
                 .registerStoredProcedureParameter("MARKER_LANGUAGE", String.class, ParameterMode.IN)
                 .registerStoredProcedureParameter("MARKER_PREVIOUS", Long.class, ParameterMode.IN)
                 .registerStoredProcedureParameter("MARKER_ID", Long.class, ParameterMode.OUT);
@@ -94,6 +99,7 @@ public class StatisticBean {
                 .setParameter("MARKER_CLIENTTIME", marker.getClientTime())
                 .setParameter("MARKER_SERVERTIME", marker.getServerTime())
                 .setParameter("MARKER_USER", marker.getUsername())
+                .setParameter("MARKER_SESSION", marker.getSession())
                 .setParameter("MARKER_LANGUAGE", marker.getLanguage())
                 .setParameter("MARKER_PREVIOUS", marker.getPreviousMarkerId());
         procedureQuery.execute();
