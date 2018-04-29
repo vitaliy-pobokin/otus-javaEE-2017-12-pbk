@@ -9,7 +9,8 @@ app.constant('urls', {
     ACCOUNT_SERVICE_API: 'http://localhost:3000' + contextPath + '/api/account/',
     LOGIN_SERVICE: 'http://localhost:3000' + contextPath + '/api/login/',
     NEWS_SERVICE_API: 'http://localhost:3000' + contextPath + '/api/news/',
-    CURRENCY_SERVICE_API: 'http://localhost:3000' + contextPath + '/api/currency/'});
+    CURRENCY_SERVICE_API: 'http://localhost:3000' + contextPath + '/api/currency/',
+    STAT_SERVICE_API: 'http://localhost:3000' + contextPath + '/stat'});
 
 app.constant('AUTH_EVENTS', {
     loginSuccess: 'auth-login-success',
@@ -157,7 +158,7 @@ app.config(function ($httpProvider) {
     ]);
 });
 
-app.run(['$rootScope', '$localStorage', 'AUTH_EVENTS', 'AuthService', function ($rootScope, $localStorage, AUTH_EVENTS, AuthService) {
+app.run(['$rootScope', '$localStorage', '$window',  'AUTH_EVENTS', 'AuthService', 'StatService', function ($rootScope, $localStorage, $window, AUTH_EVENTS, AuthService, StatService) {
     $rootScope.$on('$stateChangeStart', function (event, next) {
         if (next.data.pageType !== 'public') {
             var authorizedRoles = next.data.authorizedRoles;
@@ -174,6 +175,19 @@ app.run(['$rootScope', '$localStorage', 'AUTH_EVENTS', 'AuthService', function (
                 }
             }
         }
+    });
+    $rootScope.$on('$stateChangeSuccess', function (event, next) {
+        var stats = {
+            user: '',
+            language: '',
+            path: '',
+            date: ''
+        };
+        stats.user = $rootScope.currentUser.username;
+        stats.language = $window.navigator.language;
+        stats.path = next.url;
+        stats.date = new Date().toISOString();
+        StatService.sendStats(stats);
     });
     function init() {
         console.log('init');

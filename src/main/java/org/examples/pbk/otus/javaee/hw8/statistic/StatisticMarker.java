@@ -1,4 +1,4 @@
-package org.examples.pbk.otus.javaee.hw8.model;
+package org.examples.pbk.otus.javaee.hw8.statistic;
 
 import javax.persistence.*;
 import java.time.Instant;

@@ -239,6 +239,24 @@ angular.module('hw4App')
         }
     ])
 
+    .factory('StatService', ['$http', 'urls', function ($http, urls) {
+        var statService = {
+            sendStats: sendStats
+        };
+
+        function sendStats(stats) {
+            console.log('sending stats: ' + JSON.stringify(stats));
+            $http.post(urls.STAT_SERVICE_API, stats)
+                .then(function (response) {
+                    console.log('Stats: ' + stats + ' was successfully sent.');
+                }, function (error) {
+                    console.log('Error while sending stats');
+                });
+        }
+
+        return statService;
+    }])
+
     .factory('AuthService', ['$localStorage', '$http', '$q', 'Session', 'urls', function ($localStorage, $http, $q, Session, urls) {
         var authService = {
             login: login,

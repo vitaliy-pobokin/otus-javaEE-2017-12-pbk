@@ -1,6 +1,5 @@
 package org.examples.pbk.otus.javaee.hw8.statistic;
 
-import org.examples.pbk.otus.javaee.hw8.model.StatisticMarker;
 import org.hibernate.Session;
 
 import javax.persistence.ParameterMode;
