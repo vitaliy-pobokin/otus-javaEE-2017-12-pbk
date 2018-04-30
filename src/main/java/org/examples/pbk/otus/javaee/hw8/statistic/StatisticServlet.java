@@ -2,6 +2,8 @@ package org.examples.pbk.otus.javaee.hw8.statistic;
 
 import com.blueconic.browscap.*;
 import org.examples.pbk.otus.javaee.hw8.resources.TransactionUtils;
+import org.examples.pbk.otus.javaee.hw8.statistic.markers.BrowserUsageMarker;
+import org.examples.pbk.otus.javaee.hw8.statistic.markers.PlatformUsageMarker;
 
 import javax.json.Json;
 import javax.json.stream.JsonParser;
@@ -15,6 +17,7 @@ import java.io.IOException;
 import java.time.Instant;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @WebServlet(urlPatterns = "/stat")
@@ -34,7 +37,7 @@ public class StatisticServlet extends HttpServlet {
             statisticBean.setSession(session);
             statisticBean.createTable();
             statisticBean.createSequence();
-            statisticBean.createProcedure();
+            statisticBean.createProcedures();
         });
     }
 
@@ -56,6 +59,19 @@ public class StatisticServlet extends HttpServlet {
             statisticBean.dropTable();
             statisticBean.dropSequence();
         });
+    }
+
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        List<BrowserUsageMarker> browsers = TransactionUtils.runInTransaction(session -> {
+            statisticBean.setSession(session);
+            return statisticBean.getBrowserUsageMarker();
+        });
+        List<PlatformUsageMarker> platforms = TransactionUtils.runInTransaction(session -> {
+            statisticBean.setSession(session);
+            return statisticBean.getPlatformUsageMarker();
+        });
+        resp.getWriter().write(browsers.get(0).toString() + platforms.get(0).toString());
     }
 
     @Override

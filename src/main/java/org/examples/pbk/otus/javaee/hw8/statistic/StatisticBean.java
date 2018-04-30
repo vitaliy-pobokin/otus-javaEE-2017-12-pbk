@@ -2,6 +2,7 @@ package org.examples.pbk.otus.javaee.hw8.statistic;
 
 import oracle.jdbc.OracleTypes;
 import org.examples.pbk.otus.javaee.hw8.statistic.markers.BrowserUsageMarker;
+import org.examples.pbk.otus.javaee.hw8.statistic.markers.PlatformUsageMarker;
 import org.hibernate.Session;
 import org.hibernate.procedure.ProcedureCall;
 import org.hibernate.result.Output;
@@ -59,6 +60,17 @@ public class StatisticBean {
                     "    FROM STAT_MARKER\n" +
                     "    GROUP BY STAT_MARKER_BROWSER;\n" +
                     "  END COUNT_BROWSER_USAGE;";
+    private static final String COUNT_PLATFORM_USAGE_PROCEDURE_SQL =
+            "CREATE OR REPLACE PROCEDURE COUNT_PLATFORM_USAGE(\n" +
+                    "  C_COUNT_PLATFORM OUT SYS_REFCURSOR\n" +
+                    ")\n" +
+                    "IS\n" +
+                    "  BEGIN\n" +
+                    "    OPEN C_COUNT_PLATFORM FOR\n" +
+                    "    SELECT STAT_MARKER_PLATFORM, (COUNT(STAT_MARKER_PLATFORM) * 100 / (SELECT COUNT(*) FROM STAT_MARKER)) AS PERCENTAGE\n" +
+                    "    FROM STAT_MARKER\n" +
+                    "    GROUP BY STAT_MARKER_PLATFORM;\n" +
+                    "  END COUNT_PLATFORM_USAGE;";
     private static final String CREATE_STAT_MARKER_PROCEDURE_SQL =
             "CREATE OR REPLACE PROCEDURE CREATE_STAT_MARKER(\n" +
                     "MARKER_NAME IN STAT_MARKER.STAT_MARKER_NAME%TYPE,\n" +
@@ -154,6 +166,7 @@ public class StatisticBean {
     public void createProcedures() {
         executeNativeQuery(CREATE_STAT_MARKER_PROCEDURE_SQL);
         executeNativeQuery(COUNT_BROWSER_USAGE_PROCEDURE_SQL);
+        executeNativeQuery(COUNT_PLATFORM_USAGE_PROCEDURE_SQL);
     }
 
     public void dropTable() {
@@ -177,6 +190,18 @@ public class StatisticBean {
         List<BrowserUsageMarker> markers = new ArrayList<>();
         resultList.forEach(r -> {
             markers.add(new BrowserUsageMarker((String) r[0], ((BigDecimal) r[1]).longValue()));
+        });
+        return markers;
+    }
+
+    public List<PlatformUsageMarker> getPlatformUsageMarker() {
+        StoredProcedureQuery procedureQuery = session.createStoredProcedureQuery("COUNT_PLATFORM_USAGE");
+        procedureQuery.registerStoredProcedureParameter("C_COUNT_PLATFORM", PlatformUsageMarker.class, ParameterMode.REF_CURSOR);
+        procedureQuery.execute();
+        List<Object[]> resultList = procedureQuery.getResultList();
+        List<PlatformUsageMarker> markers = new ArrayList<>();
+        resultList.forEach(r -> {
+            markers.add(new PlatformUsageMarker((String) r[0], ((BigDecimal) r[1]).doubleValue()));
         });
         return markers;
     }

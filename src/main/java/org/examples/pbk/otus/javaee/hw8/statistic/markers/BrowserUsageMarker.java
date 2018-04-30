@@ -1,10 +1,7 @@
 package org.examples.pbk.otus.javaee.hw8.statistic.markers;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
 import java.io.Serializable;
 
-//@Entity
 public class BrowserUsageMarker implements Serializable {
     private String browser;
     private long count;
