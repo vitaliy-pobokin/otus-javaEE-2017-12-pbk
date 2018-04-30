@@ -1,18 +1,14 @@
 package org.examples.pbk.otus.javaee.hw8.statistic;
 
-import oracle.jdbc.OracleTypes;
 import org.examples.pbk.otus.javaee.hw8.statistic.markers.BrowserUsageMarker;
+import org.examples.pbk.otus.javaee.hw8.statistic.markers.PageViewsMarker;
 import org.examples.pbk.otus.javaee.hw8.statistic.markers.PlatformUsageMarker;
 import org.hibernate.Session;
-import org.hibernate.procedure.ProcedureCall;
-import org.hibernate.result.Output;
-import org.hibernate.result.ResultSetOutput;
 
 import javax.persistence.ParameterMode;
 import javax.persistence.Query;
 import javax.persistence.StoredProcedureQuery;
 import java.math.BigDecimal;
-import java.sql.CallableStatement;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
@@ -71,6 +67,17 @@ public class StatisticBean {
                     "    FROM STAT_MARKER\n" +
                     "    GROUP BY STAT_MARKER_PLATFORM;\n" +
                     "  END COUNT_PLATFORM_USAGE;";
+    private static final String COUNT_PAGE_VIEWS_PROCEDURE_SQL =
+            "CREATE OR REPLACE PROCEDURE COUNT_PAGE_VIEWS(\n" +
+                    "  C_COUNT_PAGE OUT SYS_REFCURSOR\n" +
+                    ")\n" +
+                    "IS\n" +
+                    "  BEGIN\n" +
+                    "    OPEN C_COUNT_PAGE FOR\n" +
+                    "    SELECT STAT_MARKER_PAGEPATH, COUNT(*) AS VIEWS_NUMBER\n" +
+                    "    FROM STAT_MARKER\n" +
+                    "    GROUP BY STAT_MARKER_PAGEPATH;\n" +
+                    "  END COUNT_PAGE_VIEWS;";
     private static final String CREATE_STAT_MARKER_PROCEDURE_SQL =
             "CREATE OR REPLACE PROCEDURE CREATE_STAT_MARKER(\n" +
                     "MARKER_NAME IN STAT_MARKER.STAT_MARKER_NAME%TYPE,\n" +
@@ -167,6 +174,7 @@ public class StatisticBean {
         executeNativeQuery(CREATE_STAT_MARKER_PROCEDURE_SQL);
         executeNativeQuery(COUNT_BROWSER_USAGE_PROCEDURE_SQL);
         executeNativeQuery(COUNT_PLATFORM_USAGE_PROCEDURE_SQL);
+        executeNativeQuery(COUNT_PAGE_VIEWS_PROCEDURE_SQL);
     }
 
     public void dropTable() {
@@ -202,6 +210,18 @@ public class StatisticBean {
         List<PlatformUsageMarker> markers = new ArrayList<>();
         resultList.forEach(r -> {
             markers.add(new PlatformUsageMarker((String) r[0], ((BigDecimal) r[1]).doubleValue()));
+        });
+        return markers;
+    }
+
+    public List<PageViewsMarker> getPageViewsMarker() {
+        StoredProcedureQuery procedureQuery = session.createStoredProcedureQuery("COUNT_PAGE_VIEWS");
+        procedureQuery.registerStoredProcedureParameter("C_COUNT_PAGE", PageViewsMarker.class, ParameterMode.REF_CURSOR);
+        procedureQuery.execute();
+        List<Object[]> resultList = procedureQuery.getResultList();
+        List<PageViewsMarker> markers = new ArrayList<>();
+        resultList.forEach(r -> {
+            markers.add(new PageViewsMarker((String) r[0], ((BigDecimal) r[1]).longValue()));
         });
         return markers;
     }

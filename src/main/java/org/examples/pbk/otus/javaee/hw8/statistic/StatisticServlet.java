@@ -3,6 +3,7 @@ package org.examples.pbk.otus.javaee.hw8.statistic;
 import com.blueconic.browscap.*;
 import org.examples.pbk.otus.javaee.hw8.resources.TransactionUtils;
 import org.examples.pbk.otus.javaee.hw8.statistic.markers.BrowserUsageMarker;
+import org.examples.pbk.otus.javaee.hw8.statistic.markers.PageViewsMarker;
 import org.examples.pbk.otus.javaee.hw8.statistic.markers.PlatformUsageMarker;
 
 import javax.json.Json;
@@ -71,7 +72,11 @@ public class StatisticServlet extends HttpServlet {
             statisticBean.setSession(session);
             return statisticBean.getPlatformUsageMarker();
         });
-        resp.getWriter().write(browsers.get(0).toString() + platforms.get(0).toString());
+        List<PageViewsMarker> pages = TransactionUtils.runInTransaction(session -> {
+            statisticBean.setSession(session);
+            return statisticBean.getPageViewsMarker();
+        });
+        resp.getWriter().write(browsers.get(0).toString() + platforms.get(0).toString() + pages.get(0).toString());
     }
 
     @Override
