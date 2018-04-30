@@ -24,6 +24,15 @@ public class StatisticMarker {
     @Column(name = "STAT_MARKER_USERAGENT")
     private String userAgent;
 
+    @Column(name = "STAT_MARKER_BROWSER")
+    private String browser;
+
+    @Column(name = "STAT_MARKER_PLATFORM")
+    private String platform;
+
+    @Column(name = "STAT_MARKER_DEVICE_TYPE")
+    private String deviceType;
+
     @Column(name = "STAT_MARKER_CLIENTTIME")
     private Instant clientTime;
 
@@ -80,6 +89,30 @@ public class StatisticMarker {
 
     public void setUserAgent(String userAgent) {
         this.userAgent = userAgent;
+    }
+
+    public String getBrowser() {
+        return browser;
+    }
+
+    public void setBrowser(String browser) {
+        this.browser = browser;
+    }
+
+    public String getPlatform() {
+        return platform;
+    }
+
+    public void setPlatform(String platform) {
+        this.platform = platform;
+    }
+
+    public String getDeviceType() {
+        return deviceType;
+    }
+
+    public void setDeviceType(String deviceType) {
+        this.deviceType = deviceType;
     }
 
     public Instant getClientTime() {

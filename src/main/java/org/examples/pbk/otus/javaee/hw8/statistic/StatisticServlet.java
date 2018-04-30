@@ -1,5 +1,6 @@
 package org.examples.pbk.otus.javaee.hw8.statistic;
 
+import com.blueconic.browscap.*;
 import org.examples.pbk.otus.javaee.hw8.resources.TransactionUtils;
 
 import javax.json.Json;
@@ -12,16 +13,22 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.time.Instant;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
 @WebServlet(urlPatterns = "/stat")
 public class StatisticServlet extends HttpServlet {
 
+    private static final String USER_AGENT_HEADER = "User-Agent";
+
     private StatisticBean statisticBean;
+
+    private UserAgentParser userAgentParser;
 
     @Override
     public void init() throws ServletException {
+        initParser();
         statisticBean = new StatisticBean();
         TransactionUtils.runInTransactionWithoutResult(session -> {
             statisticBean.setSession(session);
@@ -29,6 +36,18 @@ public class StatisticServlet extends HttpServlet {
             statisticBean.createSequence();
             statisticBean.createProcedure();
         });
+    }
+
+    private void initParser() {
+        try {
+            this.userAgentParser = new UserAgentService().loadParser(
+                    Arrays.asList(
+                            BrowsCapField.BROWSER,
+                            BrowsCapField.PLATFORM,
+                            BrowsCapField.DEVICE_TYPE));
+        } catch (IOException | ParseException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
@@ -40,47 +59,14 @@ public class StatisticServlet extends HttpServlet {
     }
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-        HttpSession httpSession = req.getSession();
-        Long previousMarkerId = (Long) httpSession.getAttribute("PREVIOUS_MARKER_ID");
-        if (previousMarkerId == null) {
-            previousMarkerId = -1L;
-        }
-
-        StatisticMarker marker = new StatisticMarker();
-        marker.setMarkerName("name");
-        marker.setClientIp(req.getRemoteAddr());
-        marker.setPagePath("/stat");
-        marker.setClientTime(Instant.now());
-        marker.setServerTime(Instant.now());
-        marker.setLanguage("ru_RU");
-        marker.setUserAgent(req.getHeader("User-Agent"));
-        marker.setUsername("pbk");
-        marker.setSession(req.getSession().getId());
-        marker.setPreviousMarkerId(previousMarkerId);
-        Long id = TransactionUtils.runInTransaction(session -> {
-            statisticBean.setSession(session);
-            return statisticBean.addStatMarker(marker);
-        });
-        httpSession.setAttribute("PREVIOUS_MARKER_ID", id);
-        resp.setContentType("application/json");
-        Json.createGenerator(resp.getWriter())
-                .writeStartObject()
-                .write("marker_id", id)
-                .writeEnd()
-                .flush();
-    }
-
-    @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Map<String, String> statData = new HashMap<>();
-        JsonParser parser = Json.createParser(req.getReader());
-        while (parser.hasNext()) {
-            if (parser.next() == JsonParser.Event.KEY_NAME){
-                String key = parser.getString();
-                parser.next();
-                String value = parser.getString();
+        JsonParser jsonParser = Json.createParser(req.getReader());
+        while (jsonParser.hasNext()) {
+            if (jsonParser.next() == JsonParser.Event.KEY_NAME){
+                String key = jsonParser.getString();
+                jsonParser.next();
+                String value = jsonParser.getString();
                 statData.put(key, value);
             }
         }
@@ -91,6 +77,9 @@ public class StatisticServlet extends HttpServlet {
             previousMarkerId = -1L;
         }
 
+        String userAgent = req.getHeader(USER_AGENT_HEADER);
+        Capabilities capabilities = userAgentParser.parse(userAgent);
+
         StatisticMarker marker = new StatisticMarker();
         marker.setMarkerName("name");
         marker.setClientIp(req.getRemoteAddr());
@@ -98,7 +87,10 @@ public class StatisticServlet extends HttpServlet {
         marker.setClientTime(Instant.parse(statData.get("date")));
         marker.setServerTime(Instant.now());
         marker.setLanguage(statData.get("language"));
-        marker.setUserAgent(req.getHeader("User-Agent"));
+        marker.setUserAgent(userAgent);
+        marker.setBrowser(capabilities.getBrowser());
+        marker.setPlatform(capabilities.getPlatform());
+        marker.setDeviceType(capabilities.getDeviceType());
         marker.setUsername(statData.get("user"));
         marker.setSession(req.getSession().getId());
         marker.setPreviousMarkerId(previousMarkerId);

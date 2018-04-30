@@ -18,6 +18,9 @@ public class StatisticBean {
                     "STAT_MARKER_PAGEPATH VARCHAR2(255) NOT NULL," +
                     "STAT_MARKER_CLIENTIP VARCHAR2(39) NOT NULL," +
                     "STAT_MARKER_USERAGENT VARCHAR2(255) NOT NULL," +
+                    "STAT_MARKER_BROWSER VARCHAR2(50) NOT NULL," +
+                    "STAT_MARKER_PLATFORM VARCHAR2(20) NOT NULL," +
+                    "STAT_MARKER_DEVICE_TYPE VARCHAR2(20) NOT NULL," +
                     "STAT_MARKER_CLIENTTIME DATE NOT NULL," +
                     "STAT_MARKER_SERVERTIME DATE NOT NULL," +
                     "STAT_MARKER_USER VARCHAR2(50)," +
@@ -42,6 +45,9 @@ public class StatisticBean {
                     "MARKER_PAGEPATH IN STAT_MARKER.STAT_MARKER_PAGEPATH%TYPE,\n" +
                     "MARKER_CLIENTIP IN STAT_MARKER.STAT_MARKER_CLIENTIP%TYPE,\n" +
                     "MARKER_USERAGENT IN STAT_MARKER.STAT_MARKER_USERAGENT%TYPE,\n" +
+                    "MARKER_BROWSER IN STAT_MARKER.STAT_MARKER_BROWSER%TYPE,\n" +
+                    "MARKER_PLATFORM IN STAT_MARKER.STAT_MARKER_PLATFORM%TYPE,\n" +
+                    "MARKER_DEVICE_TYPE IN STAT_MARKER.STAT_MARKER_DEVICE_TYPE%TYPE,\n" +
                     "MARKER_CLIENTTIME IN STAT_MARKER.STAT_MARKER_CLIENTTIME%TYPE,\n" +
                     "MARKER_SERVERTIME IN STAT_MARKER.STAT_MARKER_SERVERTIME%TYPE,\n" +
                     "MARKER_USER IN STAT_MARKER.STAT_MARKER_USER%TYPE,\n" +
@@ -57,6 +63,9 @@ public class StatisticBean {
                     "STAT_MARKER_PAGEPATH,\n" +
                     "STAT_MARKER_CLIENTIP,\n" +
                     "STAT_MARKER_USERAGENT,\n" +
+                    "STAT_MARKER_BROWSER,\n" +
+                    "STAT_MARKER_PLATFORM,\n" +
+                    "STAT_MARKER_DEVICE_TYPE,\n" +
                     "STAT_MARKER_CLIENTTIME,\n" +
                     "STAT_MARKER_SERVERTIME,\n" +
                     "STAT_MARKER_USER,\n" +
@@ -69,6 +78,9 @@ public class StatisticBean {
                     "CREATE_STAT_MARKER.MARKER_PAGEPATH,\n" +
                     "CREATE_STAT_MARKER.MARKER_CLIENTIP,\n" +
                     "CREATE_STAT_MARKER.MARKER_USERAGENT,\n" +
+                    "CREATE_STAT_MARKER.MARKER_BROWSER,\n" +
+                    "CREATE_STAT_MARKER.MARKER_PLATFORM,\n" +
+                    "CREATE_STAT_MARKER.MARKER_DEVICE_TYPE,\n" +
                     "CREATE_STAT_MARKER.MARKER_CLIENTTIME,\n" +
                     "CREATE_STAT_MARKER.MARKER_SERVERTIME,\n" +
                     "CREATE_STAT_MARKER.MARKER_USER,\n" +
@@ -84,6 +96,9 @@ public class StatisticBean {
                 .registerStoredProcedureParameter("MARKER_PAGEPATH", String.class, ParameterMode.IN)
                 .registerStoredProcedureParameter("MARKER_CLIENTIP", String.class, ParameterMode.IN)
                 .registerStoredProcedureParameter("MARKER_USERAGENT", String.class, ParameterMode.IN)
+                .registerStoredProcedureParameter("MARKER_BROWSER", String.class, ParameterMode.IN)
+                .registerStoredProcedureParameter("MARKER_PLATFORM", String.class, ParameterMode.IN)
+                .registerStoredProcedureParameter("MARKER_DEVICE_TYPE", String.class, ParameterMode.IN)
                 .registerStoredProcedureParameter("MARKER_CLIENTTIME", Instant.class, ParameterMode.IN)
                 .registerStoredProcedureParameter("MARKER_SERVERTIME", Instant.class, ParameterMode.IN)
                 .registerStoredProcedureParameter("MARKER_USER", String.class, ParameterMode.IN)
@@ -95,6 +110,9 @@ public class StatisticBean {
                 .setParameter("MARKER_PAGEPATH", marker.getPagePath())
                 .setParameter("MARKER_CLIENTIP", marker.getClientIp())
                 .setParameter("MARKER_USERAGENT", marker.getUserAgent())
+                .setParameter("MARKER_BROWSER", marker.getBrowser())
+                .setParameter("MARKER_PLATFORM", marker.getPlatform())
+                .setParameter("MARKER_DEVICE_TYPE", marker.getDeviceType())
                 .setParameter("MARKER_CLIENTTIME", marker.getClientTime())
                 .setParameter("MARKER_SERVERTIME", marker.getServerTime())
                 .setParameter("MARKER_USER", marker.getUsername())
