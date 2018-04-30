@@ -3,6 +3,7 @@ package org.examples.pbk.otus.javaee.hw8.statistic;
 import org.examples.pbk.otus.javaee.hw8.statistic.markers.BrowserUsageMarker;
 import org.examples.pbk.otus.javaee.hw8.statistic.markers.PageViewsMarker;
 import org.examples.pbk.otus.javaee.hw8.statistic.markers.PlatformUsageMarker;
+import org.examples.pbk.otus.javaee.hw8.statistic.markers.VisitsPerDayMarker;
 import org.hibernate.Session;
 
 import javax.persistence.ParameterMode;
@@ -78,6 +79,18 @@ public class StatisticBean {
                     "    FROM STAT_MARKER\n" +
                     "    GROUP BY STAT_MARKER_PAGEPATH;\n" +
                     "  END COUNT_PAGE_VIEWS;";
+    private static final String COUNT_VISITS_PER_DAY_PROCEDURE_SQL =
+            "CREATE OR REPLACE PROCEDURE COUNT_VISITS_PER_DAY(\n" +
+                    "  C_COUNT_VISITS OUT SYS_REFCURSOR\n" +
+                    ")\n" +
+                    "IS\n" +
+                    "  BEGIN\n" +
+                    "    OPEN C_COUNT_VISITS FOR\n" +
+                    "    SELECT to_char(STAT_MARKER_SERVERTIME, 'DAY', 'NLS_DATE_LANGUAGE=ENGLISH'), COUNT(*) AS VISITS_COUNT\n" +
+                    "    FROM STAT_MARKER\n" +
+                    "    GROUP BY to_char(STAT_MARKER_SERVERTIME, 'DAY', 'NLS_DATE_LANGUAGE=ENGLISH')\n" +
+                    "    ORDER BY to_char(STAT_MARKER_SERVERTIME, 'DAY', 'NLS_DATE_LANGUAGE=ENGLISH') DESC;\n" +
+                    "  END COUNT_VISITS_PER_DAY;";
     private static final String CREATE_STAT_MARKER_PROCEDURE_SQL =
             "CREATE OR REPLACE PROCEDURE CREATE_STAT_MARKER(\n" +
                     "MARKER_NAME IN STAT_MARKER.STAT_MARKER_NAME%TYPE,\n" +
@@ -175,6 +188,7 @@ public class StatisticBean {
         executeNativeQuery(COUNT_BROWSER_USAGE_PROCEDURE_SQL);
         executeNativeQuery(COUNT_PLATFORM_USAGE_PROCEDURE_SQL);
         executeNativeQuery(COUNT_PAGE_VIEWS_PROCEDURE_SQL);
+        executeNativeQuery(COUNT_VISITS_PER_DAY_PROCEDURE_SQL);
     }
 
     public void dropTable() {
@@ -222,6 +236,18 @@ public class StatisticBean {
         List<PageViewsMarker> markers = new ArrayList<>();
         resultList.forEach(r -> {
             markers.add(new PageViewsMarker((String) r[0], ((BigDecimal) r[1]).longValue()));
+        });
+        return markers;
+    }
+
+    public List<VisitsPerDayMarker> getVisitsPerDayMarker() {
+        StoredProcedureQuery procedureQuery = session.createStoredProcedureQuery("COUNT_VISITS_PER_DAY");
+        procedureQuery.registerStoredProcedureParameter("C_COUNT_VISITS", VisitsPerDayMarker.class, ParameterMode.REF_CURSOR);
+        procedureQuery.execute();
+        List<Object[]> resultList = procedureQuery.getResultList();
+        List<VisitsPerDayMarker> markers = new ArrayList<>();
+        resultList.forEach(r -> {
+            markers.add(new VisitsPerDayMarker((String) r[0], ((BigDecimal) r[1]).longValue()));
         });
         return markers;
     }
