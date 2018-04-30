@@ -1,6 +1,6 @@
 'use strict';
 
-var app = angular.module('hw4App', ['ui.router', 'ui.router.state.events', 'ngResource', 'ngStorage', 'ui.bootstrap']);
+var app = angular.module('hw4App', ['ui.router', 'ui.router.state.events', 'ngResource', 'ngStorage', 'ui.bootstrap', 'chart.js']);
 
 app.constant('urls', {
     BASE: 'http://localhost:3000' + contextPath,
@@ -139,6 +139,21 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', 'USER_R
                 data: {
                     pageType: 'private',
                     authorizedRoles: [USER_ROLES.ceo, USER_ROLES.acm, USER_ROLES.hrm, USER_ROLES.usr]
+                }
+            })
+
+            .state('app.statistic', {
+                url: 'statistic',
+                views: {
+                    'content@': {
+                        templateUrl : 'static/views/statistic.html',
+                        controller  : 'StatisticController',
+                        controllerAs: 'ctrl',
+                    }
+                },
+                data: {
+                    pageType: 'private',
+                    authorizedRoles: [USER_ROLES.ceo]
                 }
             });
 

@@ -29,12 +29,15 @@
 <script src="${ctx}/static/scripts/lib/ngStorage.min.js"></script>
 <script src="${ctx}/static/scripts/lib/ui-bootstrap-tpls-2.5.0.min.js"></script>
 <script src="${ctx}/static/scripts/lib/jquery.min.js"></script>
+<script src="${ctx}/static/scripts/lib/Chart.min.js"></script>
+<script src="${ctx}/static/scripts/lib/angular-chart.min.js"></script>
 <script src="${ctx}/static/scripts/app/app.js"></script>
 <script src="${ctx}/static/scripts/app/controllers/login_controller.js"></script>
 <script src="${ctx}/static/scripts/app/controllers/application_controller.js"></script>
 <script src="${ctx}/static/scripts/app/controllers/employee_controller.js"></script>
 <script src="${ctx}/static/scripts/app/controllers/departments_controller.js"></script>
 <script src="${ctx}/static/scripts/app/controllers/side_bar_controller.js"></script>
+<script src="${ctx}/static/scripts/app/controllers/statistic_controller.js"></script>
 <script src="${ctx}/static/scripts/app/services.js"></script>
 </body>
 </html>

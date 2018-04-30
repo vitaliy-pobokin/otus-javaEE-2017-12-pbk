@@ -12,6 +12,7 @@
                 <li class="navbar-item" ><a ui-sref="app.scripts">Run scripts</a></li>
                 <li class="navbar-item" ><a ui-sref="app.employees">Employees</a></li>
                 <li class="navbar-item" ><a ui-sref="app.departments">Departments</a></li>
+                <li class="navbar-item" ><a ui-sref="app.statistic">Statistic</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right" ng-controller="LoginController as ctrl">
                 <li class="navbar-item" ng-if="!currentUser"><a ui-sref="app.login"><i class="fa fa-sign-in"></i> Login</a></li>
