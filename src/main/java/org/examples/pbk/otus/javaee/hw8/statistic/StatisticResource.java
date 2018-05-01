@@ -1,28 +1,56 @@
 package org.examples.pbk.otus.javaee.hw8.statistic;
 
+import com.blueconic.browscap.*;
 import org.examples.pbk.otus.javaee.hw8.statistic.markers.BrowserUsageMarker;
 import org.examples.pbk.otus.javaee.hw8.statistic.markers.PageViewsMarker;
 import org.examples.pbk.otus.javaee.hw8.statistic.markers.PlatformUsageMarker;
 import org.examples.pbk.otus.javaee.hw8.statistic.markers.VisitsPerDayMarker;
 
+import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.json.Json;
+import javax.json.stream.JsonParser;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.StreamingOutput;
+import java.io.*;
+import java.time.Instant;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Path("statistic")
 @Produces(MediaType.APPLICATION_JSON)
 public class StatisticResource {
 
+    private static final String USER_AGENT_HEADER = "User-Agent";
+
     private StatisticMarkerService statisticService;
+
+    private UserAgentParser userAgentParser;
 
     @Inject
     public StatisticResource(StatisticMarkerServiceImpl statisticService) {
         this.statisticService = statisticService;
+        initParser();
+    }
+
+    private void initParser() {
+        try {
+            this.userAgentParser = new UserAgentService().loadParser(
+                    Arrays.asList(
+                            BrowsCapField.BROWSER,
+                            BrowsCapField.PLATFORM,
+                            BrowsCapField.DEVICE_TYPE));
+        } catch (IOException | ParseException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @GET
@@ -55,5 +83,62 @@ public class StatisticResource {
     public Response getVisitsPerDayMarker() {
         List<VisitsPerDayMarker> markers = statisticService.getVisitsPerDayMarker();
         return Response.ok(markers).build();
+    }
+
+    @POST
+    @Path("/stat")
+    @PermitAll
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response createStatMarker(InputStream data, @Context HttpServletRequest req) {
+        Map<String, String> statData = new HashMap<>();
+        JsonParser jsonParser = Json.createParser(data);
+        while (jsonParser.hasNext()) {
+            if (jsonParser.next() == JsonParser.Event.KEY_NAME){
+                String key = jsonParser.getString();
+                jsonParser.next();
+                String value = jsonParser.getString();
+                statData.put(key, value);
+            }
+        }
+
+        HttpSession httpSession = req.getSession();
+        Long previousMarkerId = (Long) httpSession.getAttribute("PREVIOUS_MARKER_ID");
+        if (previousMarkerId == null) {
+            previousMarkerId = -1L;
+        }
+
+        String userAgent = req.getHeader(USER_AGENT_HEADER);
+        Capabilities capabilities = userAgentParser.parse(userAgent);
+
+        StatisticMarker marker = new StatisticMarker();
+        marker.setMarkerName("name");
+        marker.setClientIp(req.getRemoteAddr());
+        marker.setPagePath(statData.get("path"));
+        marker.setClientTime(Instant.parse(statData.get("date")));
+        marker.setServerTime(Instant.now());
+        marker.setLanguage(statData.get("language"));
+        marker.setUserAgent(userAgent);
+        marker.setBrowser(capabilities.getBrowser());
+        marker.setPlatform(capabilities.getPlatform());
+        marker.setDeviceType(capabilities.getDeviceType());
+        marker.setUsername(statData.get("user"));
+        marker.setSession(req.getSession().getId());
+        marker.setPreviousMarkerId(previousMarkerId);
+        Long id = statisticService.addStatMarker(marker);
+        httpSession.setAttribute("PREVIOUS_MARKER_ID", id);
+
+        StreamingOutput stream = new StreamingOutput() {
+            @Override
+            public void write(OutputStream os) throws IOException,
+                    WebApplicationException {
+                Writer writer = new BufferedWriter(new OutputStreamWriter(os));
+                Json.createGenerator(writer)
+                        .writeStartObject()
+                        .write("marker_id", id)
+                        .writeEnd()
+                        .flush();
+            }
+        };
+        return Response.ok(stream).build();
     }
 }

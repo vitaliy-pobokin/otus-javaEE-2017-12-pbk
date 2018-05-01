@@ -14,7 +14,7 @@ app.constant('urls', {
     STATISTIC_PLATFORM_USAGE_API: 'http://localhost:3000' + contextPath + '/api/statistic/platform_usage/',
     STATISTIC_PAGE_VIEWS_API: 'http://localhost:3000' + contextPath + '/api/statistic/page_views/',
     STATISTIC_VISITS_PER_DAY_API: 'http://localhost:3000' + contextPath + '/api/statistic/visits_per_day/',
-    STAT_SERVICE_API: 'http://localhost:3000' + contextPath + '/stat'});
+    STAT_SERVICE_API: 'http://localhost:3000' + contextPath + '/api/statistic/stat/'});
 
 app.constant('AUTH_EVENTS', {
     loginSuccess: 'auth-login-success',
