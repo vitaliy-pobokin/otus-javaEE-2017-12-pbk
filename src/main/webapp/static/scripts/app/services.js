@@ -243,6 +243,7 @@ angular.module('hw4App')
         var statService = {
             sendStats: sendStats,
             getBrowserUsage: getBrowserUsage,
+            getPlatformUsage: getPlatformUsage,
             getPageViews: getPageViews
         };
 
@@ -267,6 +268,23 @@ angular.module('hw4App')
                     },
                     function (errResponse) {
                         console.error('Error while loading browser usage stats');
+                        deferred.reject(errResponse);
+                    }
+                );
+            return deferred.promise;
+        }
+
+        function getPlatformUsage() {
+            var deferred = $q.defer();
+            $http.get(urls.STATISTIC_PLATFORM_USAGE_API)
+                .then(
+                    function (response) {
+                        console.log('Fetched successfully platform usage stats: ');
+                        console.log(response.data);//-------------------------
+                        deferred.resolve(response.data);
+                    },
+                    function (errResponse) {
+                        console.error('Error while loading platform usage stats');
                         deferred.reject(errResponse);
                     }
                 );

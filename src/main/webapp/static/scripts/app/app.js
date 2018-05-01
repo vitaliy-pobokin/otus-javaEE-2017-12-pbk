@@ -11,6 +11,7 @@ app.constant('urls', {
     NEWS_SERVICE_API: 'http://localhost:3000' + contextPath + '/api/news/',
     CURRENCY_SERVICE_API: 'http://localhost:3000' + contextPath + '/api/currency/',
     STATISTIC_BROWSER_USAGE_API: 'http://localhost:3000' + contextPath + '/api/statistic/browser_usage/',
+    STATISTIC_PLATFORM_USAGE_API: 'http://localhost:3000' + contextPath + '/api/statistic/platform_usage/',
     STATISTIC_PAGE_VIEWS_API: 'http://localhost:3000' + contextPath + '/api/statistic/page_views/',
     STAT_SERVICE_API: 'http://localhost:3000' + contextPath + '/stat'});
 

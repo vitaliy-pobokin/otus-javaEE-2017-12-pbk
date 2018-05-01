@@ -71,10 +71,8 @@ angular.module('hw4App')
             [28, 48, 40, 19, 96, 27, 100]
         ];*/
 
-        self.platform.labels = ["Download Sales", "In-Store Sales", "Mail-Order Sales"];
-        self.platform.data = [300, 500, 100];
-
-        self.getBrowserUsage = getBrowserUsage;
+        /*self.platform.labels = ["Download Sales", "In-Store Sales", "Mail-Order Sales"];
+        self.platform.data = [300, 500, 100];*/
 
         function getBrowserUsage() {
             StatService.getBrowserUsage().then(function (data) {
@@ -82,6 +80,16 @@ angular.module('hw4App')
                 for (var i = 0; i < markers.length; i++) {
                     self.browser.labels.push(markers[i].browser);
                     self.browser.data.push(markers[i].count);
+                }
+            })
+        }
+
+        function getPlatformUsage() {
+            StatService.getPlatformUsage().then(function (data) {
+                var markers = data;
+                for (var i = 0; i < markers.length; i++) {
+                    self.platform.labels.push(markers[i].platform);
+                    self.platform.data.push(markers[i].count);
                 }
             })
         }
@@ -97,6 +105,7 @@ angular.module('hw4App')
         }
 
         getBrowserUsage();
+        getPlatformUsage();
         getPageViews();
 
 
