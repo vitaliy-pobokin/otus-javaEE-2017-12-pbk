@@ -27,14 +27,14 @@ public class StatisticServlet extends HttpServlet {
 
     private static final String USER_AGENT_HEADER = "User-Agent";
 
-    private StatisticBean statisticBean;
+    private StatisticMarkerService statisticService;
 
     private UserAgentParser userAgentParser;
 
     @Override
     public void init() throws ServletException {
         initParser();
-        statisticBean = new StatisticBean();
+        this.statisticService = new StatisticMarkerServiceImpl();
     }
 
     private void initParser() {
@@ -51,22 +51,10 @@ public class StatisticServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        List<BrowserUsageMarker> browsers = TransactionUtils.runInTransaction(session -> {
-            statisticBean.setSession(session);
-            return statisticBean.getBrowserUsageMarker();
-        });
-        List<PlatformUsageMarker> platforms = TransactionUtils.runInTransaction(session -> {
-            statisticBean.setSession(session);
-            return statisticBean.getPlatformUsageMarker();
-        });
-        List<PageViewsMarker> pages = TransactionUtils.runInTransaction(session -> {
-            statisticBean.setSession(session);
-            return statisticBean.getPageViewsMarker();
-        });
-        List<VisitsPerDayMarker> visits = TransactionUtils.runInTransaction(session -> {
-            statisticBean.setSession(session);
-            return statisticBean.getVisitsPerDayMarker();
-        });
+        List<BrowserUsageMarker> browsers = statisticService.getBrowserUsageMarker();
+        List<PlatformUsageMarker> platforms = statisticService.getPlatformUsageMarker();
+        List<PageViewsMarker> pages = statisticService.getPageViewsMarker();
+        List<VisitsPerDayMarker> visits = statisticService.getVisitsPerDayMarker();
         resp.getWriter().write(browsers.get(0).toString() + platforms.get(0).toString() + pages.get(0).toString() + visits.get(0).toString());
     }
 
@@ -106,10 +94,7 @@ public class StatisticServlet extends HttpServlet {
         marker.setUsername(statData.get("user"));
         marker.setSession(req.getSession().getId());
         marker.setPreviousMarkerId(previousMarkerId);
-        Long id = TransactionUtils.runInTransaction(session -> {
-            statisticBean.setSession(session);
-            return statisticBean.addStatMarker(marker);
-        });
+        Long id = statisticService.addStatMarker(marker);
         httpSession.setAttribute("PREVIOUS_MARKER_ID", id);
         resp.setContentType("application/json");
         Json.createGenerator(resp.getWriter())
