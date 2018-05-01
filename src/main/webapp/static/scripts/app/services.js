@@ -242,7 +242,8 @@ angular.module('hw4App')
     .factory('StatService', ['$http', '$q', 'urls', function ($http, $q, urls) {
         var statService = {
             sendStats: sendStats,
-            getBrowserUsage: getBrowserUsage
+            getBrowserUsage: getBrowserUsage,
+            getPageViews: getPageViews
         };
 
         function sendStats(stats) {
@@ -266,6 +267,23 @@ angular.module('hw4App')
                     },
                     function (errResponse) {
                         console.error('Error while loading browser usage stats');
+                        deferred.reject(errResponse);
+                    }
+                );
+            return deferred.promise;
+        }
+
+        function getPageViews() {
+            var deferred = $q.defer();
+            $http.get(urls.STATISTIC_PAGE_VIEWS_API)
+                .then(
+                    function (response) {
+                        console.log('Fetched successfully page views stats: ');
+                        console.log(response.data);//-------------------------
+                        deferred.resolve(response.data);
+                    },
+                    function (errResponse) {
+                        console.error('Error while loading page views stats');
                         deferred.reject(errResponse);
                     }
                 );

@@ -1,6 +1,7 @@
 package org.examples.pbk.otus.javaee.hw8.statistic;
 
 import org.examples.pbk.otus.javaee.hw8.statistic.markers.BrowserUsageMarker;
+import org.examples.pbk.otus.javaee.hw8.statistic.markers.PageViewsMarker;
 
 import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
@@ -27,6 +28,14 @@ public class StatisticResource {
     @RolesAllowed({"CEO"})
     public Response getBrowserUsageMarkers() {
         List<BrowserUsageMarker> markers = statisticService.getBrowserUsageMarker();
+        return Response.ok(markers).build();
+    }
+
+    @GET
+    @Path("/page_views")
+    @RolesAllowed({"CEO"})
+    public Response getPageViewsMarkers() {
+        List<PageViewsMarker> markers = statisticService.getPageViewsMarker();
         return Response.ok(markers).build();
     }
 }

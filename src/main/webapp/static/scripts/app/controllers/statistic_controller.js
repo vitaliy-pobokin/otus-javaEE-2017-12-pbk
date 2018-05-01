@@ -64,12 +64,12 @@ angular.module('hw4App')
         /*self.browser.labels = ["Download Sales", "In-Store Sales", "Mail-Order Sales", "Tele Sales", "Corporate Sales"];
         self.browser.data = [300, 500, 100, 40, 120];*/
 
-        self.pages.labels =["Eating", "Drinking", "Sleeping", "Designing", "Coding", "Cycling", "Running"];
+        /*self.pages.labels =["Eating", "Drinking", "Sleeping", "Designing", "Coding", "Cycling", "Running"];
 
         self.pages.data = [
             [65, 59, 90, 81, 56, 55, 40],
             [28, 48, 40, 19, 96, 27, 100]
-        ];
+        ];*/
 
         self.platform.labels = ["Download Sales", "In-Store Sales", "Mail-Order Sales"];
         self.platform.data = [300, 500, 100];
@@ -86,7 +86,18 @@ angular.module('hw4App')
             })
         }
 
+        function getPageViews() {
+            StatService.getPageViews().then(function (data) {
+                var markers = data;
+                for (var i = 0; i < markers.length; i++) {
+                    self.pages.labels.push(markers[i].page);
+                    self.pages.data.push(markers[i].count);
+                }
+            })
+        }
+
         getBrowserUsage();
+        getPageViews();
 
 
         /*self.login = login;
