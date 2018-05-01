@@ -43,9 +43,23 @@ public class StatisticBean {
                     "NOMAXVALUE " +
                     "CACHE 100";
     private static final String DROP_STAT_MARKER_TABLE_SQL =
-            "DROP TABLE STAT_MARKER";
+            "BEGIN\n" +
+                    "  EXECUTE IMMEDIATE 'DROP TABLE STAT_MARKER';\n" +
+                    "  EXCEPTION\n" +
+                    "  WHEN OTHERS THEN\n" +
+                    "  IF SQLCODE != -942 THEN\n" +
+                    "    RAISE;\n" +
+                    "  END IF;\n" +
+                    "END;";
     private static final String DROP_STAT_MARKER_SEQUENCE_SQL =
-            "DROP SEQUENCE STAT_MARKER_SEQUENCE";
+            "BEGIN\n" +
+                    "  EXECUTE IMMEDIATE 'DROP SEQUENCE STAT_MARKER_SEQUENCE';\n" +
+                    "  EXCEPTION\n" +
+                    "  WHEN OTHERS THEN\n" +
+                    "  IF SQLCODE != -2289 THEN\n" +
+                    "    RAISE;\n" +
+                    "  END IF;\n" +
+                    "END;";
     private static final String COUNT_BROWSER_USAGE_PROCEDURE_SQL =
             "CREATE OR REPLACE PROCEDURE COUNT_BROWSER_USAGE(\n" +
                     "  C_COUNT_BROWSER OUT SYS_REFCURSOR\n" +

@@ -37,6 +37,8 @@ public class StatisticServlet extends HttpServlet {
         statisticBean = new StatisticBean();
         TransactionUtils.runInTransactionWithoutResult(session -> {
             statisticBean.setSession(session);
+            statisticBean.dropTable();
+            statisticBean.dropSequence();
             statisticBean.createTable();
             statisticBean.createSequence();
             statisticBean.createProcedures();
