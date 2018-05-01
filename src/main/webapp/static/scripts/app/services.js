@@ -244,7 +244,8 @@ angular.module('hw4App')
             sendStats: sendStats,
             getBrowserUsage: getBrowserUsage,
             getPlatformUsage: getPlatformUsage,
-            getPageViews: getPageViews
+            getPageViews: getPageViews,
+            getVisitsPerDay: getVisitsPerDay
         };
 
         function sendStats(stats) {
@@ -302,6 +303,23 @@ angular.module('hw4App')
                     },
                     function (errResponse) {
                         console.error('Error while loading page views stats');
+                        deferred.reject(errResponse);
+                    }
+                );
+            return deferred.promise;
+        }
+
+        function getVisitsPerDay() {
+            var deferred = $q.defer();
+            $http.get(urls.STATISTIC_VISITS_PER_DAY_API)
+                .then(
+                    function (response) {
+                        console.log('Fetched successfully visits per day stats: ');
+                        console.log(response.data);//-------------------------
+                        deferred.resolve(response.data);
+                    },
+                    function (errResponse) {
+                        console.error('Error while loading visits per day stats');
                         deferred.reject(errResponse);
                     }
                 );
