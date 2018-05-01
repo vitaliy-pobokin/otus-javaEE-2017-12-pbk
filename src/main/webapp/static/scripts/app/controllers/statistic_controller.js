@@ -2,7 +2,7 @@
 
 angular.module('hw4App')
 
-    .controller('StatisticController', ['AuthService' , '$scope', '$rootScope', 'AUTH_EVENTS', function (AuthService, $scope, $rootScope, AUTH_EVENTS) {
+    .controller('StatisticController', ['StatService' , '$scope', '$rootScope', 'AUTH_EVENTS', function (StatService, $scope, $rootScope, AUTH_EVENTS) {
 
         var self = this;
         self.credentials = {
@@ -61,8 +61,8 @@ angular.module('hw4App')
             }
         };
 
-        self.browser.labels = ["Download Sales", "In-Store Sales", "Mail-Order Sales", "Tele Sales", "Corporate Sales"];
-        self.browser.data = [300, 500, 100, 40, 120];
+        /*self.browser.labels = ["Download Sales", "In-Store Sales", "Mail-Order Sales", "Tele Sales", "Corporate Sales"];
+        self.browser.data = [300, 500, 100, 40, 120];*/
 
         self.pages.labels =["Eating", "Drinking", "Sleeping", "Designing", "Coding", "Cycling", "Running"];
 
@@ -74,8 +74,22 @@ angular.module('hw4App')
         self.platform.labels = ["Download Sales", "In-Store Sales", "Mail-Order Sales"];
         self.platform.data = [300, 500, 100];
 
+        self.getBrowserUsage = getBrowserUsage;
 
-        self.login = login;
+        function getBrowserUsage() {
+            StatService.getBrowserUsage().then(function (data) {
+                var markers = data;
+                for (var i = 0; i < markers.length; i++) {
+                    self.browser.labels.push(markers[i].browser);
+                    self.browser.data.push(markers[i].count);
+                }
+            })
+        }
+
+        getBrowserUsage();
+
+
+        /*self.login = login;
         self.logout = logout;
 
         function login(credentials) {
@@ -91,7 +105,7 @@ angular.module('hw4App')
             AuthService.logout();
             $scope.setCurrentUser(null);
             $rootScope.$broadcast(AUTH_EVENTS.logoutSuccess);
-        }
+        }*/
     }])
 
     .factory('AuthInterceptor', ['$rootScope', '$q', 'AUTH_EVENTS', function ($rootScope, $q, AUTH_EVENTS) {

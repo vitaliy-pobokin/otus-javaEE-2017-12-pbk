@@ -239,9 +239,10 @@ angular.module('hw4App')
         }
     ])
 
-    .factory('StatService', ['$http', 'urls', function ($http, urls) {
+    .factory('StatService', ['$http', '$q', 'urls', function ($http, $q, urls) {
         var statService = {
-            sendStats: sendStats
+            sendStats: sendStats,
+            getBrowserUsage: getBrowserUsage
         };
 
         function sendStats(stats) {
@@ -252,6 +253,23 @@ angular.module('hw4App')
                 }, function (error) {
                     console.log('Error while sending stats');
                 });
+        }
+
+        function getBrowserUsage() {
+            var deferred = $q.defer();
+            $http.get(urls.STATISTIC_BROWSER_USAGE_API)
+                .then(
+                    function (response) {
+                        console.log('Fetched successfully browser usage stats: ');
+                        console.log(response.data);//-------------------------
+                        deferred.resolve(response.data);
+                    },
+                    function (errResponse) {
+                        console.error('Error while loading browser usage stats');
+                        deferred.reject(errResponse);
+                    }
+                );
+            return deferred.promise;
         }
 
         return statService;

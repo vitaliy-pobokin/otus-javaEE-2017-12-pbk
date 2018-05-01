@@ -1,7 +1,6 @@
 package org.examples.pbk.otus.javaee.hw8.statistic;
 
 import com.blueconic.browscap.*;
-import org.examples.pbk.otus.javaee.hw8.resources.TransactionUtils;
 import org.examples.pbk.otus.javaee.hw8.statistic.markers.BrowserUsageMarker;
 import org.examples.pbk.otus.javaee.hw8.statistic.markers.PageViewsMarker;
 import org.examples.pbk.otus.javaee.hw8.statistic.markers.PlatformUsageMarker;

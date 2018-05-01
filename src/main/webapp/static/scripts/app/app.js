@@ -10,6 +10,7 @@ app.constant('urls', {
     LOGIN_SERVICE: 'http://localhost:3000' + contextPath + '/api/login/',
     NEWS_SERVICE_API: 'http://localhost:3000' + contextPath + '/api/news/',
     CURRENCY_SERVICE_API: 'http://localhost:3000' + contextPath + '/api/currency/',
+    STATISTIC_BROWSER_USAGE_API: 'http://localhost:3000' + contextPath + '/api/statistic/browser_usage/',
     STAT_SERVICE_API: 'http://localhost:3000' + contextPath + '/stat'});
 
 app.constant('AUTH_EVENTS', {
