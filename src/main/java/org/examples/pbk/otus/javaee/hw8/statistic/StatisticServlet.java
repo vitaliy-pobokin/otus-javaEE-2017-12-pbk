@@ -35,14 +35,6 @@ public class StatisticServlet extends HttpServlet {
     public void init() throws ServletException {
         initParser();
         statisticBean = new StatisticBean();
-        TransactionUtils.runInTransactionWithoutResult(session -> {
-            statisticBean.setSession(session);
-            statisticBean.dropTable();
-            statisticBean.dropSequence();
-            statisticBean.createTable();
-            statisticBean.createSequence();
-            statisticBean.createProcedures();
-        });
     }
 
     private void initParser() {
@@ -55,14 +47,6 @@ public class StatisticServlet extends HttpServlet {
         } catch (IOException | ParseException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    @Override
-    public void destroy() {
-        TransactionUtils.runInTransactionWithoutResult(session -> {
-            statisticBean.dropTable();
-            statisticBean.dropSequence();
-        });
     }
 
     @Override
