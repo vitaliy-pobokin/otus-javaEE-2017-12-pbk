@@ -31,6 +31,8 @@ public class StatisticResource {
 
     private static final String USER_AGENT_HEADER = "User-Agent";
 
+    private static volatile boolean collectStatistic = true;
+
     private StatisticMarkerService statisticService;
 
     private UserAgentParser userAgentParser;
@@ -90,55 +92,73 @@ public class StatisticResource {
     @PermitAll
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createStatMarker(InputStream data, @Context HttpServletRequest req) {
-        Map<String, String> statData = new HashMap<>();
-        JsonParser jsonParser = Json.createParser(data);
-        while (jsonParser.hasNext()) {
-            if (jsonParser.next() == JsonParser.Event.KEY_NAME){
-                String key = jsonParser.getString();
-                jsonParser.next();
-                String value = jsonParser.getString();
-                statData.put(key, value);
+        if (collectStatistic) {
+            Map<String, String> statData = new HashMap<>();
+            JsonParser jsonParser = Json.createParser(data);
+            while (jsonParser.hasNext()) {
+                if (jsonParser.next() == JsonParser.Event.KEY_NAME){
+                    String key = jsonParser.getString();
+                    jsonParser.next();
+                    String value = jsonParser.getString();
+                    statData.put(key, value);
+                }
             }
-        }
 
-        HttpSession httpSession = req.getSession();
-        Long previousMarkerId = (Long) httpSession.getAttribute("PREVIOUS_MARKER_ID");
-        if (previousMarkerId == null) {
-            previousMarkerId = -1L;
-        }
-
-        String userAgent = req.getHeader(USER_AGENT_HEADER);
-        Capabilities capabilities = userAgentParser.parse(userAgent);
-
-        StatisticMarker marker = new StatisticMarker();
-        marker.setMarkerName("name");
-        marker.setClientIp(req.getRemoteAddr());
-        marker.setPagePath(statData.get("path"));
-        marker.setClientTime(Instant.parse(statData.get("date")));
-        marker.setServerTime(Instant.now());
-        marker.setLanguage(statData.get("language"));
-        marker.setUserAgent(userAgent);
-        marker.setBrowser(capabilities.getBrowser());
-        marker.setPlatform(capabilities.getPlatform());
-        marker.setDeviceType(capabilities.getDeviceType());
-        marker.setUsername(statData.get("user"));
-        marker.setSession(req.getSession().getId());
-        marker.setPreviousMarkerId(previousMarkerId);
-        Long id = statisticService.addStatMarker(marker);
-        httpSession.setAttribute("PREVIOUS_MARKER_ID", id);
-
-        StreamingOutput stream = new StreamingOutput() {
-            @Override
-            public void write(OutputStream os) throws IOException,
-                    WebApplicationException {
-                Writer writer = new BufferedWriter(new OutputStreamWriter(os));
-                Json.createGenerator(writer)
-                        .writeStartObject()
-                        .write("marker_id", id)
-                        .writeEnd()
-                        .flush();
+            HttpSession httpSession = req.getSession();
+            Long previousMarkerId = (Long) httpSession.getAttribute("PREVIOUS_MARKER_ID");
+            if (previousMarkerId == null) {
+                previousMarkerId = -1L;
             }
-        };
-        return Response.ok(stream).build();
+
+            String userAgent = req.getHeader(USER_AGENT_HEADER);
+            Capabilities capabilities = userAgentParser.parse(userAgent);
+
+            StatisticMarker marker = new StatisticMarker();
+            marker.setMarkerName("name");
+            marker.setClientIp(req.getRemoteAddr());
+            marker.setPagePath(statData.get("path"));
+            marker.setClientTime(Instant.parse(statData.get("date")));
+            marker.setServerTime(Instant.now());
+            marker.setLanguage(statData.get("language"));
+            marker.setUserAgent(userAgent);
+            marker.setBrowser(capabilities.getBrowser());
+            marker.setPlatform(capabilities.getPlatform());
+            marker.setDeviceType(capabilities.getDeviceType());
+            marker.setUsername(statData.get("user"));
+            marker.setSession(req.getSession().getId());
+            marker.setPreviousMarkerId(previousMarkerId);
+            Long id = statisticService.addStatMarker(marker);
+            httpSession.setAttribute("PREVIOUS_MARKER_ID", id);
+
+            StreamingOutput stream = new StreamingOutput() {
+                @Override
+                public void write(OutputStream os) throws IOException,
+                        WebApplicationException {
+                    Writer writer = new BufferedWriter(new OutputStreamWriter(os));
+                    Json.createGenerator(writer)
+                            .writeStartObject()
+                            .write("marker_id", id)
+                            .writeEnd()
+                            .flush();
+                }
+            };
+            return Response.ok(stream).build();
+        }
+        return Response.status(Response.Status.NOT_ACCEPTABLE).build();
+    }
+
+    @GET
+    @Path("/stat_collection_status")
+    @RolesAllowed({"CEO"})
+    public Response getStatCollectionStatus() {
+        return Response.ok(collectStatistic).build();
+    }
+
+    @GET
+    @Path("/alter_stat_collection")
+    @RolesAllowed({"CEO"})
+    public synchronized Response alterStatCollection() {
+        collectStatistic = !collectStatistic;
+        return Response.ok().build();
     }
 }

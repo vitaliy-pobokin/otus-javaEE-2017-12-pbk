@@ -242,6 +242,8 @@ angular.module('hw4App')
     .factory('StatService', ['$http', '$q', 'urls', function ($http, $q, urls) {
         var statService = {
             sendStats: sendStats,
+            getStatCollectionStatus: getStatCollectionStatus,
+            alterStatCollection: alterStatCollection,
             getBrowserUsage: getBrowserUsage,
             getPlatformUsage: getPlatformUsage,
             getPageViews: getPageViews,
@@ -256,6 +258,24 @@ angular.module('hw4App')
                 }, function (error) {
                     console.log('Error while sending stats');
                 });
+        }
+
+        function getStatCollectionStatus() {
+            var deferred = $q.defer();
+            $http.get(urls.STAT_COLLECTION_STATUS)
+                .then(
+                    function (response) {
+                        deferred.resolve(response.data);
+                    },
+                    function (errResponse) {
+                        deferred.reject(errResponse);
+                    }
+                );
+            return deferred.promise;
+        }
+
+        function alterStatCollection() {
+            $http.get(urls.ALTER_STAT_COLLECTION);
         }
 
         function getBrowserUsage() {

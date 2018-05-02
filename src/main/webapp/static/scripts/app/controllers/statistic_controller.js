@@ -2,13 +2,13 @@
 
 angular.module('hw4App')
 
-    .controller('StatisticController', ['StatService', function (StatService) {
+    .controller('StatisticController', ['StatService', '$scope', function (StatService, $scope) {
 
         var self = this;
-        self.credentials = {
-            username: '',
-            password: ''
-        };
+        StatService.getStatCollectionStatus().then(function (statCollectionStatus) {
+            $scope.statCollectionStatus = statCollectionStatus;
+        });
+        $scope.alterStatCollection = alterStatCollection;
 
         self.day_visits = {
             labels: [],
@@ -48,6 +48,11 @@ angular.module('hw4App')
                 ]
             }
         };
+
+        function alterStatCollection() {
+            StatService.alterStatCollection();
+            self.statCollectionStatus = !self.statCollectionStatus;
+        }
 
         function getBrowserUsage() {
             StatService.getBrowserUsage().then(function (data) {
