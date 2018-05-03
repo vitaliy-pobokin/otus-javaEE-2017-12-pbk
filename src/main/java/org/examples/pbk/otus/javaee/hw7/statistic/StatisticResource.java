@@ -25,12 +25,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
 @Path("statistic")
 @Produces(MediaType.APPLICATION_JSON)
 public class StatisticResource {
-    private static final Logger logger = Logger.getLogger(StatisticResource.class.getName());
 
     private static final String USER_AGENT_HEADER = "User-Agent";
 
@@ -44,7 +42,6 @@ public class StatisticResource {
     public StatisticResource(StatisticMarkerServiceImpl statisticService) {
         this.statisticService = statisticService;
         this.userAgentParser = UserAgentParserProvider.getInstance();
-        logger.log(Level.INFO, "StatisticResource initialized.");
     }
 
     @GET
