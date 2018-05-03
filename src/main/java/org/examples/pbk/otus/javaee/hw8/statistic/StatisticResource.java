@@ -1,6 +1,7 @@
 package org.examples.pbk.otus.javaee.hw8.statistic;
 
 import com.blueconic.browscap.*;
+import org.examples.pbk.otus.javaee.hw8.UserAgentParserProvider;
 import org.examples.pbk.otus.javaee.hw8.statistic.markers.BrowserUsageMarker;
 import org.examples.pbk.otus.javaee.hw8.statistic.markers.PageViewsMarker;
 import org.examples.pbk.otus.javaee.hw8.statistic.markers.PlatformUsageMarker;
@@ -20,14 +21,16 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.StreamingOutput;
 import java.io.*;
 import java.time.Instant;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @Path("statistic")
 @Produces(MediaType.APPLICATION_JSON)
 public class StatisticResource {
+    private static final Logger logger = Logger.getLogger(StatisticResource.class.getName());
 
     private static final String USER_AGENT_HEADER = "User-Agent";
 
@@ -40,19 +43,8 @@ public class StatisticResource {
     @Inject
     public StatisticResource(StatisticMarkerServiceImpl statisticService) {
         this.statisticService = statisticService;
-        initParser();
-    }
-
-    private void initParser() {
-        try {
-            this.userAgentParser = new UserAgentService().loadParser(
-                    Arrays.asList(
-                            BrowsCapField.BROWSER,
-                            BrowsCapField.PLATFORM,
-                            BrowsCapField.DEVICE_TYPE));
-        } catch (IOException | ParseException e) {
-            throw new RuntimeException(e);
-        }
+        this.userAgentParser = UserAgentParserProvider.getInstance();
+        logger.log(Level.INFO, "StatisticResource initialized.");
     }
 
     @GET

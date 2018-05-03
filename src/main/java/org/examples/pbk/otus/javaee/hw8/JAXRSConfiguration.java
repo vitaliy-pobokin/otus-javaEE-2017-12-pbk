@@ -9,7 +9,7 @@ import javax.ws.rs.ApplicationPath;
 public class JAXRSConfiguration extends ResourceConfig {
     public JAXRSConfiguration() {
         packages(false, "org.examples.pbk.otus.javaee.hw8.resources");
-        packages("org.examples.pbk.otus.javaee.hw8.statistic");
+        packages(false, "org.examples.pbk.otus.javaee.hw8.statistic");
         register(AuthenticationFilter.class);
     }
 }

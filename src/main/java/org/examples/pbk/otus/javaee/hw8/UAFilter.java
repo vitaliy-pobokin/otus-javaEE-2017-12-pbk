@@ -30,13 +30,7 @@ public class UAFilter implements Filter {
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
-        try {
-            this.parser = new UserAgentService().loadParser(
-                    Arrays.asList(BrowsCapField.BROWSER,
-                    BrowsCapField.BROWSER_MAJOR_VERSION));
-        } catch (IOException  | ParseException e) {
-            throw new RuntimeException(e);
-        }
+        this.parser = UserAgentParserProvider.getInstance();
     }
 
     @Override

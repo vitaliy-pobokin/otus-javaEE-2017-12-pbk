@@ -7,6 +7,7 @@ import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import org.examples.pbk.otus.javaee.hw8.model.Account;
 import org.examples.pbk.otus.javaee.hw8.service.JpaAccountService;
+import sun.rmi.runtime.Log;
 
 import javax.annotation.security.DenyAll;
 import javax.annotation.security.PermitAll;
@@ -25,10 +26,13 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 // TODO: expiration check, constants from configuration file
 @Provider
 public class AuthenticationFilter implements javax.ws.rs.container.ContainerRequestFilter {
+    private static final Logger logger = Logger.getLogger(AuthenticationFilter.class.getName());
 
     @Inject
     private JpaAccountService accountService;
@@ -50,6 +54,7 @@ public class AuthenticationFilter implements javax.ws.rs.container.ContainerRequ
                 requestContext.abortWith(ACCESS_FORBIDDEN);
                 return;
             }
+            long startTime = System.currentTimeMillis();
             final MultivaluedMap<String, String> headers = requestContext.getHeaders();
             final List<String> authorization = headers.get(AUTHORIZATION_PROPERTY);
             if(authorization == null || authorization.isEmpty()) {
@@ -77,6 +82,8 @@ public class AuthenticationFilter implements javax.ws.rs.container.ContainerRequ
                     requestContext.abortWith(ACCESS_FORBIDDEN);
                     return;
                 }
+                long endTime = System.currentTimeMillis();
+                logger.log(Level.INFO, "AuthFilter executed for: " + (endTime - startTime) + " ms");
             }
         }
     }

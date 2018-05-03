@@ -254,7 +254,7 @@ angular.module('hw4App')
             console.log('sending stats: ' + JSON.stringify(stats));
             $http.post(urls.STAT_SERVICE_API, stats)
                 .then(function (response) {
-                    console.log('Stats: ' + stats + ' was successfully sent.');
+                    console.log('Stats: ' + JSON.stringify(stats) + ' was successfully sent.');
                 }, function (error) {
                     console.log('Error while sending stats');
                 });
