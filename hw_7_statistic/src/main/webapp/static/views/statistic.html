@@ -1,0 +1,54 @@
+<div style="width: 1170px; display:flex; flex-wrap: wrap; margin-left: auto; margin-right: auto;">
+    <div style="width: 100%; max-width: 100%;" >
+        <div class="frame" style="padding: 20px">
+            <div class="flex switch-row" ng-show="statCollectionStatus !== undefined" style="width: 100%">
+                <input type="checkbox" id="switch" ng-click='alterStatCollection()' ng-model="statCollectionStatus"/><label for="switch" id="switch_label">Toggle</label>
+                <div class="switch-row-label" ng-show="!statCollectionStatus">Turn on stat collection.</div>
+                <div class="switch-row-label" ng-show="statCollectionStatus">Turn off stat collection.</div>
+            </div>
+            <div class="flex">
+                <div class="col-sm-6">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">Visits per Day of the Week</div>
+                        <div class="panel-body">
+                            <canvas id="line" class="chart chart-line" chart-data="ctrl.day_visits.data"
+                                    chart-labels="ctrl.day_visits.labels" chart-series="ctrl.day_visits.series" chart-options="ctrl.day_visits.options"
+                                    chart-dataset-override="ctrl.day_visits.datasetOverride" chart-click="onClick">
+                            </canvas>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">Visits by Browser Type</div>
+                        <div class="panel-body">
+                            <canvas id="polar-area" class="chart chart-polar-area"
+                                    chart-data="ctrl.browser.data" chart-labels="ctrl.browser.labels" chart-options="ctrl.browser.options">
+                            </canvas>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">Pages Hits</div>
+                        <div class="panel-body">
+                            <canvas id="bar" class="chart chart-bar"
+                                    chart-data="ctrl.pages.data" chart-labels="ctrl.pages.labels">
+                            </canvas>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">Platforms Percentage</div>
+                        <div class="panel-body">
+                            <canvas id="doughnut" class="chart chart-doughnut"
+                                    chart-data="ctrl.platform.data" chart-labels="ctrl.platform.labels">
+                            </canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
