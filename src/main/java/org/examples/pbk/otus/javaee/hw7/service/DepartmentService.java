@@ -1,6 +1,6 @@
-package org.examples.pbk.otus.javaee.hw8.service;
+package org.examples.pbk.otus.javaee.hw7.service;
 
-import org.examples.pbk.otus.javaee.hw8.model.Department;
+import org.examples.pbk.otus.javaee.hw7.model.Department;
 
 import java.util.List;
 

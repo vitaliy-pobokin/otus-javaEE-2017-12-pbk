@@ -1,4 +1,4 @@
-package org.examples.pbk.otus.javaee.hw8.model;
+package org.examples.pbk.otus.javaee.hw7.model;
 
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 

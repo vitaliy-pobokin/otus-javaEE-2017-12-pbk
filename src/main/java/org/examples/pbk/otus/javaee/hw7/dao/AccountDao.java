@@ -1,6 +1,6 @@
-package org.examples.pbk.otus.javaee.hw8.dao;
+package org.examples.pbk.otus.javaee.hw7.dao;
 
-import org.examples.pbk.otus.javaee.hw8.model.Account;
+import org.examples.pbk.otus.javaee.hw7.model.Account;
 
 import java.util.List;
 

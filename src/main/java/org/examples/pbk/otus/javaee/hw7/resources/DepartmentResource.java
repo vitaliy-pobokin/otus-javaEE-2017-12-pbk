@@ -1,8 +1,8 @@
-package org.examples.pbk.otus.javaee.hw8.resources;
+package org.examples.pbk.otus.javaee.hw7.resources;
 
-import org.examples.pbk.otus.javaee.hw8.model.Department;
-import org.examples.pbk.otus.javaee.hw8.service.DepartmentService;
-import org.examples.pbk.otus.javaee.hw8.service.JpaDepartmentService;
+import org.examples.pbk.otus.javaee.hw7.model.Department;
+import org.examples.pbk.otus.javaee.hw7.service.DepartmentService;
+import org.examples.pbk.otus.javaee.hw7.service.JpaDepartmentService;
 
 import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;

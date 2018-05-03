@@ -1,8 +1,8 @@
-package org.examples.pbk.otus.javaee.hw8.resources;
+package org.examples.pbk.otus.javaee.hw7.resources;
 
 import com.fasterxml.jackson.dataformat.xml.JacksonXmlModule;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
-import org.examples.pbk.otus.javaee.hw8.model.Currencies;
+import org.examples.pbk.otus.javaee.hw7.model.Currencies;
 
 import javax.annotation.security.PermitAll;
 import javax.ws.rs.GET;

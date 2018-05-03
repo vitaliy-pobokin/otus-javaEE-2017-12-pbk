@@ -1,8 +1,8 @@
-package org.examples.pbk.otus.javaee.hw8.service;
+package org.examples.pbk.otus.javaee.hw7.service;
 
-import org.examples.pbk.otus.javaee.hw8.dao.JpaAccountDao;
-import org.examples.pbk.otus.javaee.hw8.model.Account;
-import org.examples.pbk.otus.javaee.hw8.resources.TransactionUtils;
+import org.examples.pbk.otus.javaee.hw7.dao.JpaAccountDao;
+import org.examples.pbk.otus.javaee.hw7.model.Account;
+import org.examples.pbk.otus.javaee.hw7.resources.TransactionUtils;
 
 import javax.enterprise.context.ApplicationScoped;
 import java.util.List;

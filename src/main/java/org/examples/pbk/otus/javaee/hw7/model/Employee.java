@@ -1,8 +1,8 @@
-package org.examples.pbk.otus.javaee.hw8.model;
+package org.examples.pbk.otus.javaee.hw7.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import org.examples.pbk.otus.javaee.hw8.xml.XmlDateAdapter;
+import org.examples.pbk.otus.javaee.hw7.xml.XmlDateAdapter;
 
 import javax.json.Json;
 import javax.json.JsonObject;

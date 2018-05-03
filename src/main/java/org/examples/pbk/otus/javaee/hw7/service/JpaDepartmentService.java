@@ -1,8 +1,8 @@
-package org.examples.pbk.otus.javaee.hw8.service;
+package org.examples.pbk.otus.javaee.hw7.service;
 
-import org.examples.pbk.otus.javaee.hw8.dao.JpaDepartmentDao;
-import org.examples.pbk.otus.javaee.hw8.model.Department;
-import org.examples.pbk.otus.javaee.hw8.resources.TransactionUtils;
+import org.examples.pbk.otus.javaee.hw7.dao.JpaDepartmentDao;
+import org.examples.pbk.otus.javaee.hw7.model.Department;
+import org.examples.pbk.otus.javaee.hw7.resources.TransactionUtils;
 
 import java.util.List;
 

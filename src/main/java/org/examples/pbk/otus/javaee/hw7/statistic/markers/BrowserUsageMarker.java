@@ -1,4 +1,4 @@
-package org.examples.pbk.otus.javaee.hw8.statistic.markers;
+package org.examples.pbk.otus.javaee.hw7.statistic.markers;
 
 import java.io.Serializable;
 

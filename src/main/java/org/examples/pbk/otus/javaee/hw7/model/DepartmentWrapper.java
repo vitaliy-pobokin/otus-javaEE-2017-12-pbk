@@ -1,4 +1,4 @@
-package org.examples.pbk.otus.javaee.hw8.model;
+package org.examples.pbk.otus.javaee.hw7.model;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;

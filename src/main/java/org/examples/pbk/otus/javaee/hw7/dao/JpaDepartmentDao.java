@@ -1,6 +1,6 @@
-package org.examples.pbk.otus.javaee.hw8.dao;
+package org.examples.pbk.otus.javaee.hw7.dao;
 
-import org.examples.pbk.otus.javaee.hw8.model.Department;
+import org.examples.pbk.otus.javaee.hw7.model.Department;
 import org.hibernate.Session;
 
 import javax.enterprise.context.ApplicationScoped;

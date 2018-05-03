@@ -1,4 +1,4 @@
-package org.examples.pbk.otus.javaee.hw8.resources;
+package org.examples.pbk.otus.javaee.hw7.resources;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;

@@ -1,11 +1,11 @@
-package org.examples.pbk.otus.javaee.hw8.statistic;
+package org.examples.pbk.otus.javaee.hw7.statistic;
 
 import com.blueconic.browscap.*;
-import org.examples.pbk.otus.javaee.hw8.UserAgentParserProvider;
-import org.examples.pbk.otus.javaee.hw8.statistic.markers.BrowserUsageMarker;
-import org.examples.pbk.otus.javaee.hw8.statistic.markers.PageViewsMarker;
-import org.examples.pbk.otus.javaee.hw8.statistic.markers.PlatformUsageMarker;
-import org.examples.pbk.otus.javaee.hw8.statistic.markers.VisitsPerDayMarker;
+import org.examples.pbk.otus.javaee.hw7.UserAgentParserProvider;
+import org.examples.pbk.otus.javaee.hw7.statistic.markers.BrowserUsageMarker;
+import org.examples.pbk.otus.javaee.hw7.statistic.markers.PageViewsMarker;
+import org.examples.pbk.otus.javaee.hw7.statistic.markers.PlatformUsageMarker;
+import org.examples.pbk.otus.javaee.hw7.statistic.markers.VisitsPerDayMarker;
 
 import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
