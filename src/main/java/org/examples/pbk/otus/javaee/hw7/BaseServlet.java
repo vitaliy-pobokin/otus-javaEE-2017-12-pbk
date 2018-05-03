@@ -1,4 +1,4 @@
-package org.examples.pbk.otus.javaee.hw8;
+package org.examples.pbk.otus.javaee.hw7;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

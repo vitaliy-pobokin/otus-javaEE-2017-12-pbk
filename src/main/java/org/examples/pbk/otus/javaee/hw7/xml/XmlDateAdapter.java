@@ -1,4 +1,4 @@
-package org.examples.pbk.otus.javaee.hw8.xml;
+package org.examples.pbk.otus.javaee.hw7.xml;
 
 import javax.xml.bind.annotation.adapters.XmlAdapter;
 import java.text.DateFormat;

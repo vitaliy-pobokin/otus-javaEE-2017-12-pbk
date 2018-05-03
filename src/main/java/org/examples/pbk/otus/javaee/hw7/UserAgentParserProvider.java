@@ -1,4 +1,4 @@
-package org.examples.pbk.otus.javaee.hw8;
+package org.examples.pbk.otus.javaee.hw7;
 
 import com.blueconic.browscap.BrowsCapField;
 import com.blueconic.browscap.ParseException;
