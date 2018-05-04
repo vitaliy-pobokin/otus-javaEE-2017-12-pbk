@@ -7,6 +7,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.StreamingOutput;
 import java.io.*;
+import java.time.LocalDate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -50,9 +51,10 @@ public class CreditCalcResource {
     public Response calculateAnnuitantCreditPayments(
             @FormParam("sum") int sum,
             @FormParam("percent") double percent,
-            @FormParam("period") int period
+            @FormParam("period") int period,
+            @FormParam("start_date") String startDate
     ) {
-
+        LocalDate date = LocalDate.parse(startDate);
         StreamingOutput stream = new StreamingOutput() {
             @Override
             public void write(OutputStream os) throws IOException,
@@ -60,12 +62,22 @@ public class CreditCalcResource {
                 Writer writer = new BufferedWriter(new OutputStreamWriter(os));
                 JsonGenerator jsonGenerator = Json.createGenerator(writer);
                 jsonGenerator.writeStartArray();
+                double debtBalance = sum;
+                LocalDate paymentDate = date;
                 for (int i = 1; i <= period; i++) {
                     double payment = sum*percent/12/100/(1 - 1/Math.pow((1 + percent/12/100), period));
-                    jsonGenerator.writeStartObject();
-                    jsonGenerator.write("month", i);
-                    jsonGenerator.write("payment", payment);
-                    jsonGenerator.writeEnd();
+                    double accrualPayment = percent/100/paymentDate.lengthOfYear() * paymentDate.lengthOfMonth() * debtBalance;
+                    double debtPayment = payment - accrualPayment;
+                    debtBalance = debtBalance - debtPayment;
+                    paymentDate = paymentDate.plusMonths(1);
+                    jsonGenerator.writeStartObject()
+                            .write("month", i)
+                            .write("payment", payment)
+                            .write("debt_payment", debtPayment)
+                            .write("accrual_payment", accrualPayment)
+                            .write("debt_balance", debtBalance)
+                            .write("payment_date", paymentDate.toString())
+                            .writeEnd();
                 }
                 jsonGenerator.writeEnd().flush();
             }

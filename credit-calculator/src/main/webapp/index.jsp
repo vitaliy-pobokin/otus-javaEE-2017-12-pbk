@@ -7,8 +7,9 @@
             var sum = document.getElementById("sum").value;
             var percent = document.getElementById("percent").value;
             var period = document.getElementById("period").value;
+            var date = document.getElementById("start_date").value;
 
-            var data = 'sum='+sum+'&percent='+percent+'&period='+period;
+            var data = 'sum='+sum+'&percent='+percent+'&period='+period+'&start_date='+date;
 
             postData(url, data)
                 .then(data => console.log(data)) // JSON from `response.json()` call
@@ -36,6 +37,8 @@
     <input id="percent" name="percent" type="number">
     <label for="period">Period</label>
     <input id="period" name="period" type="number">
+    <label for="start_date">Start Date</label>
+    <input id="start_date" name="start_date" type="date">
 </form>
 <button onclick="sendForm()">Calculate</button>
 </body>
