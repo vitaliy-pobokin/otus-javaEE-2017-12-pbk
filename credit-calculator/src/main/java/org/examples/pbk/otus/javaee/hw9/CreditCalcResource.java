@@ -7,6 +7,8 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.StreamingOutput;
 import java.io.*;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.time.LocalDate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -41,7 +43,6 @@ public class CreditCalcResource {
                 jsonGenerator.writeEnd().flush();
             }
         };
-        logger.log(Level.INFO, "v1");
         return Response.ok(stream).build();
     }
 
@@ -49,7 +50,7 @@ public class CreditCalcResource {
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Produces("application/credit_payment-v2+json")
     public Response calculateAnnuitantCreditPayments(
-            @FormParam("sum") int sum,
+            @FormParam("sum") BigDecimal sum,
             @FormParam("percent") double percent,
             @FormParam("period") int period,
             @FormParam("start_date") String startDate
@@ -62,14 +63,18 @@ public class CreditCalcResource {
                 Writer writer = new BufferedWriter(new OutputStreamWriter(os));
                 JsonGenerator jsonGenerator = Json.createGenerator(writer);
                 jsonGenerator.writeStartArray();
-                double debtBalance = sum;
-                LocalDate paymentDate = date;
+                BigDecimal debtBalance = sum;
+                BigDecimal monthlyPercent = BigDecimal.valueOf(percent/12/100);
+                BigDecimal payment = sum.multiply(monthlyPercent).divide(BigDecimal.valueOf(1).subtract(BigDecimal.valueOf(1).divide(monthlyPercent.add(BigDecimal.valueOf(1)).pow(period), 10, BigDecimal.ROUND_HALF_EVEN)), 10, BigDecimal.ROUND_HALF_EVEN).setScale(2, BigDecimal.ROUND_HALF_EVEN);
                 for (int i = 1; i <= period; i++) {
-                    double payment = sum*percent/12/100/(1 - 1/Math.pow((1 + percent/12/100), period));
-                    double accrualPayment = percent/100/paymentDate.lengthOfYear() * paymentDate.lengthOfMonth() * debtBalance;
-                    double debtPayment = payment - accrualPayment;
-                    debtBalance = debtBalance - debtPayment;
-                    paymentDate = paymentDate.plusMonths(1);
+                    LocalDate paymentDate = date.plusMonths(i);
+                    BigDecimal accrualPayment = calculateAccrualPayment(date.plusMonths(i - 1), paymentDate, debtBalance, percent).setScale(2, BigDecimal.ROUND_HALF_EVEN);
+                    BigDecimal debtPayment = payment.subtract(accrualPayment).setScale(2, BigDecimal.ROUND_HALF_EVEN);
+                    if (debtPayment.compareTo(debtBalance) > 0) {
+                        debtPayment = debtBalance.setScale(2, BigDecimal.ROUND_HALF_EVEN);
+                        payment = debtPayment.add(accrualPayment).setScale(2, BigDecimal.ROUND_HALF_EVEN);
+                    }
+                    debtBalance = debtBalance.subtract(debtPayment).setScale(2, BigDecimal.ROUND_HALF_EVEN);
                     jsonGenerator.writeStartObject()
                             .write("month", i)
                             .write("payment", payment)
@@ -82,7 +87,14 @@ public class CreditCalcResource {
                 jsonGenerator.writeEnd().flush();
             }
         };
-        logger.log(Level.INFO, "v2");
         return Response.ok(stream).build();
+    }
+
+    private BigDecimal calculateAccrualPayment(LocalDate startDate, LocalDate endDate, BigDecimal debtAmount, double percent) {
+        BigDecimal accrualPayment = new BigDecimal(0);
+        for(int i = 1; i <= (endDate.toEpochDay() - startDate.toEpochDay()); i++) {
+            accrualPayment = accrualPayment.add(debtAmount.multiply(BigDecimal.valueOf(percent/100/startDate.plusDays(i).lengthOfYear())));
+        }
+        return accrualPayment;
     }
 }
