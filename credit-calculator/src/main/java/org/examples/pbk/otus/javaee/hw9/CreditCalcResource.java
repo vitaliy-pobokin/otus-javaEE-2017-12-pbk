@@ -21,11 +21,12 @@ public class CreditCalcResource {
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Produces("application/credit_payment-v1+json")
     public Response calculateDiffCreditPayments(
-            @FormParam("sum") int sum,
+            @FormParam("sum") BigDecimal sum,
             @FormParam("percent") double percent,
-            @FormParam("period") int period
+            @FormParam("period") int period,
+            @FormParam("start_date") String startDate
     ) {
-
+        LocalDate date = LocalDate.parse(startDate);
         StreamingOutput stream = new StreamingOutput() {
             @Override
             public void write(OutputStream os) throws IOException,
@@ -33,12 +34,25 @@ public class CreditCalcResource {
                 Writer writer = new BufferedWriter(new OutputStreamWriter(os));
                 JsonGenerator jsonGenerator = Json.createGenerator(writer);
                 jsonGenerator.writeStartArray();
+                BigDecimal debtBalance = sum;
+                BigDecimal debtPayment = sum.divide(BigDecimal.valueOf(period), 2, BigDecimal.ROUND_HALF_EVEN);
                 for (int i = 1; i <= period; i++) {
-                    double payment = sum/period + sum*(period - i + 1)*percent/100/12/period;
-                    jsonGenerator.writeStartObject();
-                    jsonGenerator.write("month", i);
-                    jsonGenerator.write("payment", payment);
-                    jsonGenerator.writeEnd();
+                    LocalDate paymentDate = date.plusMonths(i);
+                    BigDecimal accrualPayment = calculateAccrualPayment(date.plusMonths(i - 1), paymentDate, debtBalance, percent).setScale(2, BigDecimal.ROUND_HALF_EVEN);
+                    BigDecimal payment = debtPayment.add(accrualPayment).setScale(2, BigDecimal.ROUND_HALF_EVEN);
+                    if (i == period && debtPayment.compareTo(debtBalance) > 0) {
+                        debtPayment = debtBalance.setScale(2, BigDecimal.ROUND_HALF_EVEN);
+                        payment = debtPayment.add(accrualPayment).setScale(2, BigDecimal.ROUND_HALF_EVEN);
+                    }
+                    debtBalance = debtBalance.subtract(debtPayment).setScale(2, BigDecimal.ROUND_HALF_EVEN);
+                    jsonGenerator.writeStartObject()
+                            .write("month", i)
+                            .write("payment", payment)
+                            .write("debt_payment", debtPayment)
+                            .write("accrual_payment", accrualPayment)
+                            .write("debt_balance", debtBalance)
+                            .write("payment_date", paymentDate.toString())
+                            .writeEnd();
                 }
                 jsonGenerator.writeEnd().flush();
             }
@@ -70,7 +84,7 @@ public class CreditCalcResource {
                     LocalDate paymentDate = date.plusMonths(i);
                     BigDecimal accrualPayment = calculateAccrualPayment(date.plusMonths(i - 1), paymentDate, debtBalance, percent).setScale(2, BigDecimal.ROUND_HALF_EVEN);
                     BigDecimal debtPayment = payment.subtract(accrualPayment).setScale(2, BigDecimal.ROUND_HALF_EVEN);
-                    if (debtPayment.compareTo(debtBalance) > 0) {
+                    if (i == period && debtPayment.compareTo(debtBalance) > 0) {
                         debtPayment = debtBalance.setScale(2, BigDecimal.ROUND_HALF_EVEN);
                         payment = debtPayment.add(accrualPayment).setScale(2, BigDecimal.ROUND_HALF_EVEN);
                     }
@@ -83,6 +97,20 @@ public class CreditCalcResource {
                             .write("debt_balance", debtBalance)
                             .write("payment_date", paymentDate.toString())
                             .writeEnd();
+                    if (i == period && debtBalance.compareTo(BigDecimal.ZERO) > 0) {
+                        payment = debtBalance;
+                        debtPayment = BigDecimal.ZERO;
+                        accrualPayment = BigDecimal.ZERO;
+                        debtBalance = BigDecimal.ZERO;
+                        jsonGenerator.writeStartObject()
+                                .write("month", i)
+                                .write("payment", payment)
+                                .write("debt_payment", debtPayment)
+                                .write("accrual_payment", accrualPayment)
+                                .write("debt_balance", debtBalance)
+                                .write("payment_date", paymentDate.toString())
+                                .writeEnd();
+                    }
                 }
                 jsonGenerator.writeEnd().flush();
             }
