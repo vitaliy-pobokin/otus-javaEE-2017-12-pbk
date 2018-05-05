@@ -19,7 +19,7 @@ public class CreditCalcResource {
 
     @POST
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-    @Produces("application/credit_payment-v1+json")
+    @Produces("application/credit_payment-v1+json; charset=UTF-8")
     public Response calculateDiffCreditPayments(
             @FormParam("sum") BigDecimal sum,
             @FormParam("percent") double percent,
@@ -53,6 +53,20 @@ public class CreditCalcResource {
                             .write("debt_balance", debtBalance)
                             .write("payment_date", paymentDate.toString())
                             .writeEnd();
+                    if (i == period && debtBalance.compareTo(BigDecimal.ZERO) > 0) {
+                        payment = debtBalance;
+                        debtPayment = BigDecimal.ZERO;
+                        accrualPayment = BigDecimal.ZERO;
+                        debtBalance = BigDecimal.ZERO;
+                        jsonGenerator.writeStartObject()
+                                .write("month", i)
+                                .write("payment", payment)
+                                .write("debt_payment", debtPayment)
+                                .write("accrual_payment", accrualPayment)
+                                .write("debt_balance", debtBalance)
+                                .write("payment_date", paymentDate.toString())
+                                .writeEnd();
+                    }
                 }
                 jsonGenerator.writeEnd().flush();
             }
@@ -62,7 +76,7 @@ public class CreditCalcResource {
 
     @POST
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-    @Produces("application/credit_payment-v2+json")
+    @Produces("application/credit_payment-v2+json; charset=UTF-8")
     public Response calculateAnnuitantCreditPayments(
             @FormParam("sum") BigDecimal sum,
             @FormParam("percent") double percent,
