@@ -61,7 +61,7 @@
         function showData(data) {
             var tbody = document.createElement("tbody");
             tbody.setAttribute("id", "tbody");
-            data.forEach(function (item) {
+            data.forEach(function (item, index) {
                 var tr = document.createElement("tr");
                 var th = document.createElement("th");
                 th.setAttribute('scope', 'row');
@@ -71,7 +71,7 @@
                 var td_debt_payment = document.createElement("td");
                 var td_accrual_payment = document.createElement("td");
                 var td_debt_balance = document.createElement("td");
-                th.appendChild(document.createTextNode(item.month));
+                th.appendChild(document.createTextNode(index + 1));
                 td_date.appendChild(document.createTextNode(item.payment_date));
                 td_payment.appendChild(document.createTextNode(item.payment));
                 td_debt_payment.appendChild(document.createTextNode(item.debt_payment));
@@ -95,7 +95,7 @@
 </head>
 <body>
 <div class="container">
-    <form>
+    <form style="margin-top: 30px">
         <div class="row">
             <div class="form-group col-sm-6">
                 <div class="row">
@@ -151,7 +151,7 @@
     </form>
     <button class="btn btn-primary" onclick="sendForm()">Рассчитать</button>
     <div class="row">
-        <table id="table" class="table table-hover table-responsive-sm" hidden>
+        <table id="table" class="table table-hover table-responsive-sm" style="margin-top: 30px" hidden>
             <thead>
                 <tr>
                     <th scope="col">№</th>
