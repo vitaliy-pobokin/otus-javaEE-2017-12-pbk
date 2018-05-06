@@ -1,0 +1,38 @@
+<div class="modal-header">
+    <button type="button" class="close" ng-click="ctrl.close()" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <h4 class="modal-title" id="exampleModalLabel">Add Employee</h4>
+</div>
+<div class="modal-body">
+    <form>
+        <div class="form-group">
+            <label for="employee-name" class="control-label">Employee Name:</label>
+            <input type="text" class="form-control" id="employee-name" ng-model="ctrl.employee.name">
+            <label for="employee-age" class="control-label">Age:</label>
+            <input type="number" class="form-control" id="employee-age" ng-model="ctrl.employee.age">
+        </div>
+        <div class="form-group">
+            <label for="employee-email" class="control-label">Email:</label>
+            <input type="text" class="form-control" id="employee-email" ng-model="ctrl.employee.email">
+            <label for="employee-phone" class="control-label">Phone:</label>
+            <input type="text" class="form-control" id="employee-phone" ng-model="ctrl.employee.phone">
+        </div>
+        <div class="form-group">
+            <label for="employee-hiredate" class="control-label">HireDate:</label>
+            <input type="text" class="form-control" id="employee-hiredate" ng-model="ctrl.employee.hireDate">
+            <label for="employee-job" class="control-label">Job:</label>
+            <input type="text" class="form-control" id="employee-job" ng-model="ctrl.employee.job">
+            <label for="employee-salary" class="control-label">Salary:</label>
+            <input type="number" class="form-control" id="employee-salary" ng-model="ctrl.employee.salary">
+        </div>
+        <div class="form-group">
+            <label for="department" class="control-label">Department:</label>
+            <select ng-options="d as d.name for d in ctrl.departments track by d.id" ng-model="ctrl.employee.department" class="form-control" id="department">
+                <!--<option ng-repeat="">{{d.name}} - {{d.city}}</option>-->
+            </select>
+        </div>
+    </form>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-default" ng-click="ctrl.close()">Cancel</button>
+    <button type="button" class="btn btn-primary" ng-click="ctrl.createEmployee(ctrl.employee)">Add</button>
+</div>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<accounts>
+  <account id="1">
+    <username>SKING</username>
+    <password>sking</password>
+    <role>CEO</role>
+  </account>
+  <account id="2">
+    <username>NKOCHHAR</username>
+    <password>nkochhar</password>
+    <role>ACC</role>
+  </account>
+  <account id="3">
+    <username>LDEHAAN</username>
+    <password>ldehaan</password>
+    <role>HRM</role>
+  </account>
+  <account id="4">
+    <username>AHUNOLD</username>
+    <password>ahunold</password>
+    <role>USR</role>
+  </account>
+  <account id="5">
+    <username>BERNST</username>
+    <password>bernst</password>
+    <role>USR</role>
+  </account>
+  <account id="6">
+    <username>DAUSTIN</username>
+    <password>daustin</password>
+    <role>ACC</role>
+  </account>
+  <account id="7">
+    <username>VPATABAL</username>
+    <password>vpatabal</password>
+    <role>USR</role>
+  </account>
+  <account id="8">
+    <username>DLORENTZ</username>
+    <password>dlorentz</password>
+    <role>USR</role>
+  </account>
+  <account id="9">
+      <username>DFAVIET</username>
+      <password>dfaviet</password>
+      <role>USR</role>
+    </account>
+  <account id="10">
+      <username>ISCIARRA</username>
+      <password>isciarra</password>
+      <role>USR</role>
+    </account>
+</accounts>

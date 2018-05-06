@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <xs:element name="account" type="account"/>
+
+  <xs:element name="accounts" type="xmlAccountWrapper"/>
+
+  <xs:complexType name="xmlAccountWrapper">
+    <xs:sequence>
+      <xs:element ref="account" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="account">
+    <xs:all>
+      <xs:element name="password" type="xs:string"/>
+      <xs:element name="role" type="xs:string"/>
+      <xs:element name="username" type="xs:string"/>
+    </xs:all>
+    <xs:attribute name="id" type="xs:long" use="required"/>
+  </xs:complexType>
+</xs:schema>
+

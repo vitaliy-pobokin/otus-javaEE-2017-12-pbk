@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<departments>
+  <department id="1">
+      <name>Administration</name>
+      <city>Moscow</city>
+  </department>
+  <department id="2">
+      <name>Marketing</name>
+      <city>Saint-Petersburg</city>
+  </department>
+  <department id="3">
+      <name>Purchasing</name>
+      <city>London</city>
+  </department>
+  <department id="4">
+      <name>Shipping</name>
+      <city>Hamburg</city>
+  </department>
+  <department id="5">
+      <name>Public Relations</name>
+      <city>New-York</city>
+  </department>
+</departments>
