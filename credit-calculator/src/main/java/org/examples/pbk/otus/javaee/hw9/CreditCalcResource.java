@@ -1,5 +1,7 @@
 package org.examples.pbk.otus.javaee.hw9;
 
+import io.swagger.annotations.*;
+
 import javax.json.Json;
 import javax.json.stream.JsonGenerator;
 import javax.ws.rs.*;
@@ -13,6 +15,27 @@ import java.time.LocalDate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+@SwaggerDefinition(
+        info = @Info(
+                title = "Loan Calculator Swagger-generated API",
+                description = "User Resource Description example",
+                version = "1.0.0",
+                termsOfService = "share and care",
+                contact = @Contact(
+                        name = "Vitaliy", email = "pbk.vitaliy@gmail.com",
+                        url = "https://example.com"),
+                license = @License(
+                        name = "Apache 2.0",
+                        url = "http://www.apache.org")),
+        tags = {
+                @Tag(name = "Loan Calculator Swagger-generated API",
+                        description = "Description Example")
+        },
+        host = "localhost:3000",
+        basePath = "/api",
+        schemes = {SwaggerDefinition.Scheme.HTTP}
+)
+@Api(tags = "Loan Calculator Swagger-generated API", consumes = MediaType.APPLICATION_FORM_URLENCODED)
 @Path("/credit_calc")
 public class CreditCalcResource {
     private static final Logger logger = Logger.getLogger(CreditCalcResource.class.getName());
@@ -20,6 +43,17 @@ public class CreditCalcResource {
     @POST
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Produces("application/credit_payment-v1+json; charset=UTF-8")
+    @ApiOperation(value = "Calculate Differential Credit Payments",
+        produces = "application/credit_payment-v1+json; charset=UTF-8")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "List of Credit Payments")
+    })
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "sum", value = "Loan Amount", dataTypeClass = BigDecimal.class, required = true, paramType = "form"),
+            @ApiImplicitParam(name = "percent", value = "Interest Rate per Year", dataTypeClass = double.class, required = true, paramType = "form"),
+            @ApiImplicitParam(name = "period", value = "Loan Term in Months", dataTypeClass = int.class, required = true, paramType = "form"),
+            @ApiImplicitParam(name = "start_date", value = "Loan Start Date", dataTypeClass = String.class, required = true, paramType = "form")
+    })
     public Response calculateDiffCreditPayments(
             @FormParam("sum") BigDecimal sum,
             @FormParam("percent") double percent,
@@ -76,6 +110,17 @@ public class CreditCalcResource {
     @POST
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Produces("application/credit_payment-v2+json; charset=UTF-8")
+    @ApiOperation(value = "Calculate Annuitant Credit Payments",
+            produces = "application/credit_payment-v2+json; charset=UTF-8")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "List of Credit Payments")
+    })
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "sum", value = "Loan Amount", dataTypeClass = BigDecimal.class, required = true, paramType = "form"),
+            @ApiImplicitParam(name = "percent", value = "Interest Rate per Year", dataTypeClass = double.class, required = true, paramType = "form"),
+            @ApiImplicitParam(name = "period", value = "Loan Term in Months", dataTypeClass = int.class, required = true, paramType = "form"),
+            @ApiImplicitParam(name = "start_date", value = "Loan Start Date", dataTypeClass = String.class, required = true, paramType = "form")
+    })
     public Response calculateAnnuitantCreditPayments(
             @FormParam("sum") BigDecimal sum,
             @FormParam("percent") double percent,
