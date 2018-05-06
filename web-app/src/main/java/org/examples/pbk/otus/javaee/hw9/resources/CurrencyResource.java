@@ -2,6 +2,10 @@ package org.examples.pbk.otus.javaee.hw9.resources;
 
 import com.fasterxml.jackson.dataformat.xml.JacksonXmlModule;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.examples.pbk.otus.javaee.hw9.model.Currencies;
 
 import javax.annotation.security.PermitAll;
@@ -14,12 +18,18 @@ import java.net.URL;
 
 @Path("currency")
 @Produces(MediaType.APPLICATION_JSON)
+@Api(tags = "currency_resource", produces = MediaType.APPLICATION_JSON)
 public class CurrencyResource {
 
     private static final String CURRENCIES_XML_URL = "http://www.cbr.ru/scripts/XML_daily.asp";
 
     @GET
     @PermitAll
+    @ApiOperation(value = "Fetch daily currency rates from cbr.ru",
+            produces = MediaType.APPLICATION_JSON)
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "List of Currencies")
+    })
     public Response getAll() throws Exception {
         JacksonXmlModule module = new JacksonXmlModule();
         module.setDefaultUseWrapper(false);

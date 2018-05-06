@@ -1,5 +1,6 @@
 package org.examples.pbk.otus.javaee.hw9.resources;
 
+import io.swagger.annotations.*;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -18,10 +19,16 @@ import javax.ws.rs.core.Response;
 
 @Path("news")
 @Produces(MediaType.APPLICATION_JSON)
+@Api(tags = "news_resource", produces = MediaType.APPLICATION_JSON)
 public class NewsResource {
 
     @GET
     @PermitAll
+    @ApiOperation(value = "Fetch news from https://www.gazeta.ru/",
+            produces = MediaType.APPLICATION_JSON)
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "List of News")
+    })
     public Response getAll() throws Exception {
         Document site = Jsoup.connect("https://www.gazeta.ru/").get();
         Elements newsElements = site.getElementById("headlines").getElementsByClass("sausage-list-item");

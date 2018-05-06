@@ -3,6 +3,7 @@ package org.examples.pbk.otus.javaee.hw9.resources;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
+import io.swagger.annotations.*;
 import org.examples.pbk.otus.javaee.hw9.model.Account;
 import org.examples.pbk.otus.javaee.hw9.model.Credentials;
 import org.examples.pbk.otus.javaee.hw9.model.User;
@@ -26,6 +27,7 @@ import java.util.Date;
 @Path("login")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
+@Api(tags = "login_resource", produces = MediaType.APPLICATION_JSON, consumes = MediaType.APPLICATION_JSON)
 public class LoginResource {
     private static final long EXPIRATION_PERIOD = 1000 * 60 * 60 * 24 * 7;
     private static final String SIGNATURE_KEY = "ShouldBeProducedNotFromString";
@@ -42,7 +44,14 @@ public class LoginResource {
 
     @POST
     @PermitAll
-    public Response login(Credentials credentials, @Context HttpServletRequest request) {
+    @ApiOperation(value = "Login with Credentials",
+            produces = MediaType.APPLICATION_JSON,
+            consumes = MediaType.APPLICATION_JSON)
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Logged in User Info"),
+            @ApiResponse(code = 401, message = "Login failed")
+    })
+    public Response login(@ApiParam(name = "credentials", value = "Credentials to check", required = true) Credentials credentials, @Context HttpServletRequest request) {
         String username = credentials.getUsername();
         String password = credentials.getPassword();
         Account account = null;

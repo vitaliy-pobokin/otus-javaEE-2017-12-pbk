@@ -1,6 +1,7 @@
 package org.examples.pbk.otus.javaee.hw9.statistic;
 
 import com.blueconic.browscap.*;
+import io.swagger.annotations.*;
 import org.examples.pbk.otus.javaee.hw9.UserAgentParserProvider;
 import org.examples.pbk.otus.javaee.hw9.statistic.markers.BrowserUsageMarker;
 import org.examples.pbk.otus.javaee.hw9.statistic.markers.PageViewsMarker;
@@ -27,6 +28,7 @@ import java.util.Map;
 
 @Path("statistic")
 @Produces(MediaType.APPLICATION_JSON)
+@Api(tags = "statistic_resource", produces = MediaType.APPLICATION_JSON, consumes = MediaType.APPLICATION_JSON)
 public class StatisticResource {
 
     private static final String USER_AGENT_HEADER = "User-Agent";
@@ -46,6 +48,14 @@ public class StatisticResource {
     @GET
     @Path("/browser_usage")
     @RolesAllowed({"CEO"})
+    @ApiOperation(value = "Get Browser Usage Markers",
+            produces = MediaType.APPLICATION_JSON,
+            authorizations = {
+                    @Authorization(value = "Bearer", scopes = {})
+            })
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "List of Markers")
+    })
     public Response getBrowserUsageMarkers() {
         List<BrowserUsageMarker> markers = statisticService.getBrowserUsageMarker();
         return Response.ok(markers).build();
@@ -54,6 +64,14 @@ public class StatisticResource {
     @GET
     @Path("/page_views")
     @RolesAllowed({"CEO"})
+    @ApiOperation(value = "Get Page Views Markers",
+            produces = MediaType.APPLICATION_JSON,
+            authorizations = {
+                    @Authorization(value = "Bearer", scopes = {})
+            })
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "List of Markers")
+    })
     public Response getPageViewsMarkers() {
         List<PageViewsMarker> markers = statisticService.getPageViewsMarker();
         return Response.ok(markers).build();
@@ -62,6 +80,14 @@ public class StatisticResource {
     @GET
     @Path("/platform_usage")
     @RolesAllowed({"CEO"})
+    @ApiOperation(value = "Get Platform Usage Markers",
+            produces = MediaType.APPLICATION_JSON,
+            authorizations = {
+                    @Authorization(value = "Bearer", scopes = {})
+            })
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "List of Markers")
+    })
     public Response getPlatformUsageMarkers() {
         List<PlatformUsageMarker> markers = statisticService.getPlatformUsageMarker();
         return Response.ok(markers).build();
@@ -70,6 +96,14 @@ public class StatisticResource {
     @GET
     @Path("/visits_per_day")
     @RolesAllowed({"CEO"})
+    @ApiOperation(value = "Get Visits per Day Markers",
+            produces = MediaType.APPLICATION_JSON,
+            authorizations = {
+                    @Authorization(value = "Bearer", scopes = {})
+            })
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "List of Markers")
+    })
     public Response getVisitsPerDayMarker() {
         List<VisitsPerDayMarker> markers = statisticService.getVisitsPerDayMarker();
         return Response.ok(markers).build();
@@ -79,7 +113,16 @@ public class StatisticResource {
     @Path("/stat")
     @PermitAll
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response createStatMarker(InputStream data, @Context HttpServletRequest req) {
+    @ApiOperation(value = "Create StatMarker",
+            produces = MediaType.APPLICATION_JSON,
+            consumes = MediaType.APPLICATION_JSON)
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Id of created StatMarker"),
+            @ApiResponse(code = 406, message = "Statistic collection turned off")
+    })
+    public Response createStatMarker(
+            @ApiParam(name = "marker", value = "StatMarker Additional Info", required = true) InputStream data,
+            @Context HttpServletRequest req) {
         if (collectStatistic) {
             Map<String, String> statData = new HashMap<>();
             JsonParser jsonParser = Json.createParser(data);
@@ -138,6 +181,14 @@ public class StatisticResource {
     @GET
     @Path("/stat_collection_status")
     @RolesAllowed({"CEO"})
+    @ApiOperation(value = "Get Stat Collection Status",
+            produces = MediaType.APPLICATION_JSON,
+            authorizations = {
+                    @Authorization(value = "Bearer", scopes = {})
+            })
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Status")
+    })
     public Response getStatCollectionStatus() {
         return Response.ok(collectStatistic).build();
     }
@@ -145,6 +196,13 @@ public class StatisticResource {
     @GET
     @Path("/alter_stat_collection")
     @RolesAllowed({"CEO"})
+    @ApiOperation(value = "Alter Stat Collection Status",
+            authorizations = {
+                    @Authorization(value = "Bearer", scopes = {})
+            })
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Collection Status Changed")
+    })
     public synchronized Response alterStatCollection() {
         collectStatistic = !collectStatistic;
         return Response.ok().build();
