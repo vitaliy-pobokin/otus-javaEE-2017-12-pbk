@@ -29,8 +29,7 @@ public class CreditCalcResource {
         LocalDate date = LocalDate.parse(startDate);
         StreamingOutput stream = new StreamingOutput() {
             @Override
-            public void write(OutputStream os) throws IOException,
-                    WebApplicationException {
+            public void write(OutputStream os) throws IOException, WebApplicationException {
                 Writer writer = new BufferedWriter(new OutputStreamWriter(os));
                 JsonGenerator jsonGenerator = Json.createGenerator(writer);
                 jsonGenerator.writeStartArray();
@@ -86,8 +85,7 @@ public class CreditCalcResource {
         LocalDate date = LocalDate.parse(startDate);
         StreamingOutput stream = new StreamingOutput() {
             @Override
-            public void write(OutputStream os) throws IOException,
-                    WebApplicationException {
+            public void write(OutputStream os) throws IOException, WebApplicationException {
                 Writer writer = new BufferedWriter(new OutputStreamWriter(os));
                 JsonGenerator jsonGenerator = Json.createGenerator(writer);
                 jsonGenerator.writeStartArray();
