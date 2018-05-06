@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<employees>
+  <employee id="1">
+    <name>Steven King</name>
+    <age>55</age>
+    <email>s.king@company.com</email>
+    <phone>+7(234)231-12-12</phone>
+    <hiredate>17-06-2011</hiredate>
+    <department id="1">
+      <name>Administration</name>
+      <city>Moscow</city>
+    </department>
+    <job>CEO</job>
+    <salary>24000</salary>
+    <account id="1">
+      <username>SKING</username>
+      <password>sking</password>
+      <role>CEO</role>
+    </account>
+  </employee>
+  <employee id="2">
+    <name>Neena Kochhar</name>
+    <age>47</age>
+    <email>n.kochhar@company.com</email>
+    <phone>+7(234)231-12-13</phone>
+    <hiredate>21-09-2009</hiredate>
+    <department id="1">
+      <name>Administration</name>
+      <city>Moscow</city>
+    </department>
+    <job>ACM</job>
+    <salary>17000</salary>
+    <account id="2">
+      <username>NKOCHHAR</username>
+      <password>nkochhar</password>
+      <role>ACM</role>
+    </account>
+  </employee>
+  <employee id="3">
+    <name>Lex De Haan</name>
+    <age>42</age>
+    <email>l.dehaan@company.com</email>
+    <phone>+7(234)231-12-15</phone>
+    <hiredate>13-01-2009</hiredate>
+    <department id="1">
+      <name>Administration</name>
+      <city>Moscow</city>
+    </department>
+    <job>AD_VP</job>
+    <salary>16000</salary>
+    <account id="3">
+      <username>LDEHAAN</username>
+      <password>ldehaan</password>
+      <role>HRM</role>
+    </account>
+  </employee>
+  <employee id="4">
+    <name>Alexander Hunold</name>
+    <age>27</age>
+    <email>a.hunold@company.com</email>
+    <phone>+7(456)231-12-12</phone>
+    <hiredate>03-01-2014</hiredate>
+    <department id="2">
+      <name>Marketing</name>
+      <city>Saint-Petersburg</city>
+    </department>
+    <job>IT_PROG</job>
+    <salary>9000</salary>
+    <account id="4">
+      <username>AHUNOLD</username>
+      <password>ahunold</password>
+      <role>USR</role>
+    </account>
+  </employee>
+  <employee id="5">
+    <name>Bruce Ernst</name>
+    <age>35</age>
+    <email>b.ernst@company.com</email>
+    <phone>+1(122)231-12-10</phone>
+    <hiredate>21-05-2015</hiredate>
+    <department id="5">
+      <name>Public Relations</name>
+      <city>New-York</city>
+    </department>
+    <job>IT_PROG</job>
+    <salary>6000</salary>
+    <account id="5">
+      <username>BERNST</username>
+      <password>bernst</password>
+      <role>USR</role>
+    </account>
+  </employee>
+  <employee id="6">
+    <name>David Austin</name>
+    <age>40</age>
+    <email>d.austin@company.com</email>
+    <phone>+3(122)445-00-11</phone>
+    <hiredate>25-06-2013</hiredate>
+    <department id="3">
+      <name>Purchasing</name>
+      <city>London</city>
+    </department>
+    <job>FI_MGR</job>
+    <salary>12000</salary>
+    <account id="6">
+      <username>DAUSTIN</username>
+      <password>daustin</password>
+      <role>ACM</role>
+    </account>
+  </employee>
+  <employee id="7">
+    <name>Valli Pataballa</name>
+    <age>29</age>
+    <email>v.pataballa@company.com</email>
+    <phone>+3(122)445-00-12</phone>
+    <hiredate>05-02-2014</hiredate>
+    <department id="3">
+      <name>Purchasing</name>
+      <city>London</city>
+    </department>
+    <job>IT_PROG</job>
+    <salary>4800</salary>
+    <account id="7">
+      <username>VPATABAL</username>
+      <password>vpatabal</password>
+      <role>USR</role>
+    </account>
+  </employee>
+  <employee id="8">
+    <name>Diana Lorentz</name>
+    <age>26</age>
+    <email>d.lorentz@company.com</email>
+    <phone>+3(122)445-00-13</phone>
+    <hiredate>07-02-2015</hiredate>
+    <department id="3">
+      <name>Purchasing</name>
+      <city>London</city>
+    </department>
+    <job>IT_PROG</job>
+    <salary>4200</salary>
+    <account id="8">
+      <username>DLORENTZ</username>
+      <password>dlorentz</password>
+      <role>USR</role>
+    </account>
+  </employee>
+  <employee id="9">
+    <name>Daniel Faviet</name>
+    <age>34</age>
+    <email>d.faviet@company.com</email>
+    <phone>+5(252)631-42-55</phone>
+    <hiredate>16-08-2010</hiredate>
+    <department id="4">
+      <name>Shipping</name>
+      <city>Hamburg</city>
+    </department>
+    <job>PU_MAN</job>
+    <salary>2800</salary>
+    <account id="9">
+      <username>DFAVIET</username>
+      <password>dfaviet</password>
+      <role>USR</role>
+    </account>
+  </employee>
+  <employee id="10">
+    <name>Ismael Sciarra</name>
+    <age>39</age>
+    <email>i.sciarra@company.com</email>
+    <phone>+5(252)631-42-56</phone>
+    <hiredate>30-09-2013</hiredate>
+    <department id="4">
+      <name>Shipping</name>
+      <city>Hamburg</city>
+    </department>
+    <job>PU_MAN</job>
+    <salary>2700</salary>
+    <account id="10">
+      <username>ISCIARRA</username>
+      <password>isciarra</password>
+      <role>USR</role>
+    </account>
+  </employee>
+</employees>

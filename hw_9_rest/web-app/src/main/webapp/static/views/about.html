@@ -1,0 +1,53 @@
+ 
+<div style="width: 1170px; display:flex; flex-wrap: wrap; margin-left: auto; margin-right: auto;">
+  <div style="width: 70%; max-width: 70%;" >
+    <div class="frame left">
+      <section style="display:flex; flex-wrap: wrap;">
+        <h3>About company</h3>
+          <p>Lorem, ipsum ultricies quam sem ultricies cursus - ornare sit, urna, bibendum nec sodales fusce, sodales in nulla tempus. In amet quisque duis ultricies sit adipiscing fusce nibh duis - non, vitae: metus. Massa leo odio lorem sem curabitur morbi eget bibendum ornare elementum pellentesque adipiscing malesuada eu lorem sapien ultricies.</p>
+          <blockquote>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
+            <footer>Someone famous in <cite title="Source Title">Source Title</cite></footer>
+          </blockquote>
+          <p>Mauris massa lorem enim - nibh quisque morbi adipiscing eros auctor adipiscing, nulla pharetra. Ultricies, maecenas integer duis, vulputate ipsum at mauris vivamus justo sapien in sapien morbi commodo sagittis maecenas urna. Tellus rutrum tellus morbi quisque quam risus eros risus arcu duis lorem odio, eros risus mattis porttitor. Urna metus morbi: et massa ligula duis mattis non risus integer magna proin porttitor diam nec odio vitae ornare.</p>
+          <p>Eget curabitur orci in duis bibendum leo amet orci porttitor mattis. Quam ultricies integer eros sapien eros: curabitur porttitor congue malesuada molestie, justo proin. Ultricies, amet commodo duis non bibendum sodales, ipsum nulla ipsum proin mattis sagittis: nec lectus tempus, leo pharetra.</p>
+        
+      </section>
+    </div>
+  </div>
+  <div style="width: 30%; max-width: 30%;">
+    <div class="frame right">
+      <aside>
+        <div class="panel panel-default">
+          <div class="panel-heading">Currencies</div>
+          <div class="panel-body">
+            <table class="table table-striped table-condensed" id="currencies">
+              <thead>
+              <tr>
+                <th>Nominal</th>
+                <th>Code</th>
+                <th>Value</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr ng-repeat="c in ctrl.getAllCurrencies() | filter:ctrl.filterByCurrency">
+                <td>{{c.nominal}}</td>
+                <td>{{c.charCode}}</td>
+                <td>{{c.value}}</td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="panel panel-default">
+          <div class="panel-heading">News</div>
+          <div class="panel-body">
+            <div class="card card__one" id="news" ng-repeat="n in ctrl.getAllNews()" style="cursor: pointer;" ng-click="ctrl.openLink(n.ref)">
+              <div class="card__desc">{{n.text}}</div>
+            </div>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </div>
+</div>
