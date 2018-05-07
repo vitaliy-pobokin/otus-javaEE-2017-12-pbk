@@ -1,4 +1,4 @@
-package org.examples.pbk.otus.javaee.hw9;
+package org.examples.pbk.otus.javaee.hw12;
 
 import org.ehcache.CacheManager;
 import org.ehcache.config.builders.CacheConfigurationBuilder;

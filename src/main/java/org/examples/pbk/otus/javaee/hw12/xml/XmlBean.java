@@ -1,4 +1,4 @@
-package org.examples.pbk.otus.javaee.hw9.xml;
+package org.examples.pbk.otus.javaee.hw12.xml;
 
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;

@@ -5,9 +5,9 @@
 
     <persistence-unit name="persistence" transaction-type="RESOURCE_LOCAL">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
-        <class>org.examples.pbk.otus.javaee.hw9.model.Account</class>
-        <class>org.examples.pbk.otus.javaee.hw9.model.Department</class>
-        <class>org.examples.pbk.otus.javaee.hw9.model.Employee</class>
+        <class>org.examples.pbk.otus.javaee.hw12.model.Account</class>
+        <class>org.examples.pbk.otus.javaee.hw12.model.Department</class>
+        <class>org.examples.pbk.otus.javaee.hw12.model.Employee</class>
         <properties>
             <property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@127.0.0.1:1521:XE" />
             <property name="javax.persistence.jdbc.user" value="system" />

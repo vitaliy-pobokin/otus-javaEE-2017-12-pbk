@@ -1,11 +1,11 @@
-package org.examples.pbk.otus.javaee.hw9;
+package org.examples.pbk.otus.javaee.hw12;
 
-import org.examples.pbk.otus.javaee.hw9.model.*;
-import org.examples.pbk.otus.javaee.hw9.resources.TransactionUtils;
-import org.examples.pbk.otus.javaee.hw9.service.JpaAccountService;
-import org.examples.pbk.otus.javaee.hw9.service.JpaDepartmentService;
-import org.examples.pbk.otus.javaee.hw9.service.JpaEmployeeService;
-import org.examples.pbk.otus.javaee.hw9.xml.XmlBean;
+import org.examples.pbk.otus.javaee.hw12.model.*;
+import org.examples.pbk.otus.javaee.hw12.resources.TransactionUtils;
+import org.examples.pbk.otus.javaee.hw12.service.JpaAccountService;
+import org.examples.pbk.otus.javaee.hw12.service.JpaDepartmentService;
+import org.examples.pbk.otus.javaee.hw12.service.JpaEmployeeService;
+import org.examples.pbk.otus.javaee.hw12.xml.XmlBean;
 import org.hibernate.ReplicationMode;
 
 import javax.servlet.ServletContext;

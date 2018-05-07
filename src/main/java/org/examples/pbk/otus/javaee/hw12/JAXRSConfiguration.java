@@ -1,8 +1,8 @@
-package org.examples.pbk.otus.javaee.hw9;
+package org.examples.pbk.otus.javaee.hw12;
 
 import io.swagger.jaxrs.config.BeanConfig;
-import org.examples.pbk.otus.javaee.hw9.resources.*;
-import org.examples.pbk.otus.javaee.hw9.statistic.StatisticResource;
+import org.examples.pbk.otus.javaee.hw12.resources.*;
+import org.examples.pbk.otus.javaee.hw12.statistic.StatisticResource;
 
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
