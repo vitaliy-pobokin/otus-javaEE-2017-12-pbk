@@ -34,6 +34,8 @@ public class StatisticResource {
 
     private static volatile boolean collectStatistic = true;
 
+    private static final Object lock = new Object();
+
     private StatisticMarkerService statisticService;
 
     private UserAgentParser userAgentParser;
@@ -146,8 +148,10 @@ public class StatisticResource {
     @GET
     @Path("/alter_stat_collection")
     @RolesAllowed({"CEO"})
-    public synchronized Response alterStatCollection() {
-        collectStatistic = !collectStatistic;
+    public Response alterStatCollection() {
+        synchronized (lock) {
+            collectStatistic = !collectStatistic;
+        }
         return Response.ok().build();
     }
 }
