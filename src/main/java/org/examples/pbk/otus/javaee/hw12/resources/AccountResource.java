@@ -1,8 +1,8 @@
-package org.examples.pbk.otus.javaee.hw9.resources;
+package org.examples.pbk.otus.javaee.hw12.resources;
 
-import org.examples.pbk.otus.javaee.hw9.model.Account;
-import org.examples.pbk.otus.javaee.hw9.service.AccountService;
-import org.examples.pbk.otus.javaee.hw9.service.JpaAccountService;
+import org.examples.pbk.otus.javaee.hw12.model.Account;
+import org.examples.pbk.otus.javaee.hw12.service.AccountService;
+import org.examples.pbk.otus.javaee.hw12.service.JpaAccountService;
 
 import javax.annotation.security.DenyAll;
 import javax.inject.Inject;

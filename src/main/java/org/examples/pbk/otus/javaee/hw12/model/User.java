@@ -1,4 +1,4 @@
-package org.examples.pbk.otus.javaee.hw9.model;
+package org.examples.pbk.otus.javaee.hw12.model;
 
 import javax.json.Json;
 import javax.json.JsonObject;

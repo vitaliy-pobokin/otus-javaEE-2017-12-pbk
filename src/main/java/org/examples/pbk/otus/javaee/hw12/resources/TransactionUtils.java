@@ -1,6 +1,6 @@
-package org.examples.pbk.otus.javaee.hw9.resources;
+package org.examples.pbk.otus.javaee.hw12.resources;
 
-import org.examples.pbk.otus.javaee.hw9.SessionFactoryProvider;
+import org.examples.pbk.otus.javaee.hw12.SessionFactoryProvider;
 import org.hibernate.Session;
 import java.util.function.Consumer;
 import java.util.function.Function;

@@ -1,10 +1,10 @@
-package org.examples.pbk.otus.javaee.hw9.statistic;
+package org.examples.pbk.otus.javaee.hw12.statistic;
 
-import org.examples.pbk.otus.javaee.hw9.resources.TransactionUtils;
-import org.examples.pbk.otus.javaee.hw9.statistic.markers.BrowserUsageMarker;
-import org.examples.pbk.otus.javaee.hw9.statistic.markers.PageViewsMarker;
-import org.examples.pbk.otus.javaee.hw9.statistic.markers.PlatformUsageMarker;
-import org.examples.pbk.otus.javaee.hw9.statistic.markers.VisitsPerDayMarker;
+import org.examples.pbk.otus.javaee.hw12.resources.TransactionUtils;
+import org.examples.pbk.otus.javaee.hw12.statistic.markers.BrowserUsageMarker;
+import org.examples.pbk.otus.javaee.hw12.statistic.markers.PageViewsMarker;
+import org.examples.pbk.otus.javaee.hw12.statistic.markers.PlatformUsageMarker;
+import org.examples.pbk.otus.javaee.hw12.statistic.markers.VisitsPerDayMarker;
 
 import java.util.List;
 

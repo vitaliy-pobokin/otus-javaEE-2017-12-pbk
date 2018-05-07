@@ -1,4 +1,4 @@
-package org.examples.pbk.otus.javaee.hw9.model;
+package org.examples.pbk.otus.javaee.hw12.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;

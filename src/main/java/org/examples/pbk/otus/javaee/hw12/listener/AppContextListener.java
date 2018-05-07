@@ -1,10 +1,10 @@
-package org.examples.pbk.otus.javaee.hw9.listener;
+package org.examples.pbk.otus.javaee.hw12.listener;
 
-import org.examples.pbk.otus.javaee.hw9.CacheManagerProvider;
-import org.examples.pbk.otus.javaee.hw9.DatabaseStateManager;
-import org.examples.pbk.otus.javaee.hw9.SessionFactoryProvider;
-import org.examples.pbk.otus.javaee.hw9.resources.TransactionUtils;
-import org.examples.pbk.otus.javaee.hw9.statistic.StatisticBean;
+import org.examples.pbk.otus.javaee.hw12.CacheManagerProvider;
+import org.examples.pbk.otus.javaee.hw12.DatabaseStateManager;
+import org.examples.pbk.otus.javaee.hw12.SessionFactoryProvider;
+import org.examples.pbk.otus.javaee.hw12.resources.TransactionUtils;
+import org.examples.pbk.otus.javaee.hw12.statistic.StatisticBean;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;

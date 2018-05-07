@@ -1,9 +1,9 @@
-package org.examples.pbk.otus.javaee.hw9.statistic;
+package org.examples.pbk.otus.javaee.hw12.statistic;
 
-import org.examples.pbk.otus.javaee.hw9.statistic.markers.BrowserUsageMarker;
-import org.examples.pbk.otus.javaee.hw9.statistic.markers.PageViewsMarker;
-import org.examples.pbk.otus.javaee.hw9.statistic.markers.PlatformUsageMarker;
-import org.examples.pbk.otus.javaee.hw9.statistic.markers.VisitsPerDayMarker;
+import org.examples.pbk.otus.javaee.hw12.statistic.markers.BrowserUsageMarker;
+import org.examples.pbk.otus.javaee.hw12.statistic.markers.PageViewsMarker;
+import org.examples.pbk.otus.javaee.hw12.statistic.markers.PlatformUsageMarker;
+import org.examples.pbk.otus.javaee.hw12.statistic.markers.VisitsPerDayMarker;
 import org.hibernate.Session;
 
 import javax.persistence.ParameterMode;

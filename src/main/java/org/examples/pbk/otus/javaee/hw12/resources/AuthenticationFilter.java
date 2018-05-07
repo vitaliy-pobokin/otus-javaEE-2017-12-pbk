@@ -1,12 +1,12 @@
-package org.examples.pbk.otus.javaee.hw9.resources;
+package org.examples.pbk.otus.javaee.hw12.resources;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import org.examples.pbk.otus.javaee.hw9.model.Account;
-import org.examples.pbk.otus.javaee.hw9.service.JpaAccountService;
+import org.examples.pbk.otus.javaee.hw12.model.Account;
+import org.examples.pbk.otus.javaee.hw12.service.JpaAccountService;
 
 import javax.annotation.security.DenyAll;
 import javax.annotation.security.PermitAll;

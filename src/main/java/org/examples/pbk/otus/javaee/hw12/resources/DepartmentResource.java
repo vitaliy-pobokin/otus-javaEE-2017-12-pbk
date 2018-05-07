@@ -1,9 +1,9 @@
-package org.examples.pbk.otus.javaee.hw9.resources;
+package org.examples.pbk.otus.javaee.hw12.resources;
 
 import io.swagger.annotations.*;
-import org.examples.pbk.otus.javaee.hw9.model.Department;
-import org.examples.pbk.otus.javaee.hw9.service.DepartmentService;
-import org.examples.pbk.otus.javaee.hw9.service.JpaDepartmentService;
+import org.examples.pbk.otus.javaee.hw12.model.Department;
+import org.examples.pbk.otus.javaee.hw12.service.DepartmentService;
+import org.examples.pbk.otus.javaee.hw12.service.JpaDepartmentService;
 
 import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;

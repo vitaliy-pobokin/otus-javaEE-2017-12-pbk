@@ -1,8 +1,8 @@
-package org.examples.pbk.otus.javaee.hw9.service;
+package org.examples.pbk.otus.javaee.hw12.service;
 
-import org.examples.pbk.otus.javaee.hw9.dao.JpaEmployeeDao;
-import org.examples.pbk.otus.javaee.hw9.model.Employee;
-import org.examples.pbk.otus.javaee.hw9.resources.TransactionUtils;
+import org.examples.pbk.otus.javaee.hw12.dao.JpaEmployeeDao;
+import org.examples.pbk.otus.javaee.hw12.model.Employee;
+import org.examples.pbk.otus.javaee.hw12.resources.TransactionUtils;
 import org.hibernate.criterion.DetachedCriteria;
 
 import java.util.List;

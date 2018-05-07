@@ -1,6 +1,6 @@
-package org.examples.pbk.otus.javaee.hw9.dao;
+package org.examples.pbk.otus.javaee.hw12.dao;
 
-import org.examples.pbk.otus.javaee.hw9.model.Employee;
+import org.examples.pbk.otus.javaee.hw12.model.Employee;
 import org.hibernate.Session;
 import org.hibernate.criterion.DetachedCriteria;
 

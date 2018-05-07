@@ -1,4 +1,4 @@
-package org.examples.pbk.otus.javaee.hw9.resources;
+package org.examples.pbk.otus.javaee.hw12.resources;
 
 import io.swagger.annotations.*;
 import org.jsoup.Jsoup;

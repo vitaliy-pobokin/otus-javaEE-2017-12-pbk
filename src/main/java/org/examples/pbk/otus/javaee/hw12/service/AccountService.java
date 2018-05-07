@@ -1,6 +1,6 @@
-package org.examples.pbk.otus.javaee.hw9.service;
+package org.examples.pbk.otus.javaee.hw12.service;
 
-import org.examples.pbk.otus.javaee.hw9.model.Account;
+import org.examples.pbk.otus.javaee.hw12.model.Account;
 
 import java.util.List;
 

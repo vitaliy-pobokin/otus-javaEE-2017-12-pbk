@@ -1,4 +1,4 @@
-package org.examples.pbk.otus.javaee.hw9.resources;
+package org.examples.pbk.otus.javaee.hw12.resources;
 
 import com.fasterxml.jackson.dataformat.xml.JacksonXmlModule;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
@@ -6,7 +6,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
-import org.examples.pbk.otus.javaee.hw9.model.Currencies;
+import org.examples.pbk.otus.javaee.hw12.model.Currencies;
 
 import javax.annotation.security.PermitAll;
 import javax.ws.rs.GET;

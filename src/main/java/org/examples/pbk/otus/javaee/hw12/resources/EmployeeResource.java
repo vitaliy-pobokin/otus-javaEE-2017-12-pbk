@@ -1,11 +1,11 @@
-package org.examples.pbk.otus.javaee.hw9.resources;
+package org.examples.pbk.otus.javaee.hw12.resources;
 
 import io.swagger.annotations.*;
 import org.ehcache.Cache;
-import org.examples.pbk.otus.javaee.hw9.CacheManagerProvider;
-import org.examples.pbk.otus.javaee.hw9.model.Employee;
-import org.examples.pbk.otus.javaee.hw9.service.EmployeeService;
-import org.examples.pbk.otus.javaee.hw9.service.JpaEmployeeService;
+import org.examples.pbk.otus.javaee.hw12.CacheManagerProvider;
+import org.examples.pbk.otus.javaee.hw12.model.Employee;
+import org.examples.pbk.otus.javaee.hw12.service.EmployeeService;
+import org.examples.pbk.otus.javaee.hw12.service.JpaEmployeeService;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Restrictions;
