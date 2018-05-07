@@ -1,0 +1,87 @@
+<div style="width: 1170px; display:flex; flex-wrap: wrap; margin-left: auto; margin-right: auto;">
+  <div style="width: 70%; max-width: 70%;" >
+    <div class="frame left">
+      <section>
+        <div class="media">
+          <div class="media-left">
+            <a href="#">
+              <img class="media-object" src="http://placehold.it/64x64" alt="news image">
+            </a>
+          </div>
+          <div class="media-body">
+            <h4 class="media-heading">Media heading</h4>
+            <p>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.</p>
+          </div>
+        </div>
+        <div class="media">
+          <div class="media-left">
+            <a href="#">
+              <img class="media-object" src="http://placehold.it/64x64" alt="news image">
+            </a>
+          </div>
+          <div class="media-body">
+            <h4 class="media-heading">Media heading</h4>
+            <p>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.</p>
+          </div>
+        </div>
+        <div class="media">
+          <div class="media-left">
+            <a href="#">
+              <img class="media-object" src="http://placehold.it/64x64" alt="news image">
+            </a>
+          </div>
+          <div class="media-body">
+            <h4 class="media-heading">Media heading</h4>
+            <p>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.</p>
+          </div>
+        </div>
+        <div class="media">
+          <div class="media-left">
+            <a href="#">
+              <img class="media-object" src="http://placehold.it/64x64" alt="news image">
+            </a>
+          </div>
+          <div class="media-body">
+            <h4 class="media-heading">Media heading</h4>
+            <p>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.</p>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+  <div style="width: 30%; max-width: 30%;">
+    <div class="frame right">
+      <aside>
+        <div class="panel panel-default">
+          <div class="panel-heading">Currencies</div>
+          <div class="panel-body">
+            <table class="table table-striped table-condensed" id="currencies">
+              <thead>
+              <tr>
+                <th>Nominal</th>
+                <th>Code</th>
+                <th>Value</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr ng-repeat="c in ctrl.getAllCurrencies() | filter:ctrl.filterByCurrency">
+                <td>{{c.nominal}}</td>
+                <td>{{c.charCode}}</td>
+                <td>{{c.value}}</td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="panel panel-default">
+          <div class="panel-heading">News</div>
+          <div class="panel-body">
+            <div class="card card__one" id="news" ng-repeat="n in ctrl.getAllNews()" style="cursor: pointer;" ng-click="ctrl.openLink(n.ref)">
+              <div class="card__desc">{{n.text}}</div>
+            </div>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </div>
+</div>
