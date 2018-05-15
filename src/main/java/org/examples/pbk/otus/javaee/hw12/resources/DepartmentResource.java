@@ -1,12 +1,13 @@
 package org.examples.pbk.otus.javaee.hw12.resources;
 
 import io.swagger.annotations.*;
+import org.examples.pbk.otus.javaee.hw12.cdi.InvocationTimeMeasurementInterceptor;
 import org.examples.pbk.otus.javaee.hw12.model.Department;
 import org.examples.pbk.otus.javaee.hw12.service.DepartmentService;
-import org.examples.pbk.otus.javaee.hw12.service.JpaDepartmentService;
 
 import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
+import javax.interceptor.Interceptors;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -17,6 +18,7 @@ import java.util.List;
 @Path("department")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
+@Interceptors(InvocationTimeMeasurementInterceptor.class)
 @Api(tags = "department_resource", produces = MediaType.APPLICATION_JSON, consumes = MediaType.APPLICATION_JSON)
 public class DepartmentResource {
 

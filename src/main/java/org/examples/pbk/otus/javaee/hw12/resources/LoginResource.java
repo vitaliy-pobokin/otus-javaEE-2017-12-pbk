@@ -4,14 +4,15 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
 import io.swagger.annotations.*;
+import org.examples.pbk.otus.javaee.hw12.cdi.InvocationTimeMeasurementInterceptor;
 import org.examples.pbk.otus.javaee.hw12.model.Account;
 import org.examples.pbk.otus.javaee.hw12.model.Credentials;
 import org.examples.pbk.otus.javaee.hw12.model.User;
 import org.examples.pbk.otus.javaee.hw12.service.AccountService;
-import org.examples.pbk.otus.javaee.hw12.service.JpaAccountService;
 
 import javax.annotation.security.PermitAll;
 import javax.inject.Inject;
+import javax.interceptor.Interceptors;
 import javax.persistence.NoResultException;
 import javax.persistence.NonUniqueResultException;
 import javax.servlet.http.HttpServletRequest;
@@ -28,6 +29,7 @@ import java.util.Date;
 @Path("login")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
+@Interceptors(InvocationTimeMeasurementInterceptor.class)
 @Api(tags = "login_resource", produces = MediaType.APPLICATION_JSON, consumes = MediaType.APPLICATION_JSON)
 public class LoginResource {
     private static final long EXPIRATION_PERIOD = 1000 * 60 * 60 * 24 * 7;

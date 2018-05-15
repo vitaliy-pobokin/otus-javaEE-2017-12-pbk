@@ -3,15 +3,16 @@ package org.examples.pbk.otus.javaee.hw12.resources;
 import io.swagger.annotations.*;
 import org.ehcache.Cache;
 import org.examples.pbk.otus.javaee.hw12.CacheManagerProvider;
+import org.examples.pbk.otus.javaee.hw12.cdi.InvocationTimeMeasurementInterceptor;
 import org.examples.pbk.otus.javaee.hw12.model.Employee;
 import org.examples.pbk.otus.javaee.hw12.service.EmployeeService;
-import org.examples.pbk.otus.javaee.hw12.service.JpaEmployeeService;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Restrictions;
 
 import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
+import javax.interceptor.Interceptors;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
@@ -49,6 +50,7 @@ import java.util.List;
 @Path("employee")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
+@Interceptors(InvocationTimeMeasurementInterceptor.class)
 public class EmployeeResource {
 
     @Inject

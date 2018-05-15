@@ -1,12 +1,14 @@
 package org.examples.pbk.otus.javaee.hw12.resources;
 
 import io.swagger.annotations.*;
+import org.examples.pbk.otus.javaee.hw12.cdi.InvocationTimeMeasurementInterceptor;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import javax.annotation.security.PermitAll;
+import javax.interceptor.Interceptors;
 import javax.json.Json;
 import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
@@ -19,6 +21,7 @@ import javax.ws.rs.core.Response;
 
 @Path("news")
 @Produces(MediaType.APPLICATION_JSON)
+@Interceptors(InvocationTimeMeasurementInterceptor.class)
 @Api(tags = "news_resource", produces = MediaType.APPLICATION_JSON)
 public class NewsResource {
 

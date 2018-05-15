@@ -2,7 +2,7 @@ package org.examples.pbk.otus.javaee.hw12.statistic;
 
 import com.blueconic.browscap.*;
 import io.swagger.annotations.*;
-import org.examples.pbk.otus.javaee.hw12.UserAgentParserProvider;
+import org.examples.pbk.otus.javaee.hw12.cdi.InvocationTimeMeasurementInterceptor;
 import org.examples.pbk.otus.javaee.hw12.statistic.markers.BrowserUsageMarker;
 import org.examples.pbk.otus.javaee.hw12.statistic.markers.PageViewsMarker;
 import org.examples.pbk.otus.javaee.hw12.statistic.markers.PlatformUsageMarker;
@@ -11,6 +11,7 @@ import org.examples.pbk.otus.javaee.hw12.statistic.markers.VisitsPerDayMarker;
 import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
+import javax.interceptor.Interceptors;
 import javax.json.Json;
 import javax.json.stream.JsonParser;
 import javax.servlet.http.HttpServletRequest;
@@ -28,6 +29,7 @@ import java.util.Map;
 
 @Path("statistic")
 @Produces(MediaType.APPLICATION_JSON)
+@Interceptors(InvocationTimeMeasurementInterceptor.class)
 @Api(tags = "statistic_resource", produces = MediaType.APPLICATION_JSON, consumes = MediaType.APPLICATION_JSON)
 public class StatisticResource {
 

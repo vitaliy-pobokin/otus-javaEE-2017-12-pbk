@@ -6,9 +6,11 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import org.examples.pbk.otus.javaee.hw12.cdi.InvocationTimeMeasurementInterceptor;
 import org.examples.pbk.otus.javaee.hw12.model.Currencies;
 
 import javax.annotation.security.PermitAll;
+import javax.interceptor.Interceptors;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -18,6 +20,7 @@ import java.net.URL;
 
 @Path("currency")
 @Produces(MediaType.APPLICATION_JSON)
+@Interceptors(InvocationTimeMeasurementInterceptor.class)
 @Api(tags = "currency_resource", produces = MediaType.APPLICATION_JSON)
 public class CurrencyResource {
 
