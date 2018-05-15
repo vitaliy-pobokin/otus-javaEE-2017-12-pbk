@@ -1,56 +1,41 @@
 package org.examples.pbk.otus.javaee.hw12.service;
 
-import org.examples.pbk.otus.javaee.hw12.dao.JpaDepartmentDao;
+import org.examples.pbk.otus.javaee.hw12.dao.DepartmentDao;
 import org.examples.pbk.otus.javaee.hw12.model.Department;
-import org.examples.pbk.otus.javaee.hw12.resources.TransactionUtils;
 
+import javax.inject.Inject;
 import java.util.List;
 
 public class JpaDepartmentService implements DepartmentService {
 
-    private JpaDepartmentDao dao;
+    @Inject
+    private DepartmentDao dao;
 
     public JpaDepartmentService() {
-        this.dao = new JpaDepartmentDao();
     }
 
     @Override
     public List<Department> findAll() {
-        return TransactionUtils.runInTransaction(session -> {
-            dao.setSession(session);
-            return dao.findAll();
-        });
+        return dao.findAll();
     }
 
     @Override
     public Department findById(long id) {
-        return TransactionUtils.runInTransaction(session -> {
-            dao.setSession(session);
-            return dao.findById(id);
-        });
+        return dao.findById(id);
     }
 
     @Override
     public void create(Department department) {
-        TransactionUtils.runInTransactionWithoutResult(session -> {
-            dao.setSession(session);
-            dao.create(department);
-        });
+        dao.create(department);
     }
 
     @Override
     public void update(Department department) {
-        TransactionUtils.runInTransactionWithoutResult(session -> {
-            dao.setSession(session);
-            dao.update(department);
-        });
+        dao.update(department);
     }
 
     @Override
     public void delete(long id) {
-        TransactionUtils.runInTransactionWithoutResult(session -> {
-            dao.setSession(session);
-            dao.delete(id);
-        });
+        dao.delete(id);
     }
 }

@@ -1,58 +1,43 @@
 package org.examples.pbk.otus.javaee.hw12.statistic;
 
-import org.examples.pbk.otus.javaee.hw12.resources.TransactionUtils;
 import org.examples.pbk.otus.javaee.hw12.statistic.markers.BrowserUsageMarker;
 import org.examples.pbk.otus.javaee.hw12.statistic.markers.PageViewsMarker;
 import org.examples.pbk.otus.javaee.hw12.statistic.markers.PlatformUsageMarker;
 import org.examples.pbk.otus.javaee.hw12.statistic.markers.VisitsPerDayMarker;
 
+import javax.inject.Inject;
 import java.util.List;
 
 public class StatisticMarkerServiceImpl implements StatisticMarkerService {
 
+    @Inject
     private StatisticBean bean;
 
     public StatisticMarkerServiceImpl() {
-        this.bean = new StatisticBean();
     }
 
     @Override
     public long addStatMarker(StatisticMarker marker) {
-        return TransactionUtils.runInTransaction(session -> {
-            bean.setSession(session);
-            return bean.addStatMarker(marker);
-        });
+        return bean.addStatMarker(marker);
     }
 
     @Override
     public List<BrowserUsageMarker> getBrowserUsageMarker() {
-        return TransactionUtils.runInTransaction(session -> {
-            bean.setSession(session);
-            return bean.getBrowserUsageMarker();
-        });
+        return bean.getBrowserUsageMarker();
     }
 
     @Override
     public List<PlatformUsageMarker> getPlatformUsageMarker() {
-        return TransactionUtils.runInTransaction(session -> {
-            bean.setSession(session);
-            return bean.getPlatformUsageMarker();
-        });
+        return bean.getPlatformUsageMarker();
     }
 
     @Override
     public List<PageViewsMarker> getPageViewsMarker() {
-        return TransactionUtils.runInTransaction(session -> {
-            bean.setSession(session);
-            return bean.getPageViewsMarker();
-        });
+        return bean.getPageViewsMarker();
     }
 
     @Override
     public List<VisitsPerDayMarker> getVisitsPerDayMarker() {
-        return TransactionUtils.runInTransaction(session -> {
-            bean.setSession(session);
-            return bean.getVisitsPerDayMarker();
-        });
+        return bean.getVisitsPerDayMarker();
     }
 }

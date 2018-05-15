@@ -7,6 +7,7 @@ import io.swagger.annotations.*;
 import org.examples.pbk.otus.javaee.hw12.model.Account;
 import org.examples.pbk.otus.javaee.hw12.model.Credentials;
 import org.examples.pbk.otus.javaee.hw12.model.User;
+import org.examples.pbk.otus.javaee.hw12.service.AccountService;
 import org.examples.pbk.otus.javaee.hw12.service.JpaAccountService;
 
 import javax.annotation.security.PermitAll;
@@ -35,11 +36,10 @@ public class LoginResource {
     private static final String AUTHORIZATION_PROPERTY = "Authorization";
     private static final String AUTHENTICATION_SCHEME = "Bearer";
 
-    private JpaAccountService accountService;
-
     @Inject
-    public LoginResource(JpaAccountService accountService) {
-        this.accountService = accountService;
+    private AccountService accountService;
+
+    public LoginResource() {
     }
 
     @POST

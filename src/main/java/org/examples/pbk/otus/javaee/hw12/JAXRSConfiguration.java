@@ -15,14 +15,14 @@ public class JAXRSConfiguration extends Application {
     public JAXRSConfiguration() {
         BeanConfig beanConfig = new BeanConfig();
         beanConfig.setVersion("1.0");
-        beanConfig.setSchemes(new String[] { "http" });
+        beanConfig.setSchemes(new String[] { "http", "https" });
         beanConfig.setTitle("Web-app API");
     }
 
     public Set<Class<?>> getClasses() {
         Set<Class<?>> resources = new HashSet<>();
         addRestResourceClasses(resources);
-//        addFilterClasses(resources);
+        addFilterClasses(resources);
         return resources;
     }
 

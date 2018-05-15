@@ -52,7 +52,7 @@ public class Employee {
     @Column (name = "EmpSalary", nullable = false)
     private int salary;
 
-    @OneToOne (cascade = CascadeType.REMOVE)
+    @OneToOne (cascade = CascadeType.ALL)
     @JoinColumn (name = "EmpAccId", referencedColumnName = "AccId")
     private Account account;
 

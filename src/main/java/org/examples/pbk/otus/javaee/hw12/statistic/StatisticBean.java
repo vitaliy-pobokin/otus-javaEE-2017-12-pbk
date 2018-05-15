@@ -6,17 +6,20 @@ import org.examples.pbk.otus.javaee.hw12.statistic.markers.PlatformUsageMarker;
 import org.examples.pbk.otus.javaee.hw12.statistic.markers.VisitsPerDayMarker;
 import org.hibernate.Session;
 
-import javax.persistence.ParameterMode;
-import javax.persistence.Query;
-import javax.persistence.StoredProcedureQuery;
+import javax.ejb.Stateful;
+import javax.ejb.Stateless;
+import javax.enterprise.inject.Default;
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
+@Stateless
 public class StatisticBean {
 
-    private Session session;
+    @PersistenceContext(unitName = "persistence")
+    private EntityManager em;
 
     private static final String CREATE_STAT_MARKER_TABLE_SQL =
             "CREATE TABLE STAT_MARKER (" +
@@ -157,7 +160,7 @@ public class StatisticBean {
                     "END CREATE_STAT_MARKER;";
 
     public long addStatMarker(StatisticMarker marker) {
-        StoredProcedureQuery procedureQuery = session.createStoredProcedureQuery("CREATE_STAT_MARKER");
+        StoredProcedureQuery procedureQuery = em.createStoredProcedureQuery("CREATE_STAT_MARKER");
         procedureQuery.registerStoredProcedureParameter("MARKER_NAME", String.class, ParameterMode.IN)
                 .registerStoredProcedureParameter("MARKER_PAGEPATH", String.class, ParameterMode.IN)
                 .registerStoredProcedureParameter("MARKER_CLIENTIP", String.class, ParameterMode.IN)
@@ -214,12 +217,12 @@ public class StatisticBean {
     }
 
     private void executeNativeQuery(String query) {
-        Query q = session.createNativeQuery(query);
+        Query q = em.createNativeQuery(query);
         q.executeUpdate();
     }
 
     public List<BrowserUsageMarker> getBrowserUsageMarker() {
-        StoredProcedureQuery procedureQuery = session.createStoredProcedureQuery("COUNT_BROWSER_USAGE");
+        StoredProcedureQuery procedureQuery = em.createStoredProcedureQuery("COUNT_BROWSER_USAGE");
         procedureQuery.registerStoredProcedureParameter("C_COUNT_BROWSER", BrowserUsageMarker.class, ParameterMode.REF_CURSOR);
         procedureQuery.execute();
         List<Object[]> resultList = procedureQuery.getResultList();
@@ -231,7 +234,7 @@ public class StatisticBean {
     }
 
     public List<PlatformUsageMarker> getPlatformUsageMarker() {
-        StoredProcedureQuery procedureQuery = session.createStoredProcedureQuery("COUNT_PLATFORM_USAGE");
+        StoredProcedureQuery procedureQuery = em.createStoredProcedureQuery("COUNT_PLATFORM_USAGE");
         procedureQuery.registerStoredProcedureParameter("C_COUNT_PLATFORM", PlatformUsageMarker.class, ParameterMode.REF_CURSOR);
         procedureQuery.execute();
         List<Object[]> resultList = procedureQuery.getResultList();
@@ -243,7 +246,7 @@ public class StatisticBean {
     }
 
     public List<PageViewsMarker> getPageViewsMarker() {
-        StoredProcedureQuery procedureQuery = session.createStoredProcedureQuery("COUNT_PAGE_VIEWS");
+        StoredProcedureQuery procedureQuery = em.createStoredProcedureQuery("COUNT_PAGE_VIEWS");
         procedureQuery.registerStoredProcedureParameter("C_COUNT_PAGE", PageViewsMarker.class, ParameterMode.REF_CURSOR);
         procedureQuery.execute();
         List<Object[]> resultList = procedureQuery.getResultList();
@@ -255,7 +258,7 @@ public class StatisticBean {
     }
 
     public List<VisitsPerDayMarker> getVisitsPerDayMarker() {
-        StoredProcedureQuery procedureQuery = session.createStoredProcedureQuery("COUNT_VISITS_PER_DAY");
+        StoredProcedureQuery procedureQuery = em.createStoredProcedureQuery("COUNT_VISITS_PER_DAY");
         procedureQuery.registerStoredProcedureParameter("C_COUNT_VISITS", VisitsPerDayMarker.class, ParameterMode.REF_CURSOR);
         procedureQuery.execute();
         List<Object[]> resultList = procedureQuery.getResultList();
@@ -264,16 +267,5 @@ public class StatisticBean {
             markers.add(new VisitsPerDayMarker((String) r[0], ((BigDecimal) r[1]).longValue()));
         });
         return markers;
-    }
-
-    public void setSession(Session session) {
-        this.session = session;
-    }
-
-    private Session getSession() {
-        if (session == null) {
-            throw new RuntimeException("Session wasn't set");
-        }
-        return session;
     }
 }

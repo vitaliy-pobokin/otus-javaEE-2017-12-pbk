@@ -5,6 +5,7 @@ import com.blueconic.browscap.ParseException;
 import com.blueconic.browscap.UserAgentParser;
 import com.blueconic.browscap.UserAgentService;
 
+import javax.enterprise.inject.Produces;
 import java.io.IOException;
 import java.util.Arrays;
 
@@ -25,6 +26,7 @@ public class UserAgentParserProvider {
         }
     }
 
+    @Produces
     public static UserAgentParser getInstance(){
         return instance;
     }

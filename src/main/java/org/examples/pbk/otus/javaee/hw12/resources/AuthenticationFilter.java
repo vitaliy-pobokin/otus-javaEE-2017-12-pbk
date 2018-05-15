@@ -6,7 +6,7 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import org.examples.pbk.otus.javaee.hw12.model.Account;
-import org.examples.pbk.otus.javaee.hw12.service.JpaAccountService;
+import org.examples.pbk.otus.javaee.hw12.service.AccountService;
 
 import javax.annotation.security.DenyAll;
 import javax.annotation.security.PermitAll;
@@ -31,7 +31,7 @@ import java.util.Set;
 public class AuthenticationFilter implements javax.ws.rs.container.ContainerRequestFilter {
 
     @Inject
-    private JpaAccountService accountService;
+    private AccountService accountService;
 
     @Context
     private ResourceInfo resourceInfo;

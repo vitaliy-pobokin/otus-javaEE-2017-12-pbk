@@ -51,12 +51,11 @@ import java.util.List;
 @Consumes(MediaType.APPLICATION_JSON)
 public class EmployeeResource {
 
+    @Inject
     private EmployeeService service;
     private Cache<String, List> filterCache;
 
-    @Inject
-    public EmployeeResource(JpaEmployeeService service) {
-        this.service = service;
+    public EmployeeResource() {
         this.filterCache = CacheManagerProvider.getCacheManager().getCache("filterEmployee", String.class, List.class);
     }
 

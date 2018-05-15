@@ -1,66 +1,57 @@
 package org.examples.pbk.otus.javaee.hw12.dao;
 
 import org.examples.pbk.otus.javaee.hw12.model.Account;
-import org.hibernate.Session;
 
-import javax.enterprise.context.ApplicationScoped;
+import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.util.List;
 
-@ApplicationScoped
+@Stateless
 public class JpaAccountDao implements AccountDao {
 
-    private Session session;
+    @PersistenceContext(unitName = "persistence")
+    private EntityManager em;
 
     @Override
     public List<Account> findAll() {
-        CriteriaBuilder builder = getSession().getCriteriaBuilder();
+        CriteriaBuilder builder = em.getCriteriaBuilder();
         CriteriaQuery<Account> criteria = builder.createQuery(Account.class);
         criteria.from(Account.class);
-        return session.createQuery(criteria).getResultList();
+        return em.createQuery(criteria).getResultList();
     }
 
     @Override
     public Account findById(long id) {
-        return getSession().find(Account.class, id);
+        return em.find(Account.class, id);
     }
 
     @Override
     public Account findByUsername(String username) {
-        CriteriaBuilder builder = getSession().getCriteriaBuilder();
+        CriteriaBuilder builder = em.getCriteriaBuilder();
         CriteriaQuery<Account> criteria = builder.createQuery(Account.class);
         Root<Account> from = criteria.from(Account.class);
         criteria.where(builder.equal(from.get("username"), username));
-        TypedQuery<Account> query = getSession().createQuery(criteria);
+        TypedQuery<Account> query = em.createQuery(criteria);
         return query.getSingleResult();
     }
 
     @Override
     public void create(Account account) {
-        getSession().persist(account);
+        em.persist(account);
     }
 
     @Override
     public void update(Account account) {
-        getSession().merge(account);
+        em.merge(account);
     }
 
     @Override
     public void delete(long id) {
-        getSession().remove(getSession().find(Account.class, id));
-    }
-
-    public void setSession(Session session) {
-        this.session = session;
-    }
-
-    private Session getSession() {
-        if (session == null) {
-            throw new RuntimeException("Session wasn't set");
-        }
-        return session;
+        em.remove(em.find(Account.class, id));
     }
 }

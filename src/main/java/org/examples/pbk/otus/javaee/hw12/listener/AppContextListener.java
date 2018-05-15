@@ -2,10 +2,9 @@ package org.examples.pbk.otus.javaee.hw12.listener;
 
 import org.examples.pbk.otus.javaee.hw12.CacheManagerProvider;
 import org.examples.pbk.otus.javaee.hw12.DatabaseStateManager;
-import org.examples.pbk.otus.javaee.hw12.SessionFactoryProvider;
-import org.examples.pbk.otus.javaee.hw12.resources.TransactionUtils;
 import org.examples.pbk.otus.javaee.hw12.statistic.StatisticBean;
 
+import javax.inject.Inject;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
@@ -14,33 +13,33 @@ import javax.servlet.annotation.WebListener;
 @WebListener
 public class AppContextListener implements ServletContextListener {
 
+    @Inject
+    private StatisticBean bean;
+
+    @Inject
+    private DatabaseStateManager stateManager;
+
     @Override
     public void contextInitialized(ServletContextEvent event) {
-        SessionFactoryProvider.init();
         CacheManagerProvider.init();
         ServletContext sc = event.getServletContext();
         sc.setAttribute("ctx", sc.getContextPath());
-        new DatabaseStateManager().loadDatabaseState(sc);
+        stateManager.loadDatabaseState(sc);
         initializeStatisticTables();
     }
 
     @Override
     public void contextDestroyed(ServletContextEvent event) {
         ServletContext sc = event.getServletContext();
-        new DatabaseStateManager().saveDatabaseState(sc);
+        stateManager.saveDatabaseState(sc);
         CacheManagerProvider.dispose();
-        SessionFactoryProvider.dispose();
     }
 
     private void initializeStatisticTables() {
-        StatisticBean bean = new StatisticBean();
-        TransactionUtils.runInTransactionWithoutResult(session -> {
-            bean.setSession(session);
-            bean.dropTable();
-            bean.dropSequence();
-            bean.createTable();
-            bean.createSequence();
-            bean.createProcedures();
-        });
+        bean.dropTable();
+        bean.dropSequence();
+        bean.createTable();
+        bean.createSequence();
+        bean.createProcedures();
     }
 }

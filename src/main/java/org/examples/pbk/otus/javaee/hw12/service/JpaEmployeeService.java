@@ -1,65 +1,47 @@
 package org.examples.pbk.otus.javaee.hw12.service;
 
-import org.examples.pbk.otus.javaee.hw12.dao.JpaEmployeeDao;
+import org.examples.pbk.otus.javaee.hw12.dao.EmployeeDao;
 import org.examples.pbk.otus.javaee.hw12.model.Employee;
-import org.examples.pbk.otus.javaee.hw12.resources.TransactionUtils;
 import org.hibernate.criterion.DetachedCriteria;
 
+import javax.inject.Inject;
 import java.util.List;
 
 public class JpaEmployeeService implements EmployeeService {
 
-    private JpaEmployeeDao dao;
+    @Inject
+    private EmployeeDao dao;
 
     public JpaEmployeeService() {
-        this.dao = new JpaEmployeeDao();
     }
 
     @Override
     public List<Employee> findAll() {
-        return TransactionUtils.runInTransaction(session -> {
-            dao.setSession(session);
             return dao.findAll();
-        });
     }
 
     @Override
     public List<Employee> findEmployees(DetachedCriteria dcr) {
-        return TransactionUtils.runInTransaction(session -> {
-            dao.setSession(session);
-            return dao.findEmployees(dcr);
-        });
+        return dao.findEmployees(dcr);
     }
 
     @Override
     public Employee findById(long id) {
-        return TransactionUtils.runInTransaction(session -> {
-            dao.setSession(session);
-            return dao.findById(id);
-        });
+        return dao.findById(id);
     }
 
     @Override
     public void create(Employee employee) {
-        TransactionUtils.runInTransactionWithoutResult(session -> {
-            dao.setSession(session);
-            dao.create(employee);
-        });
+        dao.create(employee);
     }
 
     @Override
     public void update(Employee employee) {
-        TransactionUtils.runInTransactionWithoutResult(session -> {
-            dao.setSession(session);
-            dao.update(employee);
-        });
+        dao.update(employee);
     }
 
     @Override
     public void delete(long id) {
-        TransactionUtils.runInTransactionWithoutResult(session -> {
-            dao.setSession(session);
-            dao.delete(id);
-        });
+        dao.delete(id);
     }
 }

@@ -35,14 +35,13 @@ public class StatisticResource {
 
     private static volatile boolean collectStatistic = true;
 
+    @Inject
     private StatisticMarkerService statisticService;
 
+    @Inject
     private UserAgentParser userAgentParser;
 
-    @Inject
-    public StatisticResource(StatisticMarkerServiceImpl statisticService) {
-        this.statisticService = statisticService;
-        this.userAgentParser = UserAgentParserProvider.getInstance();
+    public StatisticResource() {
     }
 
     @GET

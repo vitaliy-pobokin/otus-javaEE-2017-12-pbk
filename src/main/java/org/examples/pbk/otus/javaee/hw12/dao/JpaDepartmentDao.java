@@ -1,53 +1,45 @@
 package org.examples.pbk.otus.javaee.hw12.dao;
 
 import org.examples.pbk.otus.javaee.hw12.model.Department;
-import org.hibernate.Session;
 
-import javax.enterprise.context.ApplicationScoped;
+import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import java.util.List;
 
-@ApplicationScoped
+@Stateless
 public class JpaDepartmentDao implements DepartmentDao{
-    private Session session;
+
+    @PersistenceContext(unitName = "persistence")
+    private EntityManager em;
 
     @Override
     public List<Department> findAll() {
-        CriteriaBuilder builder = getSession().getCriteriaBuilder();
+        CriteriaBuilder builder = em.getCriteriaBuilder();
         CriteriaQuery<Department> criteria = builder.createQuery(Department.class);
         criteria.from(Department.class);
-        return session.createQuery(criteria).getResultList();
+        return em.createQuery(criteria).getResultList();
     }
 
     @Override
     public Department findById(long id) {
-        return getSession().find(Department.class, id);
+        return em.find(Department.class, id);
     }
 
     @Override
     public void create(Department department) {
-        getSession().persist(department);
+        em.persist(department);
     }
 
     @Override
     public void update(Department department) {
-        getSession().merge(department);
+        em.merge(department);
     }
 
     @Override
     public void delete(long id) {
-        getSession().remove(getSession().find(Department.class, id));
-    }
-
-    public void setSession(Session session) {
-        this.session = session;
-    }
-
-    private Session getSession() {
-        if (session == null) {
-            throw new RuntimeException("Session wasn't set");
-        }
-        return session;
+        em.remove(em.find(Department.class, id));
     }
 }

@@ -18,11 +18,10 @@ import java.util.List;
 @Consumes(MediaType.APPLICATION_JSON)
 public class AccountResource {
 
+    @Inject
     private AccountService service;
 
-    @Inject
-    public AccountResource(JpaAccountService service) {
-        this.service = service;
+    public AccountResource() {
     }
 
     @GET

@@ -20,11 +20,10 @@ import java.util.List;
 @Api(tags = "department_resource", produces = MediaType.APPLICATION_JSON, consumes = MediaType.APPLICATION_JSON)
 public class DepartmentResource {
 
+    @Inject
     private DepartmentService service;
 
-    @Inject
-    public DepartmentResource(JpaDepartmentService service) {
-        this.service = service;
+    public DepartmentResource() {
     }
 
     @GET
