@@ -4,6 +4,7 @@ import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -20,9 +21,11 @@ public class Department {
     private Long id;
 
     @Column (name = "DepName", nullable = false)
+    @NotBlank(message = "Department name should not be blank")
     private String name;
 
     @Column (name = "DepCity", nullable = false)
+    @NotBlank(message = "Department city should not be blank")
     private String city;
 
     @XmlAttribute(name = "id", required = true)

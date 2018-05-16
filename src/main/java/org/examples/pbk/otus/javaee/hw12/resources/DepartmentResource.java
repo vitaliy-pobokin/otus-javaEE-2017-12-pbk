@@ -20,7 +20,7 @@ import java.util.List;
 @Consumes(MediaType.APPLICATION_JSON)
 @Interceptors(InvocationTimeMeasurementInterceptor.class)
 @Api(tags = "department_resource", produces = MediaType.APPLICATION_JSON, consumes = MediaType.APPLICATION_JSON)
-public class DepartmentResource {
+public class DepartmentResource implements DepartmentResourceI {
 
     @Inject
     private DepartmentService service;
@@ -28,6 +28,7 @@ public class DepartmentResource {
     public DepartmentResource() {
     }
 
+    @Override
     @GET
     @RolesAllowed({"CEO", "ACC", "HRM", "USR"})
     @ApiOperation(value = "Find All Departments",
@@ -43,6 +44,7 @@ public class DepartmentResource {
         return Response.ok(departments).build();
     }
 
+    @Override
     @GET
     @Path("/{id}")
     @RolesAllowed({"CEO", "ACC", "HRM", "USR"})
@@ -62,6 +64,7 @@ public class DepartmentResource {
         return Response.ok(department).build();
     }
 
+    @Override
     @POST
     @RolesAllowed({"CEO"})
     @ApiOperation(value = "Create Department",
@@ -78,6 +81,7 @@ public class DepartmentResource {
         return Response.created(new URI("/api/account/" + department.getId())).build();
     }
 
+    @Override
     @PUT
     @RolesAllowed({"CEO"})
     @ApiOperation(value = "Update Department",
@@ -94,6 +98,7 @@ public class DepartmentResource {
         return Response.ok().build();
     }
 
+    @Override
     @DELETE
     @Path("/{id}")
     @RolesAllowed({"CEO"})
