@@ -51,7 +51,7 @@ import java.util.List;
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 @Interceptors(InvocationTimeMeasurementInterceptor.class)
-public class EmployeeResource {
+public class EmployeeResource implements EmployeeResourceI {
 
     @Inject
     private EmployeeService service;
@@ -61,6 +61,7 @@ public class EmployeeResource {
         this.filterCache = CacheManagerProvider.getCacheManager().getCache("filterEmployee", String.class, List.class);
     }
 
+    @Override
     @GET
     @RolesAllowed({"CEO", "ACC", "HRM", "USR"})
     @ApiOperation(value = "Find All Employees",
@@ -76,6 +77,7 @@ public class EmployeeResource {
         return Response.ok(employees).build();
     }
 
+    @Override
     @GET
     @Path("/filter")
     @RolesAllowed({"CEO", "ACC", "HRM", "USR"})
@@ -131,6 +133,7 @@ public class EmployeeResource {
         }
     }
 
+    @Override
     @GET
     @Path("/{id}")
     @RolesAllowed({"CEO", "ACC", "HRM", "USR"})
@@ -150,6 +153,7 @@ public class EmployeeResource {
         return Response.ok(employee).build();
     }
 
+    @Override
     @POST
     @RolesAllowed({"CEO", "HRM"})
     @ApiOperation(value = "Create Employee",
@@ -167,6 +171,7 @@ public class EmployeeResource {
         return Response.created(new URI("/api/account/" + employee.getId())).build();
     }
 
+    @Override
     @PUT
     @RolesAllowed({"CEO", "ACC", "HRM"})
     @ApiOperation(value = "Update Employee",
@@ -184,6 +189,7 @@ public class EmployeeResource {
         return Response.ok().build();
     }
 
+    @Override
     @DELETE
     @Path("/{id}")
     @RolesAllowed({"CEO", "HRM"})

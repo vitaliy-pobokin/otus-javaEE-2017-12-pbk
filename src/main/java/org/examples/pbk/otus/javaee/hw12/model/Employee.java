@@ -8,6 +8,7 @@ import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
 import javax.persistence.*;
+import javax.validation.constraints.*;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -28,28 +29,37 @@ public class Employee {
     private Long id;
 
     @Column (name = "EmpName", nullable = false)
+    @NotBlank(message = "Name should not be blank")
     private String name;
 
     @Column (name = "EmpAge", nullable = false)
+    @Min(value = 18, message = "Age should not be less than 18")
+    @Max(value = 100, message = "Age should not be greater than 100")
     private int age;
 
     @Column (name = "EmpEmail")
+    @Email(message = "Email should be valid")
     private String email;
 
     @Column (name = "EmpPhone")
     private String phone;
 
     @Column (name = "EmpHireDate", nullable = false)
+    @PastOrPresent(message = "Hire Date should be some day in the past, or today.")
     private Date hireDate;
 
     @ManyToOne (optional = false)
     @JoinColumn (name = "EmpDepId", referencedColumnName = "DepId", nullable = false)
+    @NotNull(message = "Department should not be null")
     private Department department;
 
     @Column (name = "EmpJob", nullable = false)
+    @NotBlank(message = "Job should not be blank")
     private String job;
 
     @Column (name = "EmpSalary", nullable = false)
+    @Min(value = 1000, message = "Salary should not be less than 1000")
+    @Max(value = 1000000, message = "Salary should not be greater than 1000000")
     private int salary;
 
     @OneToOne (cascade = CascadeType.ALL)
