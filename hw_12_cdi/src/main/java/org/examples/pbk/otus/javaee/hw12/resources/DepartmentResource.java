@@ -1,0 +1,119 @@
+package org.examples.pbk.otus.javaee.hw12.resources;
+
+import io.swagger.annotations.*;
+import org.examples.pbk.otus.javaee.hw12.cdi.InvocationTimeMeasurementInterceptor;
+import org.examples.pbk.otus.javaee.hw12.model.Department;
+import org.examples.pbk.otus.javaee.hw12.service.DepartmentService;
+
+import javax.annotation.security.RolesAllowed;
+import javax.inject.Inject;
+import javax.interceptor.Interceptors;
+import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.List;
+
+@Path("department")
+@Produces(MediaType.APPLICATION_JSON)
+@Consumes(MediaType.APPLICATION_JSON)
+@Interceptors(InvocationTimeMeasurementInterceptor.class)
+@Api(tags = "department_resource", produces = MediaType.APPLICATION_JSON, consumes = MediaType.APPLICATION_JSON)
+public class DepartmentResource implements DepartmentResourceI {
+
+    @Inject
+    private DepartmentService service;
+
+    public DepartmentResource() {
+    }
+
+    @Override
+    @GET
+    @RolesAllowed({"CEO", "ACC", "HRM", "USR"})
+    @ApiOperation(value = "Find All Departments",
+            produces = MediaType.APPLICATION_JSON,
+            authorizations = {
+                    @Authorization(value = "Bearer", scopes = {})
+            })
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "List of Departments")
+    })
+    public Response findAll() {
+        List<Department> departments = service.findAll();
+        return Response.ok(departments).build();
+    }
+
+    @Override
+    @GET
+    @Path("/{id}")
+    @RolesAllowed({"CEO", "ACC", "HRM", "USR"})
+    @ApiOperation(value = "Get Department by id",
+            produces = MediaType.APPLICATION_JSON,
+            authorizations = {
+                    @Authorization(value = "Bearer", scopes = {})
+            })
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Department with requested id")
+    })
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "id", value = "Id of Department", dataTypeClass = long.class, paramType = "path")
+    })
+    public Response findById(@PathParam("id") long id) {
+        Department department = service.findById(id);
+        return Response.ok(department).build();
+    }
+
+    @Override
+    @POST
+    @RolesAllowed({"CEO"})
+    @ApiOperation(value = "Create Department",
+            produces = MediaType.APPLICATION_JSON,
+            consumes = MediaType.APPLICATION_JSON,
+            authorizations = {
+                    @Authorization(value = "Bearer", scopes = {})
+            })
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "URI of created Department")
+    })
+    public Response create(@ApiParam(name = "department", value = "Department to create", required = true) Department department) throws URISyntaxException {
+        service.create(department);
+        return Response.created(new URI("/api/account/" + department.getId())).build();
+    }
+
+    @Override
+    @PUT
+    @RolesAllowed({"CEO"})
+    @ApiOperation(value = "Update Department",
+            produces = MediaType.APPLICATION_JSON,
+            consumes = MediaType.APPLICATION_JSON,
+            authorizations = {
+                    @Authorization(value = "Bearer", scopes = {})
+            })
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "")
+    })
+    public Response update(@ApiParam(name = "department", value = "Department to create", required = true) Department department) {
+        service.update(department);
+        return Response.ok().build();
+    }
+
+    @Override
+    @DELETE
+    @Path("/{id}")
+    @RolesAllowed({"CEO"})
+    @ApiOperation(value = "Delete Department by id",
+            authorizations = {
+                    @Authorization(value = "Bearer", scopes = {})
+            })
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "")
+    })
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "id", value = "Id of Department", dataTypeClass = long.class, paramType = "path")
+    })
+    public Response delete(@PathParam("id") long id) {
+        service.delete(id);
+        return Response.ok().build();
+    }
+}
