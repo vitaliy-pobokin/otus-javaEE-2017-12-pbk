@@ -5,12 +5,16 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
 import io.swagger.annotations.*;
 import org.examples.pbk.otus.javaee.hw12.cdi.InvocationTimeMeasurementInterceptor;
+import org.examples.pbk.otus.javaee.hw12.cdi.events.LoginEvent;
+import org.examples.pbk.otus.javaee.hw12.cdi.events.qualifiers.Successful;
+import org.examples.pbk.otus.javaee.hw12.cdi.events.qualifiers.Unsuccessful;
 import org.examples.pbk.otus.javaee.hw12.model.Account;
 import org.examples.pbk.otus.javaee.hw12.model.Credentials;
 import org.examples.pbk.otus.javaee.hw12.model.User;
 import org.examples.pbk.otus.javaee.hw12.service.AccountService;
 
 import javax.annotation.security.PermitAll;
+import javax.enterprise.event.Event;
 import javax.inject.Inject;
 import javax.interceptor.Interceptors;
 import javax.persistence.NoResultException;
@@ -41,6 +45,14 @@ public class LoginResource {
     @Inject
     private AccountService accountService;
 
+    @Inject
+    @Successful
+    private Event<LoginEvent> successfulLoginEvent;
+
+    @Inject
+    @Unsuccessful
+    private Event<LoginEvent> unsuccessfulLoginEvent;
+
     public LoginResource() {
     }
 
@@ -60,13 +72,17 @@ public class LoginResource {
         try {
             account = accountService.findByUsername(username);
         } catch (NoResultException | NonUniqueResultException e) {
+        } finally {
+            LoginEvent payload = new LoginEvent(credentials, request.getRemoteAddr());
+            if (account != null && account.getPassword().equals(password)) {
+                String token = createJwtToken(account);
+                User user = getUser(account);
+                successfulLoginEvent.fire(payload);
+                return Response.ok(user).header(AUTHORIZATION_PROPERTY, AUTHENTICATION_SCHEME + " " + token).build();
+            }
+            unsuccessfulLoginEvent.fire(payload);
+            return Response.status(Response.Status.UNAUTHORIZED).build();
         }
-        if (account != null && account.getPassword().equals(password)) {
-            String token = createJwtToken(account);
-            User user = getUser(account);
-            return Response.ok(user).header(AUTHORIZATION_PROPERTY, AUTHENTICATION_SCHEME + " " + token).build();
-        }
-        return Response.status(Response.Status.UNAUTHORIZED).build();
     }
 
     private String createJwtToken(Account account) {
