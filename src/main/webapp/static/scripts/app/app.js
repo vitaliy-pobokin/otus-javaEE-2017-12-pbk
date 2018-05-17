@@ -16,7 +16,8 @@ app.constant('urls', {
     STATISTIC_VISITS_PER_DAY_API: 'http://localhost:3000' + contextPath + '/api/statistic/visits_per_day/',
     STAT_SERVICE_API: 'http://localhost:3000' + contextPath + '/api/statistic/stat/',
     STAT_COLLECTION_STATUS: 'http://localhost:3000' + contextPath + '/api/statistic/stat_collection_status/',
-    ALTER_STAT_COLLECTION: 'http://localhost:3000' + contextPath + '/api/statistic/alter_stat_collection/'});
+    ALTER_STAT_COLLECTION: 'http://localhost:3000' + contextPath + '/api/statistic/alter_stat_collection/',
+    AVERAGE_INVOCATION_TIME_API: 'http://localhost:3000' + contextPath + '/api/invocation_time/average/'});
 
 app.constant('AUTH_EVENTS', {
     loginSuccess: 'auth-login-success',

@@ -1,6 +1,7 @@
 package org.examples.pbk.otus.javaee.hw12;
 
 import io.swagger.jaxrs.config.BeanConfig;
+import org.examples.pbk.otus.javaee.hw12.cdi.InvocationTimeResource;
 import org.examples.pbk.otus.javaee.hw12.resources.*;
 import org.examples.pbk.otus.javaee.hw12.statistic.StatisticResource;
 
@@ -38,6 +39,7 @@ public class JAXRSConfiguration extends Application {
         resources.add(LoginResource.class);
         resources.add(NewsResource.class);
         resources.add(StatisticResource.class);
+        resources.add(InvocationTimeResource.class);
 
         resources.add(io.swagger.jaxrs.listing.ApiListingResource.class);
         resources.add(io.swagger.jaxrs.listing.SwaggerSerializers.class);

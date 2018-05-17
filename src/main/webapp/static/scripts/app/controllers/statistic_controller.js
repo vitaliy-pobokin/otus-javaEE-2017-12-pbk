@@ -35,6 +35,12 @@ angular.module('hw4App')
             options: []
         };
 
+        self.invocation = {
+            labels: [],
+            data: [],
+            options: []
+        };
+
         self.day_visits.datasetOverride = [{ yAxisID: 'y-axis-1' }];
         self.day_visits.options = {
             scales: {
@@ -94,10 +100,20 @@ angular.module('hw4App')
             })
         }
 
+        function getAverageInvocationTime() {
+            StatService.getAverageInvocationTime().then(function (data) {
+                for (var i = 0; i < data.length; i++) {
+                    self.invocation.labels.push(data[i].class.substring(data[i].class.lastIndexOf('.') + 1) + " - " + data[i].method);
+                    self.invocation.data.push(data[i].avg_time);
+                }
+            })
+        }
+
         getBrowserUsage();
         getPlatformUsage();
         getPageViews();
         getVisitsPerDay();
+        getAverageInvocationTime();
     }])
 
     .factory('AuthInterceptor', ['$rootScope', '$q', 'AUTH_EVENTS', function ($rootScope, $q, AUTH_EVENTS) {
